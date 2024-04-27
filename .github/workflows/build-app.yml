@@ -42,5 +42,5 @@ jobs:
           platforms: linux/amd64,linux/arm64/v8
           push: true
           tags: |
-            ghcr.io/${{ github.actor }}/react-modern-pattern-workshop:latest
-            ghcr.io/${{ github.actor }}/react-modern-pattern-workshop:${{ steps.sha.outputs.short }}
+            ghcr.io/${{ github.actor }}/moderne-react-pattern-workshop:latest
+            ghcr.io/${{ github.actor }}/moderne-react-pattern-workshop:${{ steps.sha.outputs.short }}
