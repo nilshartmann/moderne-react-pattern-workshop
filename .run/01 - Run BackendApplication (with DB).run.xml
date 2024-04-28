@@ -1,7 +1,7 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="01 - Run BackendApplication (with DB)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-    <module name="nextjs-workshop.backend.main" />
+    <module name="moderne-react-pattern-workshop.backend.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="nh.recipify.BackendApplication" />
     <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
     <method v="2">
