@@ -3,7 +3,11 @@ import "./globals.css";
 import { GlobalPageLayout } from "@/app/components/layout/GlobalPageLayout";
 
 export const metadata: Metadata = {
-  title: "Recipify Next.js demo",
+  title: {
+    template: "%s - Recipify Next.js demo",
+    default: "",
+  },
+
   description: "Recipes for hungry frontend devs",
 };
 

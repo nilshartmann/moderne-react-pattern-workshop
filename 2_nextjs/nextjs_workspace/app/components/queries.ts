@@ -99,3 +99,17 @@ export function saveFeedback(recipeId: string, newFeedback: NewFeedback) {
     },
   );
 }
+
+export function saveLikeToDb(recipeId: string) {
+  return fetchFromApi(
+    getEndpointConfig("patch", "/api/recipes/{recipeId}/likes"),
+    {
+      path: {
+        recipeId,
+      },
+      query: {
+        slowdown: slowDown_IncreaseLikes,
+      },
+    },
+  );
+}

@@ -57,6 +57,20 @@ export function fetchRecipe(recipeId: string) {
   );
 }
 
+export function saveLike(recipeId: string) {
+  return fetchFromApi(
+    getEndpointConfig("patch", "/api/recipes/{recipeId}/likes"),
+    {
+      path: {
+        recipeId,
+      },
+      query: {
+        slowdown: slowDown_IncreaseLikes,
+      },
+    },
+  );
+}
+
 export function fetchFeedback(
   recipeId: string,
 ): Promise<GetRecipeFeedbacksResponse> {

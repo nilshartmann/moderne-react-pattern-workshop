@@ -25,6 +25,15 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
               />
             </div>
           </Link>
+          <div className={"mt-8 flex justify-between text-red"}>
+            <p
+              className={
+                "font-space text-sm font-medium uppercase tracking-[2px] "
+              }
+            >
+              {recipe.mealType}
+            </p>
+          </div>
           <H1 className={"mb-4 mt-4 font-space font-bold"}>
             <Link
               prefetch={true}
