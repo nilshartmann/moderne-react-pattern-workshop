@@ -19,6 +19,7 @@ import {
   slowDown_GetIngredients,
   slowDown_GetRecipe,
   slowDown_GetRecipeList,
+  slowDown_IncreaseLikes,
   slowDown_SubscribeNewsletter,
 } from "../demo-config.tsx";
 
@@ -79,7 +80,7 @@ export function fetchRecipe(recipeId: string) {
   });
 }
 
-export function useGetRecipeQuery(
+export function useGetRecipeSuspenseQuery(
   recipeId: string,
 ): UseSuspenseQueryResult<GetRecipeResponse> {
   return useSuspenseQuery<GetRecipeResponse>({
@@ -204,6 +205,70 @@ export function useSubscribeToNewsletterMutation() {
           },
         },
       );
+    },
+  });
+}
+
+export function useLikeMutation(recipeId: string) {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["PUT", "recipes", recipeId, "likes"],
+    mutationFn: () => {
+      return fetchFromApi(
+        getEndpointConfig("patch", "/api/recipes/{recipeId}/likes"),
+        {
+          path: { recipeId },
+          query: {
+            slowdown: slowDown_IncreaseLikes,
+          },
+        },
+      );
+    },
+    onSuccess: async (patchLikesResult) => {
+      // UPDATE CLIENT-SITE DATA AFTER LIKES:
+
+      // Option 1:
+      //  - invalidate data in cache
+      //     - if data is not in cache -> nothing happens
+      //     - if data is in cache -> data is considered stale
+      //       - data will be read from backend if:
+      //          - immediately if data is currently rendered on a component
+      //          - later as soon as a component renders that uses the data
+      //  - 'await'ing the invalidation make the whole mutation
+      //      "pending" until: the mutation request is done AND
+      //         the "invalidate" request is DONE
+      //          (only if it is run imediately)
+      await queryClient.invalidateQueries({ queryKey: ["recipe-list"] });
+
+      // Option 2:
+      //  Modify the cache data manually
+      //    - advantage: no server request neccessary for updates
+      //    - disadvantage: duplicating logic from backend
+      queryClient.setQueryData(["recipes", recipeId], (cachedData: unknown) => {
+        if (!cachedData) {
+          return cachedData;
+        }
+        const cachedRecipe = GetRecipeResponse.safeParse(cachedData);
+        if (!cachedRecipe.success) {
+          console.log(
+            "Unknown query data in cache for recipe",
+            recipeId,
+            cachedRecipe,
+            cachedData,
+          );
+          return cachedData;
+        }
+
+        const newData = {
+          ...cachedRecipe.data,
+          recipe: {
+            ...cachedRecipe.data.recipe,
+            likes: patchLikesResult.newLikes,
+          },
+        } satisfies GetRecipeResponse;
+
+        return newData;
+      });
     },
   });
 }

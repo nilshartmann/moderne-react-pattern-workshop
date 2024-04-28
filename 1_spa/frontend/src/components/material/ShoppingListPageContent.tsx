@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { useGetRecipeQuery } from "../use-queries.ts";
+import { useGetRecipeSuspenseQuery } from "../use-queries.ts";
 
 type ShoppingListPageProps = { recipeId: string };
 export default function ShoppingListPage({ recipeId }: ShoppingListPageProps) {
   const {
     data: { recipe },
-  } = useGetRecipeQuery(recipeId);
+  } = useGetRecipeSuspenseQuery(recipeId);
 
   return (
     <>
