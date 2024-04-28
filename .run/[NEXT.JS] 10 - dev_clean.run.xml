@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="10 - Next.js dev:clean" type="js.build_tools.npm">
-    <package-json value="$PROJECT_DIR$/frontend_nextjs/package.json" />
+  <configuration default="false" name="[NEXT.JS] 10 - dev:clean" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/2_nextjs/frontend_nextjs/package.json" />
     <command value="run" />
     <scripts>
       <script value="dev:clean" />
