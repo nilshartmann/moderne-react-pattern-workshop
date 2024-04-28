@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Ingredient } from "../api-types.ts";
 import IngredientList from "./IngredientList.tsx";
+import { twMerge } from "tailwind-merge";
 
 type IngredientsProps = {
   ingredients: Ingredient[];
@@ -24,10 +25,12 @@ export default function IngredientsSection({ ingredients }: IngredientsProps) {
           />
           <span className={"text-gray-500 "}> {servings} servings </span>
           <i
-            className={
-              "fa-solid fa-circle-minus text-orange_2 hover:cursor-pointer hover:text-orange_2-500"
-            }
-            onClick={() => setServings(servings - 1)}
+            className={twMerge(
+              "fa-solid fa-circle-minus cursor-pointer text-orange_2 hover:text-orange_2-500",
+              servings < 2 &&
+                "cursor-default text-gray-300 hover:text-gray-300",
+            )}
+            onClick={servings > 1 ? () => setServings(servings - 1) : undefined}
           />{" "}
         </div>
       </div>

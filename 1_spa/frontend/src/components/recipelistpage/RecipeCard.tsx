@@ -62,11 +62,8 @@ const RecipeCard = memo(function RecipeCard({ recipe }: RecipeCardProps) {
         <div className={"text mt-2 font-inter text-gray-500"}>
           {recipe.headline}
         </div>
-        <div className={"mt-4 space-x-1 text-orange_2"}>
-          <RatingStars rating={recipe.averageRating} />
-        </div>
       </div>
-      <div className={"mt-4 flex"}>
+      <div className={"mt-4 space-y-2"}>
         <RecipeCategories recipe={recipe} />
       </div>
     </div>

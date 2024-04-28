@@ -4,7 +4,7 @@ import RecipeListPageContent from "../../components/recipelistpage/RecipeListPag
 
 const RecipePageListParams = z.object({
   page: z.number().min(0).optional(),
-  orderBy: z.enum(["time", "rating"]).optional(),
+  orderBy: z.enum(["time", "likes"]).optional(),
   bookmarkedRecipeIds: z.string().array().optional(),
   showOnlyBookmarked: z.boolean().optional(),
 });

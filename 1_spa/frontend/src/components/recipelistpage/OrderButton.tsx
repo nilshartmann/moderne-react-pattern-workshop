@@ -6,7 +6,7 @@ const recipeListRoute = getRouteApi("/recipes/");
 
 type OrderButtonProps = {
   children: ReactNode;
-  orderBy?: "time" | "rating" | undefined;
+  orderBy?: "time" | "likes" | undefined;
 };
 
 export function OrderButton({ children, orderBy }: OrderButtonProps) {

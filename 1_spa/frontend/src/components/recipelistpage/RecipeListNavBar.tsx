@@ -7,7 +7,7 @@ export default function RecipeListNavBar() {
     <NavButtonBar align={"right"}>
       <ButtonBar>
         <OrderButton orderBy={undefined}>Newest first</OrderButton>
-        <OrderButton orderBy={"rating"}>Best rated</OrderButton>
+        <OrderButton orderBy={"likes"}>Most liked</OrderButton>
         <OrderButton orderBy={"time"}>Shortest time</OrderButton>
       </ButtonBar>
     </NavButtonBar>
