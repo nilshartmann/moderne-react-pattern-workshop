@@ -3,6 +3,7 @@
     <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
     <module name="nextjs-workshop.backend.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="nh.recipify.BackendApplication" />
+    <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

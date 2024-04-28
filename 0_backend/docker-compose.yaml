@@ -1,3 +1,4 @@
+name: recipify-backend-db
 services:
   postgres:
     image: 'postgres:16-alpine'

@@ -60,6 +60,11 @@ Die Next.js-Anwendung läuft auf Port `8100`. Dieser Port muss also bei dir frei
 
 Das Java-Projekt wird mit Gradle gebaut. Wenn Du das Projekt in deiner IDE öffnest, sollte diese also in der Lage sein, Gradle-Projekte zu importieren. Das geht bei IntelliJ z.B. automatisch. Nach dem Importieren und compilieren startest Du die Spring Boot `main`-Klasse `nh.recipify.BackendApplication`.
 
+> **Arbeitsverzeichnis setzen**
+> 
+> In IntelliJ musst Du in der Run Configuration darauf achten, dass das `Working directory` auf `$MODULE_DIR$` gesetzt ist.
+> Am besten, Du verwendest einfach die fertige Run Configuration `01 - Run BackendApplication (with DB)`
+
 Diese Klasse sorgt auch automatisch dafür, dass ein Docker-Container mit einer Postgres Datenbank gestartet wird. Voraussetzung dafür ist, dass Du docker-compose auf einem Computer installiert hast.
 
 Wenn das Backend gestartet ist, kannst Du einmal `localhost:8080/api/recipes` im Browser öffnen. Dort sollte eine JSON-Liste mit Rezepten zurückgeliefert werden.
