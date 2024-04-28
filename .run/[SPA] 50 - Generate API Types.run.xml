@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="[SPA] 50 - Generate API Types" type="js.build_tools.npm">
-    <package-json value="$PROJECT_DIR$/1_spa/frontend/package.json" />
+    <package-json value="$PROJECT_DIR$/1_spa/spa_frontend/package.json" />
     <command value="run" />
     <scripts>
       <script value="openapi:generate" />
