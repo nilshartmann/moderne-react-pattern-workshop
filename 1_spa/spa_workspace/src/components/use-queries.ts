@@ -68,13 +68,13 @@ export function useGetTotalPageCountQuery(
   return -1;
 }
 
-export function fetchRecipe(recipeId: string) {
+export function fetchRecipe(recipeId: string, slowdown = slowDown_GetRecipe) {
   return fetchFromApi(getEndpointConfig("get", "/api/recipes/{recipeId}"), {
     path: {
       recipeId,
     },
     query: {
-      slowdown: slowDown_GetRecipe,
+      slowdown,
     },
   });
 }
@@ -139,58 +139,64 @@ export function useGetRecipeFeedbackQuery(
   });
 }
 
-type AddFeedbackMutationProps = {
-  payload: {
-    commenter: string;
-    stars: number;
-    comment: string;
-  };
+export type AddFeedbackMutationPayload = {
+  commenter: string;
+  stars: number;
+  comment: string;
 };
 
-export function useAddFeedbackMutation(recipeId: string) {
-  const queryClient = useQueryClient();
-  return useMutation({
-    mutationKey: ["POST", "recipes", recipeId, "feedbacks"],
-    mutationFn: ({ payload }: AddFeedbackMutationProps) => {
-      return fetchFromApi(
-        getEndpointConfig("post", "/api/recipes/{recipeId}/feedbacks"),
-        {
-          path: { recipeId },
-          body: { feedbackData: payload },
-          query: {
-            slowdown: slowDown_AddFeedback,
-          },
-        },
-      );
+export function saveFeedback(
+  recipeId: string,
+  payload: AddFeedbackMutationPayload,
+  slowdown = slowDown_AddFeedback,
+) {
+  return fetchFromApi(
+    getEndpointConfig("post", "/api/recipes/{recipeId}/feedbacks"),
+    {
+      path: { recipeId },
+      body: { feedbackData: payload },
+      query: {
+        slowdown,
+      },
     },
-    onSuccess: (newFeedback) => {
-      queryClient.setQueryData(
-        ["recipes", recipeId, "feedbacks"],
-        (oldData: unknown) => {
-          console.log("ON SUCCESS", newFeedback, oldData);
-          if (!oldData) {
-            return oldData;
-          }
-          const result = GetRecipeFeedbacksResponse.safeParse(oldData);
-          if (!result.success) {
-            console.log("Unknown query data in cache", result, oldData);
-            return oldData;
-          }
-
-          const oldFeedbacks = result.data;
-
-          const newData = {
-            ...oldFeedbacks,
-            feedbacks: [...oldFeedbacks.feedbacks, newFeedback.newFeedback],
-          } satisfies GetRecipeFeedbacksResponse;
-
-          console.log("NEW DATA", newData);
-          return newData;
-        },
-      );
-    },
-  });
+  );
 }
+//
+// export function useAddFeedbackMutation(recipeId: string) {
+//   const queryClient = useQueryClient();
+//   return useMutation({
+//     mutationKey: ["POST", "recipes", recipeId, "feedbacks"],
+//     mutationFn: ({ payload }: AddFeedbackMutationPayload) => {
+//
+//     },
+//     onSuccess: (newFeedback) => {
+//       queryClient.setQueryData(
+//         ["recipes", recipeId, "feedbacks"],
+//         (oldData: unknown) => {
+//           console.log("ON SUCCESS", newFeedback, oldData);
+//           if (!oldData) {
+//             return oldData;
+//           }
+//           const result = GetRecipeFeedbacksResponse.safeParse(oldData);
+//           if (!result.success) {
+//             console.log("Unknown query data in cache", result, oldData);
+//             return oldData;
+//           }
+//
+//           const oldFeedbacks = result.data;
+//
+//           const newData = {
+//             ...oldFeedbacks,
+//             feedbacks: [...oldFeedbacks.feedbacks, newFeedback.newFeedback],
+//           } satisfies GetRecipeFeedbacksResponse;
+//
+//           console.log("NEW DATA", newData);
+//           return newData;
+//         },
+//       );
+//     },
+//   });
+// }
 
 export function useSubscribeToNewsletterMutation() {
   return useMutation({

@@ -29,23 +29,15 @@ export function FeedbackForm({ recipeId }: AddFeedbackFormProps) {
   //    - der mutationKey ist hier nicht so wichtig, überleg' doch mal, ob du einen guten findest
   //    - in der mutationFn kannst Du die fertige Funktion 'saveFeedback' für das eigentliche speichern
   //      des Feedbacks verwenden
-  //    - Die 'saveFeedback'-Funktion benötigt als Paramter:
-  //       1. die recipeId (aus den Properties dieser Komponente)
-  //       2. die Formular-Daten ('formState').
   //
   //  2. Verwende die Mutation in 'handleSave', um die eingegebenen Daten zu speichern
 
-  const mutation = null; // TODO
-
-  const handleSave = async () => {
-    // TODO:
-    //
-    //   - Führe deine Mutation aus, um die Daten aus dem Formular ('formState') zu speichern
-    //
-    // TODO OPTIONAL:
-    //
-    //   - Wenn die Mutation erfolgreich war, kannst du den Formular-Inhalt löschen?
-  };
+  const mutation = useMutation({
+    mutationKey: ["POST", "recipes", recipeId, "feedback"],
+    mutationFn: (data: FormState) => {
+      return saveFeedback(recipeId, data);
+    },
+  });
 
   // TODO: (alles OPTIONAL):
   // Experimentiere mit den Status einer Mutation, z.B.:
@@ -63,17 +55,35 @@ export function FeedbackForm({ recipeId }: AddFeedbackFormProps) {
   // 4. Wenn nach der Ausführung einer Mutation eines der Eingabefelder verändert wird, kannst Du
   //    die Erfolg- oder Fehlermeldung (Schritt 2 bzw. 3) wieder entfernen?
 
-  const formDisabled = false;
-  const isSuccess = false;
-  const isError = false;
+  const formDisabled = mutation.isPending;
 
   const handleChange = (e: {
     target: { name: string; value: string | number };
   }) => {
+    mutation.reset();
     setFormState((f) => ({
       ...f,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleSave = async () => {
+    // TODO:
+    //
+    //   - Verwende deine Mutation, um die Daten aus dem Formular ('formState') zu speichern
+    //
+    // TODO OPTIONAL:
+    //
+    //   - Wenn die Mutation erfolgreich war, kannst du den Formular-Inhalt löschen?
+
+    const r = await mutation.mutateAsync(formState);
+
+    console.log("RESULT", r);
+    setFormState({
+      commenter: "",
+      stars: -1,
+      comment: "",
+    });
   };
 
   return (
@@ -144,14 +154,14 @@ export function FeedbackForm({ recipeId }: AddFeedbackFormProps) {
             </Button>
           </ButtonBar>
         </div>
-        {isSuccess && (
+        {mutation.isSuccess && (
           <div>
             <div className={"mt-4 font-medium text-green"}>
               Thanks for your submission!
             </div>
           </div>
         )}
-        {isError && (
+        {mutation.isError && (
           <div>
             <div className={"mt-4 font-medium text-red"}>Submission failed</div>
           </div>

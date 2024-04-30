@@ -280,10 +280,10 @@
 - Du kannst - ähnlich wie mit `useSelector` in Redux oder Zustand - auch einzelne Search-Parameter auswählen
 - Dann wird die Komponente nur neu gerendert, wenn sich diese Parameter geändert haben
 - Dazu übergibst Du an `useSearch` ein Option-Objekt mit einem `select`-Property
-- Das `select`-Property ist eine Methode, die die aktuellen Suchparameter übergeben bekommt und das die ausgewählten Parameter zurückliefern muss
+- Das `select`-Property ist eine Methode, die die aktuellen Suchparameter übergeben bekommt und das die ausgewählten Parameter als Objekt zurückliefern muss
 - Hier wird nur neu gerendert, wenn sich der `lastname` geändert hat:
 - ```typescript
-    const { lastname, order_by } = Route.useSearch({
+    const { lastname } = Route.useSearch({
       select: search => ({ lastname: s.lastname })
     });
   ```
