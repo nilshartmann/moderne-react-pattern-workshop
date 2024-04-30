@@ -11,27 +11,17 @@ import PaginationButton from "./PaginationButton.tsx";
 
 const recipeListRoute = getRouteApi("/recipes/");
 
-const empty: string[] = [];
-
 export default function RecipeListPageContent() {
-  const { page, orderBy, showOnlyIds } = recipeListRoute.useSearch({
+  const { page, orderBy } = recipeListRoute.useSearch({
     select: (s) => ({
       page: s.page || 0,
       orderBy: s.orderBy,
-      showOnlyIds: s.showOnlyBookmarked
-        ? s.bookmarkedRecipeIds || empty
-        : undefined,
     }),
   });
 
-  const totalPages = useGetTotalPageCountQuery(page, orderBy, showOnlyIds);
+  const totalPages = useGetTotalPageCountQuery(page, orderBy);
 
-  console.log(
-    "Rendering RecipeListPage with search Params",
-    page,
-    orderBy,
-    showOnlyIds,
-  );
+  console.log("Rendering RecipeListPage with search Params", page, orderBy);
 
   return (
     <div className={"bg-goldgray"}>
@@ -55,16 +45,13 @@ export default function RecipeListPageContent() {
 }
 
 function RecipeList() {
-  const { page, orderBy, showOnlyIds } = recipeListRoute.useSearch({
+  const { page, orderBy } = recipeListRoute.useSearch({
     select: (s) => ({
       page: s.page || 0,
       orderBy: s.orderBy,
-      showOnlyIds: s.showOnlyBookmarked
-        ? s.bookmarkedRecipeIds || empty
-        : undefined,
     }),
   });
-  const result = useGetAllRecipesQuery(page, orderBy, showOnlyIds);
+  const result = useGetAllRecipesQuery(page, orderBy);
   return (
     <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
       {result.data.content.map((recipe) => {

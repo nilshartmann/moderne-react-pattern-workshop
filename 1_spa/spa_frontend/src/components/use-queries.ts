@@ -59,9 +59,8 @@ export function useGetAllRecipesQuery(
 export function useGetTotalPageCountQuery(
   page: number,
   orderBy?: "time" | "likes",
-  ids?: string[],
 ) {
-  const result = useQuery(getAllRecipesQueryOptions(page, orderBy, ids));
+  const result = useQuery(getAllRecipesQueryOptions(page, orderBy));
   if (result.isSuccess) {
     return result.data.totalPages;
   }

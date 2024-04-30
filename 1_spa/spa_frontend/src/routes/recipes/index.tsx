@@ -1,20 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { z } from "zod";
 import RecipeListPageContent from "../../components/recipelistpage/RecipeListPageContent.tsx";
+import { RecipePageListParams } from "../../components/recipelistpage/RecipeListRouteParams.ts";
 
-const RecipePageListParams = z.object({
-  page: z.number().min(0).optional(),
-  orderBy: z.enum(["time", "likes"]).optional(),
-  bookmarkedRecipeIds: z.string().array().optional(),
-  showOnlyBookmarked: z.boolean().optional(),
-});
-type TRecipePageListParams = z.infer<typeof RecipePageListParams>;
-
-// todo:
-//  - add search params (copy from 70_RecipePageListParams.txt)
-//  - add validateSearch
+// TODO:
+//  - add validateSearch-Method that uses 'RecipePageListParams' to
+//     define and validate the search params for this route
+//
 export const Route = createFileRoute("/recipes/")({
   component: RecipeListPageContent,
-  validateSearch: (search): TRecipePageListParams =>
-    RecipePageListParams.parse(search),
+  validateSearch: (search) => RecipePageListParams.parse(search),
 });
