@@ -4,7 +4,7 @@ import ButtonBar from "../ButtonBar.tsx";
 import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { saveFeedback } from "../use-queries.ts";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import RatingInput from "./RatingInput.tsx";
 
 type AddFeedbackFormProps = {
@@ -31,12 +31,16 @@ export function FeedbackForm({ recipeId }: AddFeedbackFormProps) {
   //      des Feedbacks verwenden
   //
   //  2. Verwende die Mutation in 'handleSave', um die eingegebenen Daten zu speichern
-
+  const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationKey: ["POST", "recipes", recipeId, "feedback"],
     mutationFn: (data: FormState) => {
       return saveFeedback(recipeId, data);
     },
+    onSuccess: () =>
+      queryClient.invalidateQueries({
+        queryKey: ["recipes", recipeId, "feedbacks"],
+      }),
   });
 
   // TODO: (alles OPTIONAL):

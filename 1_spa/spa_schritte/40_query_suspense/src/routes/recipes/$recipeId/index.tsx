@@ -2,7 +2,6 @@ import { fetchRecipe } from "../../../components/use-queries.ts";
 import { createFileRoute } from "@tanstack/react-router";
 import RecipePageContent from "../../../components/recipepage/RecipePageContent.tsx";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import LoadingIndicator from "../../../components/LoadingIndicator.tsx";
 
 export const Route = createFileRoute("/recipes/$recipeId/")({
   component: RecipePage,
@@ -16,13 +15,5 @@ function RecipePage() {
     queryFn: () => fetchRecipe(recipeId),
   });
 
-  if (result.isSuccess) {
-    return <RecipePageContent recipe={result.data.recipe} />;
-  }
-
-  if (result.isLoading) {
-    return <LoadingIndicator />;
-  }
-
-  return <div>There was an error.</div>;
+  return <RecipePageContent recipe={result.data.recipe} />;
 }

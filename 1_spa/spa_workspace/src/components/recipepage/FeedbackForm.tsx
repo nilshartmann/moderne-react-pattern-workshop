@@ -29,9 +29,18 @@ export function FeedbackForm({ recipeId }: AddFeedbackFormProps) {
   //    - der mutationKey ist hier nicht so wichtig, überleg' doch mal, ob du einen guten findest
   //    - in der mutationFn kannst Du die fertige Funktion 'saveFeedback' für das eigentliche speichern
   //      des Feedbacks verwenden
-  //    - Die 'saveFeedback'-Funktion benötigt als Paramter:
-  //       1. die recipeId (aus den Properties dieser Komponente)
-  //       2. die Formular-Daten ('formState').
+  //      - Die 'saveFeedback'-Funktion benötigt als Paramter:
+  //         1. die recipeId (aus den Properties dieser Komponente)
+  //         2. die Formular-Daten ('formState').
+  //    - in der 'onSuccess'-Funktion musst den Cache mit den bereits geladenen Feedbacks invalidieren
+  //      - Dazu musst Du dir mit 'useQueryClient' eine Instanz des zentralen QueryClient-Objektes holen
+  //      - Darauf kannst Du dann invalidateQuery aufrufen:
+  //               onSuccess: () =>
+  //                  queryClient.invalidateQueries({
+  //                    queryKey: ["recipes", recipeId, "feedbacks"],
+  //                  }),
+  //
+  //
   //
   //  2. Verwende die Mutation in 'handleSave', um die eingegebenen Daten zu speichern
 

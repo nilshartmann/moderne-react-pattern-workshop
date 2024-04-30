@@ -13,9 +13,7 @@ export function RecipesPageLayout({ children }: RecipesPageLayoutProps) {
       <RecipesHeader>
         <Timer />
       </RecipesHeader>
-      <main className={"flex-grow "}>
-        <Suspense fallback={<GlobalLoadingIndicator />}>{children}</Suspense>
-      </main>
+      <main className={"flex-grow "}>{children}</main>
     </>
   );
 }

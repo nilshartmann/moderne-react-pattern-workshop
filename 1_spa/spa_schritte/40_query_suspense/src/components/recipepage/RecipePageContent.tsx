@@ -2,6 +2,8 @@ import { useRecipifyWindowTitle } from "../useRecipifyWindowTitle.tsx";
 import { RecipeBanner } from "./RecipeBanner.tsx";
 import { CookingTime } from "./CookingTime.tsx";
 import { Instructions } from "./Instructions.tsx";
+import { Suspense } from "react";
+import LoadingIndicator from "../LoadingIndicator.tsx";
 import { FeedbackForm } from "./FeedbackForm.tsx";
 import { H2 } from "../Heading.tsx";
 import { Sidebar } from "../Sidebar.tsx";
@@ -31,21 +33,13 @@ export default function RecipePageContent({ recipe }: RecipePageContentProps) {
         <div className={"md:w-1/3"}>
           <Sidebar>
             <H2>Feedback</H2>
-
-            {/*
-               TODO
-
-               - Kommentiere die FeedbackListLoader-Komponente ein
-               - Kannst Du die Suspense-Grenzen so ziehen, dass NICHT auf den FeedbackListLoader gewartet wird
-               - das Rezept soll also in jedem Fall angezeigt werden, auch wenn der FeedbackListLoader
-                 seine Daten noch nicht gelesen hat
-               - Du kannst zum testen beide Queries künstlich verlangsamen:
-                  - dazu in der demo-config.tsx-Datei die beiden Konstanten auf einen Delay (in ms) setzen:
-                    - slowDown_GetRecipe  (für den Rezept-Query)
-                    - slowDown_GetFeedbacks  (für das Feedback)
-            */}
-
-            {/*<FeedbackListLoader recipeId={recipe.id} />*/}
+            <Suspense
+              fallback={
+                <LoadingIndicator>Loading feedback...</LoadingIndicator>
+              }
+            >
+              <FeedbackListLoader recipeId={recipe.id} />
+            </Suspense>
             <FeedbackForm recipeId={recipe.id} />
           </Sidebar>
         </div>
