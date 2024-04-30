@@ -25,7 +25,7 @@ export default async function RecipeListPage({
 
   return (
     <div className={"bg-goldgray"}>
-      <div className={"container mx-auto pb-16 pt-16"}>
+      <div className={"container mx-auto space-y-8 pb-8 pt-8"}>
         <RecipeListNavBar />
 
         <RecipeList recipesPromise={result} />

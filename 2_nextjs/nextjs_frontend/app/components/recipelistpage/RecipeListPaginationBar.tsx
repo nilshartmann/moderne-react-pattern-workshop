@@ -19,7 +19,7 @@ export default function RecipeListPaginationBar({
   const currentPage = params.page || 0;
 
   return (
-    <div className={"mt-8 flex justify-center"}>
+    <div className={"flex justify-center"}>
       <PaginationBar
         totalPagesPromise={totalPagesPromise}
         currentPage={currentPage}
