@@ -1,4 +1,5 @@
 # TanStack Router
+<!-- .slide: id="t-tanstack-router" -->
 ---
 ## TanStack Router
 
@@ -190,9 +191,46 @@
   ```
 - Auch diese Verwendung ist hier typsicher 
   - Es gibt einen Fehler wenn du `params` nicht angibst (oder kein `userId` darin)
-  
 ---
-### Search Params
+### Übung: Routing mit TS Router
+
+---
+### Übung: Vorbereitung #1
+
+- **Klonen des Repositories**
+- Kurze Vorstellung des Repositories von mir
+- Bitte klonen: https://github.com/nilshartmann/moderne-react-pattern-workshop
+- In der [README.md-Datei](https://github.com/nilshartmann/nextjs-workshop/blob/main/README.md) findet ihr Hinweise zur Installation des Workspaces
+  - Es reicht für diesen Teil, wenn ihr **das Backend** und die **SPA-Anwendung (Workspace)** installiert bzw. startet 
+- **Arbeitsverzeichnis**: Wir arbeiten ausschliesslich im Verzeichnis `1_spa/spa_workspace`
+- ⚠️ Am besten nur das `1_spa/spa_workspace`-Verzeichnis in der IDE oder im Editor öffnen
+
+---
+### Übung: Routing mit TS Router
+
+- Lege die Route für `/recipes` an.
+  - Als Komponente kannst Du dort die fertige Komponente `RecipeListPageContent` angeben
+  - Füge in der (fertigen) `LandingPage.tsx`-Komponente einen `Link` auf die recipes-Route hinzu
+    - Du findest in der Datei ein entsprechendes TODO
+- Lege die Route zur Einzeldarstellung eines Rezeptes an
+  - Die Pfade im Browser lauten `/recipes/Id-1`, `/recipes/ID-2`, ...
+  - Du brauchst also ein variables Segment mit der `recipeId`
+  - Die Komponente für die Route kann eine "Hello-World"-Komponente sein
+  - Sie soll mit `useParams` die `recipeId` abfragen und die `recipeId`-anzeigen
+- Für in der `RecipeCard`-Komponente einen Link zur Einzeldarstellung hinzu
+  - In `RecipeCard.tsx` stehen entsprechende TODOs
+- **Optional**: Kannst Du ein Layout für alle Routen in `/recipes` erzeugen?
+  - Du kannst dafür die `RecipesPageLayout`-Komponente verwenden oder Du denkst was einfaches selber aus
+- Eine Lösung findest Du in `spa_schritte/10_router_routing`
+
+---
+### Exkurs: zod
+
+<!-- .slide: data-markdown="zod.md" -->
+
+---
+### TanStack Router
+## Search Params
 
 - TanStack Router bietet flexible und typsichere Wege um mit Search Parametern in der URL zu arbeiten
   - (alles hinter dem `?` in der URL: `/users?order_by=age&lastname=mueller`)
@@ -236,7 +274,7 @@
     //   order_by ist undefined oder "age" oder "name"  
   ```
 ---
-### Ausgewählte Search Parameter
+### Ausgewählte Search-Parameter
 - Eine Komponente, die `useSearch` verwendet, wird automatisch neu gerendert, wenn sich die Search Parameter ändern
   - ähnlich wie bei `useState`
 - Du kannst - ähnlich wie mit `useSelector` in Redux oder Zustand - auch einzelne Search-Parameter auswählen
@@ -249,3 +287,17 @@
       select: search => ({ lastname: s.lastname })
     });
   ```
+---
+### Übung: Search-Parameter
+- **Definiere für die Rezeptliste den `orderBy`-Search-Parameter**
+  - Das `zod`-Objekt mit den Parametern ist bereits fertig: `RecipePageListParams` in `RecipeListRouteParams.ts`
+  - Du musst in `routes/recipes/index.tsx` nur noch die `Route.validateSearch`-Methode hinzufügen
+  - Diese soll `ReceipPageListParams.parse` verwenden, um sicherzustellen, dass die Search-Parameter korrekt sind
+- In `OrderButton.tsx` musst Du mit dem `orderBy`-Search-Parameter arbeiten:
+  - Lies den aktuellen `orderBy`-Search-Parameter aus
+  - Baue einen Link mit einem neuen `orderBy`-Parameter
+  - Siehe Todos in `OrderButton.tsx`
+- Danach sollte Sortierung und Paginierung funktionieren (s. `RecipeListPageContent.tsx`)
+- Mögliche Lösung: `spa_schritte/20_router_search_params`
+---
+### 

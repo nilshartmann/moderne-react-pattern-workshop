@@ -1,9 +1,8 @@
 ## März 2023...
-
+<!-- .slide: id="t-nextjs" -->
 ## <img src="slides/images/go-with-fullstack-framework.png">
 
 ---
-
 ## React empfiehlt "Fullstack-Framework"
 
 <img src="slides/images/can-i-use-react-without-a-framework.png" style="height:900px">
@@ -116,7 +115,6 @@
   ```
 
 ---
-
 ### Übung: Vorbereitung #1
 
 - **Klonen des Repositories**

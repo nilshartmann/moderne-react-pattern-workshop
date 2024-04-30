@@ -1,79 +1,29 @@
-import { getRouteApi, MatchRoute } from "@tanstack/react-router";
-import {
-  useGetAllRecipesQuery,
-  useGetTotalPageCountQuery,
-} from "../use-queries.ts";
-import PaginationBar from "../PaginationBar.tsx";
-import { LoadingRecipeCard } from "./LoadingRecipeCard.tsx";
-import { RecipeCard } from "./RecipeCard.tsx";
 import RecipeListNavBar from "./RecipeListNavBar.tsx";
-import PaginationButton from "./PaginationButton.tsx";
-
-const recipeListRoute = getRouteApi("/recipes/");
+import RecipeListPaginationBar from "./RecipeListPaginationBar.tsx";
+import RecipeList from "./RecipeList.tsx";
 
 export default function RecipeListPageContent() {
-  const { page, orderBy } = recipeListRoute.useSearch({
-    select: (s) => ({
-      page: s.page || 0,
-      orderBy: s.orderBy,
-    }),
-  });
-
-  const totalPages = useGetTotalPageCountQuery(page, orderBy);
-
-  console.log("Rendering RecipeListPage with search Params", page, orderBy);
+  // TODO:
+  //
+  //   Kommentiere 'RecipeListNavBar' und 'RecipeListPaginationBar' ein,
+  //     wenn du den OrderButton vervollständigt hast
+  //   - Wenn der OrderButton implementiert ist, kannst Du nun
+  //     die Sortierung ändern und (auf der Seite unten) eine andere Seite
+  //     (1, 2, 3, ...) anspringen
+  //   - Wenn alles richtig ist, sollte die Sortierreihenfolge erhalten bleiben,
+  //      wenn sich der 'page'-Search-Parameter beim Seitenwechsel ändert
+  //      (beim Wechsel von Seite 1 auf 2 der Liste soll die Sortierung natürlich
+  //       erhalten bleiben)
 
   return (
     <div className={"bg-goldgray"}>
-      <div className={"container mx-auto pb-16 pt-16"}>
-        <RecipeListNavBar />
+      <div className={"container mx-auto space-y-8 pb-8 pt-8"}>
+        {/*<RecipeListNavBar />*/}
 
         <RecipeList />
 
-        <div className={"mt-8 flex justify-center"}>
-          <PaginationBar
-            totalPages={totalPages === -1 ? 10 : totalPages}
-            currentPage={page}
-            disabled={totalPages === -1}
-          >
-            {(btn) => <PaginationButton btn={btn} />}
-          </PaginationBar>
-        </div>
+        {/*<RecipeListPaginationBar />*/}
       </div>
-    </div>
-  );
-}
-
-function RecipeList() {
-  const { page, orderBy } = recipeListRoute.useSearch({
-    select: (s) => ({
-      page: s.page || 0,
-      orderBy: s.orderBy,
-    }),
-  });
-  const result = useGetAllRecipesQuery(page, orderBy);
-  return (
-    <div className="mt-8 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-      {result.data.content.map((recipe) => {
-        return (
-          <div
-            key={recipe.id}
-            className={
-              "h-full transform rounded border border-gray-200 bg-white p-4 shadow-lg transition-all duration-500 ease-in-out hover:drop-shadow-2xl "
-            }
-          >
-            <MatchRoute to={"/"} params={{ recipeId: recipe.id }} pending>
-              {(match) => {
-                return match ? (
-                  <LoadingRecipeCard />
-                ) : (
-                  <RecipeCard recipe={recipe} />
-                );
-              }}
-            </MatchRoute>
-          </div>
-        );
-      })}
     </div>
   );
 }
