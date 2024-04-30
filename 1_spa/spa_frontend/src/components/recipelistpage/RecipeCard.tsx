@@ -1,10 +1,7 @@
 import { RecipeDto } from "../api-types.ts";
 import { H1 } from "../Heading.tsx";
 import { Link } from "@tanstack/react-router";
-import { RatingStars } from "../RatingStars.tsx";
 import { memo } from "react";
-import { BookmarkButton } from "./BookmarkButton.tsx";
-import { useGetRecipeIngredientsQuery } from "../use-queries.ts";
 import { RecipeCategories } from "../RecipeCategories.tsx";
 
 type RecipeCardProps = {

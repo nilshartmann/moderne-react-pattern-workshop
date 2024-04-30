@@ -1,7 +1,4 @@
-import {
-  fetchRecipe,
-  useGetRecipeSuspenseQuery,
-} from "../../../components/use-queries.ts";
+import { useGetRecipeSuspenseQuery } from "../../../components/use-queries.ts";
 import { createFileRoute } from "@tanstack/react-router";
 import RecipePageContent from "../../../components/recipepage/RecipePageContent.tsx";
 

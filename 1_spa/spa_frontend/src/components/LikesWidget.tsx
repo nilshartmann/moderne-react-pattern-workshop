@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 import { RecipeDto } from "./api-types.ts";
 import { useLikeMutation } from "./use-queries.ts";

@@ -25,7 +25,7 @@ import {
 
 const getAllRecipesQueryOptions = (
   page: number,
-  orderBy?: "time" | "rating",
+  orderBy?: "time" | "likes",
   ids?: string[],
 ) => {
   const idsString = ids?.join(",");
@@ -48,7 +48,7 @@ const getAllRecipesQueryOptions = (
 
 export function useGetAllRecipesQuery(
   page: number,
-  orderBy?: "time" | "rating",
+  orderBy?: "time" | "likes",
   ids?: string[],
 ): UseSuspenseQueryResult<PageResponseRecipeDto> {
   return useSuspenseQuery<PageResponseRecipeDto>(
@@ -58,7 +58,7 @@ export function useGetAllRecipesQuery(
 
 export function useGetTotalPageCountQuery(
   page: number,
-  orderBy?: "time" | "rating",
+  orderBy?: "time" | "likes",
   ids?: string[],
 ) {
   const result = useQuery(getAllRecipesQueryOptions(page, orderBy, ids));

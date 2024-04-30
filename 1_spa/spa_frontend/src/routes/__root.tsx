@@ -1,7 +1,5 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { GlobalPageLayout } from "../components/layout/GlobalPageLayout.tsx";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 
 export const Route = createRootRoute({
   component: RootRoute,
