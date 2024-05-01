@@ -17,11 +17,7 @@
 ## TanStack Query
 ### Schritt-für-Schritt: Laden von Daten mit "TanStack Query"
 
-* 👉 `PostListPage`
-* 👉 später: `PostEditorPage`
-* 👉 später: Custom Hooks
-* 👉 später: zod
-* 👉 Arbeiten in `advanced/workspace`
+* 👉 `$recipeId`-Route
 
 
 ---
@@ -112,22 +108,50 @@
 
   function ReipcePage({recipeId}) {
 
-    // Für jeden Aufruf mit einer neuen recipeId
-    //  wird das Ergebnis separat in den Cache gelegt
     const result = useQuery({
-      queryKey: ['recipes', recipeId], 
+  
+      // Für jeden Aufruf mit einer neuen recipeId
+      //  wird das Ergebnis separat in den Cache gelegt
+      queryKey: ['recipes', recipeId],
+   
       queryFn: () => fetchRecipe(recipeId)
     });
 
     // ...
   }
   ```
-* Wenn ein Query mit denselben Query Keys in mehr als einer Komponente ausgeführt wird
-* stellt TanStack Query sicher, dass der Query nur einmal ausgeführt wird
-* wenn sich das Ergebnis ändert, werden alle Komponenten, die den Query verwenden,
-  automatisch aus dem Cache aktualisiert
-* 👉 dieses Verhalten sehen wir uns später noch an
-
+---
+### TanStack Query für globalen State
+* Wenn ein Query mit demselben Query Key in mehr als einer Komponente ausgeführt wird:
+  * stellt TanStack Query sicher, dass der Query nur einmal ausgeführt wird
+  * wenn sich das Ergebnis ändert, werden alle Komponenten, die den Query verwenden,
+    automatisch aus dem Cache aktualisiert
+* Ihr könnt also gefahrlos denselben Query (= selber Query Key) in diversen Komponenten verwenden
+* Dadurch ist TS Query eine Art globale Statemanagement Library für serverseitige Daten
+* ```tsx
+  function useUser() {
+    return useQuery(
+      { queryKey: [ "current-user" ], 
+      queryFn: () => {/*...*/ }
+     });
+  }
+  ```
+* ```tsx
+  
+  function UserProfile() {
+    const user = useUser();
+  
+    // ...
+  }
+  ```
+* ```tsx
+  
+  function UserAvatar() {
+    const user = useUser();
+  
+    // ...
+  }
+  ```
 ---
 ## Übung: Daten lesen mit TanStack Query
 
@@ -139,11 +163,6 @@
 ---
 ## Validieren von Daten
 
----
-### Validieren von Daten
-* <!-- .element: class="demo" --> Außerhalb des Projektes, in einer TypeScript-Datei:
-* <!-- .element: class="demo" --> fetch-Ergebnis ist any in TypeScript
-* <!-- .element: class="demo" --> zod
 ---
 ### Validieren von Daten
 <!-- .slide: class="left" -->
@@ -170,12 +189,20 @@
     const data = await response.json();
     //      ^-- data ist 'any'
     const recipe = Recipe.parse(data);
-  //        ^-- recipe is Recipe 
+    //        ^-- recipe is Recipe 
     return data;
   }
   ```
 * Wenn `parse` das Objekt *nicht* erfolgreich validieren kann, wird ein Fehler geworfen
 * Das führt in TanStack Query automatisch dazu, dass der Fehlerfall aktiviert wird (`isError === true`)
+---
+### Generieren von TypeScript Typen
+* In der Beispiel-Anwendung werden die Typen für die API-Zugriffe aus einer OpenAPI-Beschreibung generiert:
+  * Das Backend erzeugt beim Starten eine aktuelle OpenAPI-Beschreibung aus dem Backend-Code (hier: Java)
+  * Mit dem Projekt [typed-openapi](https://github.com/astahmer/typed-openapi) werden aus der OpenAPI-Beschreibung Zod-Typen erzeugt
+* Der Zugriff auf die API ist damit "Ende-zu-Ende-typsicher"
+* Beispiele:
+  * siehe `use-queries.ts` und `getEndpointConfig` (`fetch-from-api.ts`)
 ---
 ## Suspense
 <!-- .slide: id="t-suspense" -->

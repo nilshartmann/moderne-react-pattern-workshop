@@ -31,7 +31,7 @@ export function OrderButton({ children, orderBy }: OrderButtonProps) {
                OrderButton-Komponente übergeben wurde)
            - Danach kannst Du in 'RecipeListPageContent.tsx' die beiden
               Komponenten 'RecipeListNavBar' und 'RecipeListPaginationBar' einkommentieren (siehe TODO dort),
-              um deinen Code auszuporbieren
+              um deinen Code auszuprobieren
          */}
       <Link to={"/recipes"} disabled={checked}>
         <CheckLabel checked={checked}>{children}</CheckLabel>

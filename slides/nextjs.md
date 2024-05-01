@@ -2,12 +2,15 @@
 <!-- .slide: id="t-nextjs" -->
 ## <img src="slides/images/go-with-fullstack-framework.png">
 
----
-## React empfiehlt "Fullstack-Framework"
+[//]: # (---)
 
-<img src="slides/images/can-i-use-react-without-a-framework.png" style="height:900px">
+[//]: # (## React empfiehlt "Fullstack-Framework")
 
-(https://react.dev/learn/start-a-new-react-project#can-i-use-react-without-a-framework)
+[//]: # ()
+[//]: # (<img src="slides/images/can-i-use-react-without-a-framework.png" style="height:900px">)
+
+[//]: # ()
+[//]: # (&#40;https://react.dev/learn/start-a-new-react-project#can-i-use-react-without-a-framework&#41;)
 
 ---
 
@@ -21,15 +24,22 @@
 
 ---
 
-## Next.js
+[//]: # (## Next.js)
 
-- https://nextjs.org/
-- Features:
-  - Unterstützung für React Server Components
-  - SSR
-  - Static Rendering
-  - Datei-basiertes Routing
-  - Caching und Preloading
+[//]: # ()
+[//]: # (- https://nextjs.org/)
+
+[//]: # (- Features:)
+
+[//]: # (  - Unterstützung für React Server Components)
+
+[//]: # (  - SSR)
+
+[//]: # (  - Static Rendering)
+
+[//]: # (  - Datei-basiertes Routing)
+
+[//]: # (  - Caching und Preloading)
 
 ---
 
@@ -110,20 +120,16 @@
   import Link from "next/link";
 
   function RecipeLink( { recipeId } ) {
-  return <Link href={`${/recipes/${receipeId}`}>Show recipe</Link>;
+    return <Link href={`${/recipes/${receipeId}`}>Show recipe</Link>;
   }
   ```
 
----
-### Übung: Vorbereitung #1
+### Übung: Vorbereitung
 
-- **Klonen des Repositories**
-- Bitte klonen: https://github.com/nilshartmann/nextjs-workshop
-- In der [README.md-Datei](https://github.com/nilshartmann/nextjs-workshop/blob/main/README.md) findet ihr Hinweise zur Installation des Workspaces
-- **Arbeitsverzeichnis**: Wir arbeiten ausschliesslich im Verzeichnis `workspace`
-- ⚠️ Am besten nur das `workspace`-Verzeichnis in der IDE oder im Editor öffnen
-
----
+- Der Next.js-Workspace befindet sich in `2_nextjs/nextjs_workspace`
+- ⚠️ Bitte dieses Verzeichnis in IDE/Editor öffnen
+- In diesem Verzeichnis das Script `dev` ausführen
+- Die Anwendung sollte dann auf http://localhost:8100 laufen
 
 ### Warnung: Next.js Caching
 
@@ -131,7 +137,7 @@
 - Wenn ihr "komisches" Verhalten feststellt, könnt ihr probieren:
   - Im Browser neuen Tab öffnen, oder in den Dev Tools Caching ausschalten oder Inkognito Modus verwenden
   - "Hard Refresh" im Browser machen
-  - Verzeichnis `workspace/.next` löschen und Next.js neu starten
+  - Verzeichnis `nextjs_workspace/.next` löschen und Next.js neu starten
 
 ---
 
@@ -141,10 +147,8 @@
 
 1. Baue die "Landing Page" für die Root-Route (`/`) im `app`-Verzeichnis
 
-   - Die Seite muss nicht hübsch sein
-   - heute gilt: wir machen Bauhaus-Style, "form follows function" 😉
-   - unter `app/components` findest Du aber ein paar Basis-Komponenten (Button, Überschriften etc.), die Du benutzen kannst, wenn Du möchtest
-   - Die Komponente soll einen Link auf `/recipes` rendern
+   - Die Seite muss nicht hübsch sein, "Hello World" reicht
+   - wichtig: die Komponente soll einen Link auf `/recipes` rendern
 
 2. Lege die Komponente für die Route `/recipes` an
    - Es reicht, wenn diese Komponente erstmal nur "Hello World" ausgibt.
@@ -154,80 +158,10 @@
    - Füge ein `console.log`-Statement in deine Komponenten hinzu, das beim Rendern die aktuelle Uhrzeit ausgibt
    - wo und wann wird das Log-Statement ausgegeben?
 
-4. **Optional**: Kannst Du eine `layout`-Komponente bauen, die für Routen innerhalb `/recipes` gilt, aber nicht für die Root-Route (`/`)
-   - Du kannst dir selbst ein einfaches Layout ausdenken, oder diese Komponente verwenden: `RecipesPageLayout`
+- Mögliche Lösung findest Du in `nextjs_schritte/10_routen_und_links`
 
-- Mögliche Lösung findest Du in `schritte/10_routen_und_links`
 
 ---
-
-# Recipify
-
-## Was macht die Beispiel-Anwendung aus?
-
-- Viel statischer Content
-- Viel JavaScript
-- ...gleichzeitig wenig Interaktion
-
----
-
-## Anforderung
-
-- Die Seiten sollen möglichst schnell für den Benutzer **sichtbar** und **bedienbar** sein
-
----
-
-## Mögliche Probleme
-
-- Viel JavaScript-Code, der...
-  - ...vom Browser geladen werden muss
-  - ...interpretiert und ausgeführt werden muss
-  - ...mit jeder Komponente mehr wird
-
----
-
-## Serverseitiges Rendern (SSR)
-
-### Der Klassiker
-
-1. Bei SSR wird die Anwendung auf dem Server ausgeführt
-
-2. Der Server schickt **fertiges HTML** zum Client
-
-- Gut: Client braucht HTML nur anzuzeigen (schnell!)
-- Gut: Kein JavaScript für die Darstellung notwendig
-
-3. Ebenfalls wird der **komplette Anwendungscode** zum Client geschickt
-
-- 😢 Auch für statische Komponenten
-- 😢 Bandbreite! Performance!
-
-- 👉 SSR löst Probleme... aber nicht alle
-
----
-
-## "Fullstack Architektur-Vision"
-
-- [https://react.dev/learn/start-a-new-react-project#which-features-make-up-the-react-teams-full-stack-architecture-vision](https://react.dev/learn/start-a-new-react-project#which-features-make-up-the-react-teams-full-stack-architecture-vision)
-
----
-
-## "Fullstack Architektur-Vision"
-
-### <!-- .element: class="fragment" data-fragment-index="0" -->React Server Components (RSC)
-
-- <!-- .element: class="fragment" data-fragment-index="1" -->Komponenten, die auf dem Server, Client und im Build gerendert werden können
-- <!-- .element: class="fragment" data-fragment-index="2" -->Data Fetching "integriert"
-
-### <!-- .element: class="fragment" data-fragment-index="3" --> Suspense
-
-- Platzhalter für "langsame" Teile einer Seite
-- Mit Streaming können diese Teile einer Seite "nachgeliefert" werden, sobald sie gerendert sind
-
----
-
-## Zero-Bundle-Size
-
 # React Server Components
 
 ---
@@ -242,7 +176,6 @@
 - React bzw. JavaScript muss also im Client laufen
 
 ---
-
 ### Arten von Komponenten
 
 - **Client-Komponenten** (wie bisher)
@@ -384,128 +317,6 @@
 
 ---
 
-### Rendering Modes in Next.js
-
-<!-- .element: class="demo" -->nach Einzel-Seite
-
-- Routen können **statisch** oder **dynamisch** gerendert werden:
-  - Wenn Next.js alle Informationen zu einer Route schon zur Buildzeit hat, wird es eine **statische** Route.
-  - Dynamische Routen werden bei jedem Request neu erzeugt (z.B. bei variablen Pfad-Segmenten)
-  - Das lässt sich in beiden Fällen (zumindest teilweise) pro Route auch ändern
-
----
-
-## Exkurs: zod
-
-- Kennt ihr zod? https://zod.dev/ 🤔
-
----
-
-# Zod
-
----
-
-- "TypeScript-first schema validation with static type inference"
-- https://zod.dev/
-
----
-
-### TypeScript vs. JavaScript
-
-<!-- .slide: class="left" -->
-
-- Im folgenden ist mit **TypeScript** das Typsystem von TypeScript gemeint, das nur zur Buildzeit vorhanden ist
-- Mit **JavaScript** ist der Code gemeint, den wir in JavaScript oder TypeScript schreiben, und der dann auch im Browser (als JavaScript) ausgeführt wird
-
-* ```typescript
-  // "TypeScript": zur Laufzeit weg
-  type User = { lastname: string; firstname?: string };
-
-  // "JavaScript"
-  function login() {
-    return { lastname: "Meier", firstname: null };
-  }
-  ```
-
----
-
-### Problem: TypeScript-Typen sind zur Laufzeit weg
-
-- Wenn man ein Objekt beschrieben hat, kann man das zur **Laufzeit** nicht mit TypeScript überprüfen
-  - Hat uns der Server zur Laufzeit wirklich ein Objekt geschickt, das aussieht wie ein `User`?
-- Für "echte" Validierungen sind TypeScript-Typen auch zu ungenau:
-  - keine Wertebegrenzungen (bzw. nur sehr eingeschränkt)
-  - Längen-Begrenzungen gibt es nicht
-- Wenn man Validierung zur Laufzeit benötigt, kommt man um (JavaScript-)Code, der zur Laufzeit ausgeführt wird, nicht drumherum
-- Also müssen die Validierungsregeln in JavaScript beschrieben werden.
-- Dann sind diese aber redundant: in TypeScript (statische Typbeschreibung), in JavaScript zur Validierung während der Laufzeit
-
----
-
-### Zod: Typen in JavaScript beschreiben und TS-Typen ableiten
-
-- Aus dieser Not macht Zod eine Tugend:
-- Wir beschreiben die Objekte in JavaScript...
-- ...und können von der Beschreibung TypeScript Typen ableiten lassen
-- ```typescript
-  import { z } from "zod";
-
-  const User = z.object({
-    firstName: z.string(),
-    lastName: z.string().nullish(),
-  });
-
-  type IUser = z.infer<typeof User>;
-  ```
-
-- Mit dem `User`-Objekt von zod können wir nun zur Laufzeit ein Objekt validieren
-- Wenn das Objekt dem User-Schema entspricht, ist alles gut, sonst gibt es einen Fehler
-- ```typescript
-  const mayOrMayNotBeAUser = readUserFromServer();
-
-  const user = User.parse(mayOrMayNotBeAUser);
-  ```
-
-- Die `parse`-Funktion fungiert gleichzeit als **Type Predicate Function**, so dass TypeScript
-  danach auch weiß, wie `user` aussieht, unabhängig davon, was in `parse` übergeben wurde
-- ```typescript
-  declare function readUserFromServer(): unknown;
-
-  const user = User.parse(readUserFromServer());
-  //     ^? --> IUser
-  ```
-
----
-
-### Komplexe Regeln
-
-- Mit Zod kann man die typischen Datentypen verwenden (Objekte, Arrays, string, number, boolean etc)
-- Auch aus TypeScript bekannte Möglichkeiten wie `unions`, `extends`, `omit` oder `brand-Types` werden unterstützt
-- Darüberhin kann man auch die gültigen Wertemengen und andere Constraints beschreiben
-- ```typescript
-  import { z } from "zod";
-
-  const User = z.object({
-    login: z.string().min(5),
-    email: z.string().email(),
-    status: z.string().emoji(), // 😊
-    age: z.number().min(18).max(123),
-  });
-  ```
-
-- Die `parse`-Funktion gibt dann detailierte Fehler, wenn ein überprüftes Objekt nicht diesen Regeln entspricht.
-- Das funktioniert mittlerweile auch für das Validieren von Formularen in [React Hook Form
-  ](https://react-hook-form.com/) mit dem [zod-Resolver](https://github.com/react-hook-form/resolvers#zod)
-
----
-
-### Zod und Next.js
-
-- Ob ihr Zod in eurer Anwendung einsetzt, bleibt natürlich euch überlassen
-- In der Beispiel-Anwendung wird Zod verwendet, um Daten, die von der Backend API gelesen wurden zu validieren
-
----
-
 ### Übung: Asynchrone Server Komponenten
 
 - **Baue die Komponente für die Rezept Übersicht (`/recipes`)**
@@ -514,11 +325,11 @@
   - Die Funktion zum Laden der Rezepte ist schon fertig: `fetchRecipes`
   - Die geladenen Rezepte kannst Du mit der ferigen Komponente `RecipeCard` rendern
 - Baue eine `loading`-Komponente, die angezeigt wird, während die Daten geladen werden
-  - Gib darin einfach "irgendwas" aus oder verwende die fertige Komponente `GlobalLodingIndicator`
+  - Gib darin einfach "irgendwas" aus oder verwende die fertige Komponente `GlobalLoadingIndicator`
   - Um die Komponente zu testen, kannst Du das Laden der Daten künstlich verzögern:
     - gehe dazu in `demo-config.ts` und setze `slowDown_GetRecipeList` z.B. auf `1600` (Verzögerung von 1,6 Sekunden)
-- Du findest Ausgangsmaterial mit weiteren Hinweisen in `schritte/20_async_rsc/ausgang`
-- Eine Lösung findest Du in `schritte/20_async_rsc/fertig`
+- Du findest Ausgangsmaterial mit weiteren Hinweisen in `nextjs_schritte/20_async_rsc/ausgang`
+- Eine Lösung findest Du in `nextjs_schritte/20_async_rsc/fertig`
 
 ---
 
@@ -606,7 +417,7 @@
 ---
 
 ### Übung: eine dynamische Route
-
+* <!-- .element: class="demo" --> Diese Übung eventuell raus
 - **Implementiere die Route zur Einzeldarstellung eines Rezepts**
 - Das Verzeichnis ist `app/recipes/[recipeId]`
 - Lies in der Komponente die `recipeId` aus dem `params`-Objekt das als `props` an die Komponente übergeben wird
@@ -622,6 +433,7 @@
 ## Suspense
 
 - Suspense unterbricht das Rendern, wenn in einer Komponente "etwas" fehlt
+- Das haben wir schon in Zusammenhang mit TanStack Query gesehen
 - "Etwas" ist im Fall von RSC ein Promise, das nicht aufgelöst ist
   - Am Beispiel der `loading`-Komponente haben wir das schon gesehen (dort aber abstrahiert von Next.js)
 - Dazu kann um eine Komponente die `Suspense`-Komponente von React gelegt werden
@@ -1167,7 +979,7 @@ Schöne neue Welt? 🤔
   - Weitere Todos findest Du in `recipe-actions.ts`
 - Ergänze dann die Komponente in `LikesWidget.tsx`. Hier musst Du nun deinen neue Server-Action-Funktion aufrufen.
   - Auch in dieser Datei findest du Todos
-- Fertige Lösung in: `schritte/60_actions`
+- Fertige Lösung in: `nextjs_schritte/60_actions`
 - **Optional**: Kannst Du die Ausführung der Server Action mit einer Transition ummanteln?
 
 ---
@@ -1208,11 +1020,7 @@ Schöne neue Welt? 🤔
     );
   }
   ```
+---
+### Formulare und Actions mit useActionState
 
-```
-
-```
-
-```
-
-```
+- 
