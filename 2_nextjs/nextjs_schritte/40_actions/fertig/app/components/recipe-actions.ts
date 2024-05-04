@@ -1,7 +1,9 @@
+"use server";
+
 import { revalidateTag } from "next/cache";
 import { saveLike } from "@/app/components/queries.ts";
 
-export function increaseLikes(recipeId: string) {
+export async function increaseLikes(recipeId: string) {
   // TODO:
   //
   // Implementiere die increaseLikes Server-Action-Funktion
@@ -12,9 +14,12 @@ export function increaseLikes(recipeId: string) {
   //   		- 'saveLike' liefert ein Promise mit einem Objekt zurück, das so aussieht:
   //         { newLikes: 213 }
   //   - Dieses Objekt kannst Du als Rückgabe-Wert für deine increaseLikes Server-Action-Funktion verwenden
+  const result = saveLike(recipeId);
 
-  //  Bitte die folgenden Zeilen unverändert am Ende der Funktion VOR DEM return-Statement stehen lassen
+  //  Bitte die folgenden Zeilen unverändert am Ende der Funktion stehen lassen
   //   - damit wird der Next.js-Cache geleert
   revalidateTag("recipes");
   revalidateTag(`recipes/${recipeId}`);
+
+  return result;
 }

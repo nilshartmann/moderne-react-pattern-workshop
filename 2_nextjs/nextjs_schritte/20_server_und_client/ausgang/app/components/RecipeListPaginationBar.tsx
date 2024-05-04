@@ -2,8 +2,6 @@ import PaginationBar from "@/app/components/PaginationBar.tsx";
 import { PageButton } from "@/app/components/Button.tsx";
 import Link from "next/link";
 import { buildUrl } from "@/app/components/material/build-url.ts";
-import { use } from "react";
-import { useSearchParams } from "next/navigation";
 
 type RecipeListPaginationBarProps = {
   pageCountPromise: Promise<{
@@ -12,13 +10,25 @@ type RecipeListPaginationBarProps = {
   params: Record<string, string>;
 };
 
-export default function RecipeListPaginationBar({
+export default async function RecipeListPaginationBar({
   pageCountPromise,
   params,
 }: RecipeListPaginationBarProps) {
+  console.log(
+    "Rendering RecipeListPaginationBar at ",
+    new Date().toLocaleTimeString(),
+  );
+
   // TODO:
-  //  Lies 'totalPages' aus dem übergebenen pageCountPromise
-  const totalPages = -1;
+  //  Die RecipeListPaginationBar-Komponente soll den Fenster/Tab-Titel verändertn
+  //    - Verwende dazu den useRecipifyWindowTitle-Hook
+  //      - Schreibe in den Titel "X of Y pages" o.ä. mit den Informationen
+  //        currentPage und totalPages
+  //  Dazu muss diese Komponente eine Client-Komponente werden!
+  //   - Was musst du alles umstellen?
+
+  const pageCount = await pageCountPromise;
+  const totalPages = pageCount.totalPages;
 
   const currentPage = parseInt(params.page || "0");
 

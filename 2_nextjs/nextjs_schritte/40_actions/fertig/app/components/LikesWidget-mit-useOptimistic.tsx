@@ -1,29 +1,30 @@
 "use client";
 import { RecipeDto } from "@/app/components/api-types.ts";
-import { useState } from "react";
+import { useActionState, useOptimistic, useState, useTransition } from "react";
 import { twMerge } from "tailwind-merge";
+import { increaseLikes } from "@/app/components/recipe-actions.ts";
+import { ErrorBoundary } from "next/dist/client/components/error-boundary";
 
 type LikesWidgetProps = {
   recipe: RecipeDto;
 };
 
 export function LikesWidget({ recipe }: LikesWidgetProps) {
+  const [isPending, startTransition] = useTransition();
   const [likes, setLikes] = useState(recipe.likes);
-
-  // todo:
-  //  - Wenn der Aufruf deiner Action funktioniert, kannst Du
-  //    eine Transition einfügen, so dass die 'isPending'-Information
-  //    über die Transition verwaltet wird?
-  // - Wenn auch die Transition funktioniert, kannst Du ein "optimistisches" Ergebnis
-  //    mit "useOptimistic" zurückliefern?
-  const isPending = false;
+  const [optimisticLikes, setOptimisticLikes] = useOptimistic(
+    likes,
+    (currentLikes, incrementBy: number) => {
+      return currentLikes + incrementBy;
+    },
+  );
 
   const handleIncreaseLikes = () => {
-    // todo: rufe die increaseLikes Server-Action-Funktion auf
-    //       die Funktion liefert ein Objekt zurück, in dem die 'newLikes'
-    //       vorhanden sind.
-    //       Setze die newLikes in den State
-    //
+    startTransition(async () => {
+      setOptimisticLikes(1);
+      const result = await increaseLikes(recipe.id);
+      setLikes(result.newLikes);
+    });
   };
 
   return (
@@ -36,7 +37,7 @@ export function LikesWidget({ recipe }: LikesWidgetProps) {
       )}
     >
       <i className="fa-regular fa-heart mr-2"></i>
-      {likes}
+      {optimisticLikes}
     </p>
   );
 }

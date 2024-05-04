@@ -1,5 +1,5 @@
 {
-  "name": "frontend_nextjs",
+  "name": "nextjs_frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -18,7 +18,7 @@
   "dependencies": {
     "bootstrap-icons": "^1.11.2",
     "date-fns": "^3.0.6",
-    "next": "14.2.2",
+    "next": "14.2.3",
     "react": "^18",
     "react-dom": "^18",
     "tailwind-merge": "^2.2.0",

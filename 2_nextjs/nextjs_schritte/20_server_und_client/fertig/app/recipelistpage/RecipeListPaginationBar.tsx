@@ -1,9 +1,10 @@
+"use client";
 import PaginationBar from "@/app/components/PaginationBar.tsx";
 import { PageButton } from "@/app/components/Button.tsx";
 import Link from "next/link";
 import { buildUrl } from "@/app/components/material/build-url.ts";
+import { useRecipifyWindowTitle } from "@/app/components/useRecipifyWindowTitle.tsx";
 import { use } from "react";
-import { useSearchParams } from "next/navigation";
 
 type RecipeListPaginationBarProps = {
   pageCountPromise: Promise<{
@@ -16,11 +17,17 @@ export default function RecipeListPaginationBar({
   pageCountPromise,
   params,
 }: RecipeListPaginationBarProps) {
-  // TODO:
-  //  Lies 'totalPages' aus dem übergebenen pageCountPromise
-  const totalPages = -1;
+  console.log(
+    "Rendering RecipeListPaginationBar at ",
+    new Date().toLocaleTimeString(),
+  );
+
+  const pageCount = use(pageCountPromise);
+  const totalPages = pageCount.totalPages;
 
   const currentPage = parseInt(params.page || "0");
+
+  useRecipifyWindowTitle(`Page ${currentPage} of ${totalPages}`);
 
   return (
     <div className={"mt-8 flex justify-center"}>

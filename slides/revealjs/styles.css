@@ -229,7 +229,11 @@ li.note:before {
   content: "👉 ";
 }
 
-body.exkurs {
+.nextjs-exkurs {
+  background: #e3f3ff url("./nextjs-icon.png") no-repeat right top;
+}
+
+.exkurs {
   background-color: #e3f3ff;
 }
 
