@@ -1,8 +1,8 @@
 "use client";
 import { RecipeDto } from "@/app/components/api-types.ts";
 import { useOptimistic, useState, useTransition } from "react";
-import { increaseLikes } from "@/app/components/material/recipe-actions.ts";
 import { twMerge } from "tailwind-merge";
+import { increaseLikes } from "@/app/components/recipe-actions.ts";
 
 type LikesWidgetProps = {
   recipe: RecipeDto;
@@ -18,7 +18,7 @@ export function LikesWidget({ recipe }: LikesWidgetProps) {
     },
   );
 
-  const handleIncreaseLikes = async () => {
+  const handleIncreaseLikes = () => {
     startTransition(async () => {
       increaseOptimistic(1);
       const result = await increaseLikes(recipe.id);
