@@ -29,11 +29,11 @@ In dieser Variante müssen die Ports `8080` und `8432` verfügbar sein.
 
 **Variante 2**: Starten per docker-compose
 
-Das Backend gibt es als fertig gebautes Docker Image. Wenn du Docker auf deinem Laptop installiert hast, ist die einfachste Möglichkeit, das Backend zu verwenden, über das hier enthaltene docker-compose-File den Backend-Prozess samt Datenbank zu starten. Das [Image der Backend-Anwendung liegt in der GitHub Container Registry](https://github.com/nilshartmann/nextjs-workshop/pkgs/container/nextjs-workshop). Das bedeutet, dein Laptop bzw. Docker muss in der Lage sein, Images aus der Docker und der GitHub Registry zu installieren.
+Das Backend gibt es als fertig gebautes Docker Image. Wenn du Docker auf deinem Laptop installiert hast, ist die einfachste Möglichkeit, das Backend zu verwenden, über das hier enthaltene docker-compose-File den Backend-Prozess samt Datenbank zu starten. Das [Image der Backend-Anwendung liegt in der GitHub Container Registry](https://github.com/nilshartmann/moderne-react-pattern-workshop/pkgs/container/moderne-react-pattern-workshop). Das bedeutet, dein Laptop bzw. Docker muss in der Lage sein, Images aus der Docker und der GitHub Registry zu installieren.
 
 In dieser Variante muss der Port `8080` verfügbar sein.
 
-> Wenn du normalerweise kein Java entwickelts, und Docker installiert hast, ist dieses die beste Variante.
+> Wenn du normalerweise kein Java entwickelst und Docker installiert hast, ist dieses die beste Variante.
 
 **Variante 3**: Verwenden der gehosteten Variante in der Cloud
 
@@ -116,8 +116,8 @@ Zum Testen der Verbindung kannst du einmal den Cloud-Hostnamen mit dem Pfad `/ap
 
 Um den kompletten Workspace in GitPod zu starten, gibt es zwei Möglichkeiten.
 
-- du kannst einfach [mit diesem Link GitPod mit dem Workspace starten](https://gitpod.io/#https://github.com/nilshartmann/nextjs-workshop)
-- du öffnest die Seite https://github.com/nilshartmann/nextjs-workshop im Browser und klickst dort auf `Open`.
+- du kannst einfach [mit diesem Link GitPod mit dem Workspace starten](https://gitpod.io/#https://github.com/nilshartmann/moderne-react-pattern-workshop)
+- du öffnest die Seite https://github.com/nilshartmann/moderne-react-pattern-workshop im Browser und klickst dort auf `Open`.
 - Hinweis: grundsätzlich kannst du den Workspace über Gitpod auch in einer lokalen IDE öffnen. Dazu wirst du beim Starten von GitPod befragt. Dafür müssen aber bestimmte Voraussetzungen erfüllt sein. Weitere Informationen findest du [hier in der GitPod Dokumentation](https://www.gitpod.io/docs/references/ides-and-editors)
 
 ## Installation der beiden Frontend-Anwendungen (React SPA und Next.js)
