@@ -427,12 +427,6 @@
 * Lösung: `nextjs_schritte/20_server_und_client/fertig`
 ---
 ## Suspense mit React und Next.js
-<!-- .slide: data-state="nextjs-exkurs" -->
----
-### Überbrücken der Wartezeit
-
-- Was passiert, wenn wir die `RecipeList` (`/recipes`) aufrufen und der `fetch`-Call "lange" dauert? 🤔
-- Was passiert, wenn wir die `/recipes`-Route zweimal hintereinander aufrufen? 🤔
 
 ---
 
@@ -467,34 +461,6 @@
 - Das Caching ist in der [Dokumentation beschrieben](https://nextjs.org/docs/app/building-your-application/caching)
 
 ---
-
-[//]: # (### Übung: Asynchrone Server Komponenten)
-
-[//]: # ()
-[//]: # (- **Baue die Komponente für die Rezept Übersicht &#40;`/recipes`&#41;**)
-
-[//]: # (- Du musst deine bestehende Komponente &#40;`/app/recipes/page.tsx`&#41; nun erweitern:)
-
-[//]: # (  - sie soll asynchron sein)
-
-[//]: # (  - Die Funktion zum Laden der Rezepte ist schon fertig: `fetchRecipes`)
-
-[//]: # (  - Die geladenen Rezepte kannst Du mit der ferigen Komponente `RecipeCard` rendern)
-
-[//]: # (- Baue eine `loading`-Komponente, die angezeigt wird, während die Daten geladen werden)
-
-[//]: # (  - Gib darin einfach "irgendwas" aus oder verwende die fertige Komponente `GlobalLoadingIndicator`)
-
-[//]: # (  - Um die Komponente zu testen, kannst Du das Laden der Daten künstlich verzögern:)
-
-[//]: # (    - gehe dazu in `demo-config.ts` und setze `slowDown_GetRecipeList` z.B. auf `1600` &#40;Verzögerung von 1,6 Sekunden&#41;)
-
-[//]: # (- Du findest Ausgangsmaterial mit weiteren Hinweisen in `nextjs_schritte/20_async_rsc/ausgang`)
-
-[//]: # (- Eine Lösung findest Du in `nextjs_schritte/20_async_rsc/fertig`)
-
-[//]: # (---)
-
 ### Mehr zu Next.js Routen
 <!-- .slide: data-state="nextjs-exkurs" -->  
 - Neben den "klassischen" Verzeichnisnamen, die URL-Segementen entsprechen, gibt es noch weitere Konventionen:
@@ -576,31 +542,6 @@
   - Das betrifft Funktionen, die mit Daten aus einem Request arbeiten (`headers()` und `cookies()`)
 - Ggf. wird das Ergebnis auf dem Server gecached
 
-[//]: # (---)
-
-[//]: # ()
-[//]: # (### Übung: eine dynamische Route)
-
-[//]: # (* <!-- .element: class="demo" --> Diese Übung eventuell raus)
-
-[//]: # (- **Implementiere die Route zur Einzeldarstellung eines Rezepts**)
-
-[//]: # (- Das Verzeichnis ist `app/recipes/[recipeId]`)
-
-[//]: # (- Lies in der Komponente die `recipeId` aus dem `params`-Objekt das als `props` an die Komponente übergeben wird)
-
-[//]: # (- Dann kannst du die fertige Funktion `fetchRecipe` verwenden, um das Rezept zu laden)
-
-[//]: # (  - Wenn diese Funktion `null` zurückgibt, wurde das Rezept nicht gefunden, dann verwende `notFound&#40;&#41;` um die Fehler-Komponente zu rendern)
-
-[//]: # (  - Wenn diese Funktion ein Rezept zurückliefert, kannst Du das an die fertige `RecipePageContent`-Komponente übergeben)
-
-[//]: # (- Was passiert, wenn ein Rezept nicht gefunden wurde? Testen kannst du das, in dem Du z.B. `/recipes/123` aufrufst)
-
-[//]: # (- Eine Lösung findest Du in `schritte/30_dynamic_segments`)
-
-[//]: # (- **Optional**: baue eine `not-found`-Komponente, die einen Fehler anzeigt, wenn ein Rezept nicht gefunden wurde)
-
 ---
 
 ## Suspense
@@ -632,7 +573,6 @@
 ---
 
 ### Suspense in Next.js
-<!-- .slide: data-state="nextjs-exkurs" -->  
 - Um die oberste Komponente einer Route (`page.tsx`) legt Next.js eine automatisch eine `Suspense`-Komponente
 - Den `fallback` dafür implementieren wir in der Datei `loading.tsx`, die eine Komponente per `default export` exportieren muss
 - Konzeptionell sieht das so aus:
@@ -666,7 +606,7 @@
 
 ---
 
-### Streaming
+## Streaming
 
 - Wenn eine Komponente auf dem Server gerendert wird, kann React das Rendern bei einer `Suspense`-Komponente unterbrechen
 - Dann wird der Rest der Seite schon zum Client gesendet
@@ -729,6 +669,8 @@
 ---
 
 ## Aufteilung in Server-Client-Komponenten
+
+<!-- .element: class="todo" -->Entweder komplett raus, oder hinter die Client-Komponenten Übung
 
 ---
 
@@ -877,7 +819,8 @@
 - Wenn sie als Server Component verwent werden, wird ihr JavaScript-Code nicht zum Client geschickt
 - Next.JS rendert die Client Component serverseitig vor
 - Erst wenn eine Komponente als Client Komponente benötigt wird, der JS-Code vom Server abgefragt
---
+
+---
 ## (Server) Actions
 
 ---
@@ -1085,58 +1028,17 @@
   - Auch in dieser Datei findest du Todos
 - Fertige Lösung in: `nextjs_schritte/40_actions`
 - **Optional**: Kannst Du die Ausführung der Server Action mit einer Transition ummanteln?
-- - **Optional**: Kannst Du mit `useOptimistic` ein "optimistisches" Ergebnis zurückliefern?
-
----
-## Mutations
-
----
-
-## Mutations
-
-### Verändern von Daten
-
-- Das **Schreiben** von Daten kann grundsätzlich so wie bislang auch umgesetzt werden:
-  - Zum Beispiel in dem ein `form` übertragen wird
-  - Oder, wie in React üblich, ein REST-Aufruf an den Server mit `fetch`gemacht wird
-- Aber!
-  - Nach dem Verändern von Daten muss die UI aktualisiert werden
-  - Mangels State auf dem Client geht das aber nicht wie bislang
-  - Der **Server** muss nach Datenänderungen **aktualisierte UI** liefern
-
----
-
-### UI bzw. Routen aktualisieren (Next.js spezifisch)
-- <!-- .element: class="demo" -->: `OrderButton` mit Transition
-- Möglichkeit 1:
-  - Client-seitig kann man mit [`Router.refresh`](https://nextjs.org/docs/app/api-reference/functions/use-router#userouter) die aktuelle Route - unabhängig vom Cache - aktualsieren lassen. Next.js rendert die Route dann auf dem Server neu und liefert aktualisierte UI
-- Möglichkeit 2:
-  - Invalidieren des Caches mit `revalidatePath` bzw. `revalidateTags`
-- Möglichkeit 3:
-  - `noStore()` verwenden, damit wird eine Route vom Caching ausgenommen
-
-
----
-
-## Formulare
-
-- Mit Next.js (bzw. künftigen React APIs) soll es möglich sein, Formulare so zu bauen, dass man sie auch ausfüllen und absenden kann, wenn kein JavaScript im Browser läuft (**Progressive enhancement**)
-- Wofür könnte das relevant sein? 🤔
-- Welche Einschränkungen könnte es dabei geben? 🤔
+- **Optional**: Kannst Du mit `useOptimistic` ein "optimistisches" Ergebnis zurückliefern?
 
 ---
 
 ### Formulare
 
-- <!-- .element: class="demo" -->Feedback Form
-- Um Formulare ohne JavaScript absenden zu können, muss es genauso aussehen, als wenn man ein Formular in einer statischen HTML-Seite beschreibt:
-  - dazu muss ein HTML `form`-Element mit einem `action`-Attribute verwendet werden
-  - Damit das Formular abgesendet werden kann, muss es einen `submit`-Button geben
-- In "regulärem" HTML wird der Form-Inhalt dann an den in der `action` angegebenen Endpunkt geschickt
-- Der Payload ist ein `FormData`-Objekt
-- Mit Next.js (bzw. React) können wir als `action` eine Server-Action-Funktion angeben
-- Die angegebene Server Action muss als Parameter ein `FormData`-Objekt entgegennehmen
--
+- Ab React 19 können Formulare eine Action als `action`-Attribute übergeben bekommen
+  - [Dokumentation: form-Komponente](https://19.react.dev/reference/react-dom/components/form)
+- Die entsprechende Action-Funktion wird dann beim Submit des Formulars aufgerufen
+- Übergeben wird der Form-Inhalt mit einem [FormData-Objekt](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
+- Die Action kann eine Client- oder Server-Action sein
 - ```tsx
   export function FeedbackForm() {
     async function saveForm(data: FormData) {
@@ -1154,7 +1056,3 @@
     );
   }
   ```
----
-### Formulare und Actions mit useActionState
-
-- 
