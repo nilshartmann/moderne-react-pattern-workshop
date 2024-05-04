@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import RecipeListPageContent from "../../components/recipelistpage/RecipeListPageContent.tsx";
+import RecipeListPageContentWrapper from "../../components/recipelistpage/RecipeListPageContentWrapper.tsx";
 import { RecipePageListParams } from "../../components/recipelistpage/RecipeListRouteParams.ts";
 
 // TODO:
@@ -7,6 +7,6 @@ import { RecipePageListParams } from "../../components/recipelistpage/RecipeList
 //     define and validate the search params for this route
 //
 export const Route = createFileRoute("/recipes/")({
-  component: RecipeListPageContent,
+  component: RecipeListPageContentWrapper,
   validateSearch: (search) => RecipePageListParams.parse(search),
 });
