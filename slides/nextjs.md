@@ -1038,6 +1038,8 @@
   - [Dokumentation: form-Komponente](https://19.react.dev/reference/react-dom/components/form)
 - Die entsprechende Action-Funktion wird dann beim Submit des Formulars aufgerufen
 - Übergeben wird der Form-Inhalt mit einem [FormData-Objekt](https://developer.mozilla.org/en-US/docs/Web/API/FormData)
+  - Das bietet sich m.E. insb. für uncontrolled Formulare an (ohne lokalen State)
+  - Kann z.B. mit [React Hook Form](https://react-hook-form.com/) verwendet werden
 - Die Action kann eine Client- oder Server-Action sein
 - ```tsx
   export function FeedbackForm() {
