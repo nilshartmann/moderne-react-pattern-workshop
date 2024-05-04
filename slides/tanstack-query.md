@@ -383,18 +383,22 @@
 
 ---
 ## Übung: Suspense
-
-* Die Rezept-Detailseite soll das Rezept nun mit Suspense laden und außerdem die Bewertungen darstellen
-* In der Route `/recipes/$recipeId/page.tsx` hast Du bereits den Query mit `useQuery` gebaut
+<!-- .slide: class="left" -->
+**Die Rezept-Detailseite soll das Rezept nun mit Suspense laden und außerdem die Bewertungen darstellen**
+1. In der Route `/recipes/$recipeId/page.tsx` hast Du bereits den Query mit `useQuery` gebaut
   * Wenn du nicht fertig geworden bist, kopiere dir `spa_schritte/30/query_use_query/.../$recipeId/index.tsx` in deinen Workspace
   * Stelle diesen Query auf `useSuspenseQuery` um (nur `useQuery` durch `useSuspenseQuery` ersetzen)
   * Die Logik zum prüfen, ob der Query erfolgreich war oder noch lädt, kannst Du nun entfernen.
-* Wenn Du den Query umgestellt hast, musst Du eine Suspense-Komponente einziehen
+
+2. Wenn Du den Query umgestellt hast, musst Du eine Suspense-Komponente einziehen
   * Das muss in einer Komponente sein, die oberhalb von `RecipePage` (bzw. `/recipes/$recipeId/page.tsx`) liegt
-    * Du kannst eine `route.tsx` dafür verwenden oder eine "Wrapper-Komponente" um `RecipePage` bauen.
-* Kommentiere in  `RecipePageContent` den `FeedbackListLoader` ein und setze die `Suspense`-Grenze
-*   (siehe TODOs dort)
-* Lösung: `spa_schritte/40_query_suspense`
+    * Du kannst `recipes/route.tsx` dafür verwenden oder eine "Wrapper-Komponente" um `RecipePage` bauen.
+  * Als `fallback`-Komponenten kannst Du `GlobalLoadingIndicator` verwenden
+
+3. Kommentiere in  `RecipePageContent` den `FeedbackListLoader` ein und setze die `Suspense`-Grenze
+  * (siehe TODOs dort)
+
+4. Lösung: `spa_schritte/40_query_suspense`
 
 ---
 ### TanStack Query: Mutations

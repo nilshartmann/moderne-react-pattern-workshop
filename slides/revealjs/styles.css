@@ -89,7 +89,8 @@ code span.line-number {
  * 
  * Einschalten mit: <!-- .slide: class="left" -->
  */
-.reveal section.left ul {
+.reveal section.left ul,
+.reveal section.left ol {
   width: 100%;
 }
 

@@ -4,9 +4,5 @@ import { Suspense } from "react";
 import { GlobalLoadingIndicator } from "../../components/material/GlobalLoadingIndicator.tsx";
 
 export const Route = createFileRoute("/recipes")({
-  component: () => (
-    <RecipesPageLayout>
-      <Outlet />
-    </RecipesPageLayout>
-  ),
+  component: () => <Outlet />,
 });
