@@ -3,7 +3,7 @@ import RecipeListPaginationBar from "./RecipeListPaginationBar.tsx";
 import RecipeList from "./RecipeList.tsx";
 
 export default function RecipeListPageContent() {
-  // TODO:
+  // TODO Übung Search Parameter
   //
   //   Kommentiere 'RecipeListNavBar' und 'RecipeListPaginationBar' ein,
   //     wenn du den OrderButton vervollständigt hast

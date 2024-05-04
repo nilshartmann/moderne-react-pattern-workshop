@@ -14,6 +14,7 @@ type RecipePageContentProps = {
 };
 
 export default function RecipePageContent({ recipe }: RecipePageContentProps) {
+  // React 19: <title>{recipe.title}</title>
   useRecipifyWindowTitle(recipe.title);
 
   return (
@@ -39,7 +40,7 @@ export default function RecipePageContent({ recipe }: RecipePageContentProps) {
                - Kannst Du die Suspense-Grenzen so ziehen, dass NICHT auf den FeedbackListLoader gewartet wird
                - das Rezept soll also in jedem Fall angezeigt werden, auch wenn der FeedbackListLoader
                  seine Daten noch nicht gelesen hat
-               - Du kannst zum testen beide Queries künstlich verlangsamen:
+               - Du kannst zum Testen beide Queries künstlich verlangsamen:
                   - dazu in der demo-config.tsx-Datei die beiden Konstanten auf einen Delay (in ms) setzen:
                     - slowDown_GetRecipe  (für den Rezept-Query)
                     - slowDown_GetFeedbacks  (für das Feedback)

@@ -195,7 +195,7 @@
 ### Übung: Routing mit TS Router
 
 ---
-### Übung: Vorbereitung #1
+### Übung: Vorbereitung "SPA-Workspace"
 
 - **Klonen des Repositories**
 - Kurze Vorstellung des Repositories von mir
@@ -208,19 +208,19 @@
 ---
 ### Übung: Routing mit TS Router
 
-- Lege die Route für `/recipes` an.
-  - Als Komponente kannst Du dort die fertige Komponente `RecipeListPageContent` angeben
-  - Füge in der (fertigen) `LandingPage.tsx`-Komponente einen `Link` auf die recipes-Route hinzu
-    - Du findest in der Datei ein entsprechendes TODO
 - Lege die Route zur Einzeldarstellung eines Rezeptes an
-  - Die Pfade im Browser lauten `/recipes/Id-1`, `/recipes/ID-2`, ...
-  - Du brauchst also ein variables Segment mit der `recipeId`
-  - Die Komponente für die Route kann eine "Hello-World"-Komponente sein
-  - Sie soll mit `useParams` die `recipeId` abfragen und die `recipeId`-anzeigen
-- Für in der `RecipeCard`-Komponente einen Link zur Einzeldarstellung hinzu
+  - Wenn Du die Datei dafür angelegt hast, sollte TS Router die (minimale) Routen-Defintion automatisch generieren. Wenn das *nicht* passiert:
+      - evtl. Datei manuell in deiner IDE/Editor neu laden
+      - Vite einmal beenden und neustarten (dann läuft der Generator neu los)
+  - Die Pfade im Browser lauten `/recipes/1`, `/recipes/2`, `/recipes/3`, ...
+  - Du brauchst also ein variables Segment. Das soll `recipeId` heißen
+- Die **Komponente** für die Route kann eine "Hello-World"-Komponente sein
+  - Die Seite muss nicht hübsch sein, heute gilt: wir machen Bauhaus-Style, "form follows function" 😉
+  - Die Komponente soll mit `Route.useParams` die `recipeId` abfragen und die `recipeId`-anzeigen
+- Füge in der `components/recipelistpage/RecipeCard`-Komponente einen Link zur Einzeldarstellung hinzu
   - In `RecipeCard.tsx` stehen entsprechende TODOs
 - **Optional**: Kannst Du ein Layout für alle Routen in `/recipes` erzeugen?
-  - Du kannst dafür die `RecipesPageLayout`-Komponente verwenden oder Du denkst was einfaches selber aus
+  - Du kannst dafür die `RecipesPageLayout`-Komponente verwenden oder Du denkst dir was einfaches selber aus
 - Eine Lösung findest Du in `spa_schritte/10_router_routing`
 
 ---
@@ -389,10 +389,12 @@
   ```
 ---
 ### Übung: Search-Parameter
+![Order Button](./slides/images/order-buttons.png)
 - **Definiere für die Rezeptliste den `orderBy`-Search-Parameter**
-  - Das `zod`-Objekt mit den Parametern ist bereits fertig: `RecipePageListParams` in `RecipeListRouteParams.ts`
+  - Das `zod`-Objekt mit den Parametern ist bereits fertig: `RecipePageListParams` in `src/components/recipelistpage/RecipeListRouteParams.ts`
   - Du musst in `routes/recipes/index.tsx` nur noch die `Route.validateSearch`-Methode hinzufügen
-  - Diese soll `ReceipPageListParams.parse` verwenden, um sicherzustellen, dass die Search-Parameter korrekt sind
+  - Diese soll `RecipePageListParams.parse` verwenden, um sicherzustellen, dass die Search-Parameter korrekt sind
+  - Mehr zu Search Parameters findest Du [hier in der Dokumentation](https://tanstack.com/router/latest/docs/framework/react/guide/search-params)
 - In `OrderButton.tsx` musst Du mit dem `orderBy`-Search-Parameter arbeiten:
   - Lies den aktuellen `orderBy`-Search-Parameter aus
   - Baue einen Link mit einem neuen `orderBy`-Parameter

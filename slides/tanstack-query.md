@@ -1,6 +1,7 @@
 <!-- .slide: id="t-tanstack-query" -->
-# TanStack Query
 ## Modernes Data Fetching mit 
+# TanStack Query
+
 ---
 ## Modernes Data Fetching in React
 * Mit `useEffect`, `fetch` und `axios` stehen dir "Low-Level-APIs" zur Verfügung, um mit serverseitigen Daten zu arbeiten
@@ -156,6 +157,7 @@
 ## Übung: Daten lesen mit TanStack Query
 
 - In der Route `/routes/recipes/$recipeId/index.tsx` befindet sich (d)eine Hello-World-Komponente
+  - Wenn Du mit der Router-Übung nicht fertig geworden bist, kopiere dir die Dateien aus `spa_schritte/10_router_routing` in deinen Workspace 
 - Füge in dieser Komponente einen TanStack Query mit `useQuery` ein, der die Daten eines Rezeptes liest
 - In der Datei `/spa_material/30/query_use_query` findest eine Vorlage und weitere TODOs
 - In `/spa_schritte/30/query_use_query` findest Du eine mögliche Lösung
@@ -225,8 +227,36 @@
 * Die Parameter sind dieselben
 * Aber: der Query liefert erst ein Ergebnis, wenn die Daten geladen worden sind (oder im Cache vorhanden sind)
   * Für die Dauer der Ladezeit muss `Suspense` verwendet werden, um eine Platzhalter-Komponente zu rendern
-  * Für den Fall eines Fehlers muss eine [Error-Boundary-Komponente](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary) gesetzt werden
-    * Das ist eine Art try-catch-Mechanismus, mit dem eine React-Anwendung auf Fehler _während des Renderns_ reagieren kann
+* ```tsx
+  // /routes/recipes/$recipeId/index.tsx
+  function RecipePage() {
+	const { recipeId } = Route.useParams();
+  
+    // hier wird das Rendern von React unterbrochen, bis die Daten da sind:
+    const data = useSuspenseQuery({ 
+      queryFn: fetchRecipe(/*...*/), 
+      queryKey: ["recipes", recipeId] 
+    });
+  
+    // wenn die Anwendung hierher kommt, sind die Daten in jedem Fall vorhanden
+    return ...;
+  }
+  ```
+  
+* ```tsx
+  // in einer Komponente oberhalb von RecipePage
+  //  (z.B. Route/Layout-Komponente von TanStack Router)
+  function App() {
+    return <React.Suspense fallback={<div>Loading Recipe...</div>}>
+      <RecipePage />
+    </React.Suspense>
+  }
+  ```
+  
+---
+### Fehlerbehandlung mit Suspense
+* Für den Fall eines Fehlers muss eine [Error-Boundary-Komponente](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary) gesetzt werden
+  * Das ist eine Art try-catch-Mechanismus, mit dem eine React-Anwendung auf Fehler _während des Renderns_ reagieren kann
 
 * ```tsx
   // /routes/recipes/$recipeId/index.tsx
@@ -257,6 +287,7 @@
 - Die Komponente kann dann eine Fehlermeldung o.ä. rendern
 - Ihr könnt damit sehr feingranular steuern, wo Fehler angezeigt werden sollen (wenn _eine_ Abfrage nicht funktioniert, können die anderen weiterlaufen - oder nicht)
 - Es gibt eine fertige, generische Error-Boundary-Komponente: [react-error-boundary](https://www.npmjs.com/package/react-error-boundary)
+  - Diese Bibliothek wird auch vom React Team in der Dokumentation empfohlen
 - Auch TanStack Query hat eine Error-Boundary-Komponente, [QueryErrorResetBoundary](https://tanstack.com/query/latest/docs/framework/react/reference/QueryErrorResetBoundary)
   - Mit dieser gibt es die Möglichkeit, einen fehlerhaften Query wiederholen zu lassen (auch durch User-Interaktion, z.B. Button click)
 
@@ -278,7 +309,7 @@
 * Was passiert hier:
 * ```typescript
   function RecipePage() {
-    const reipceData = useSuspenseQuery( /* Recipe Daten laden */ );
+    const recipeData = useSuspenseQuery( /* Recipe Daten laden */ );
     const feedbackData = useSuspenseQuery( /* Feedback Daten laden */) ;
 
     // ...
@@ -287,36 +318,43 @@
 * React rendert Komponente bis zum ersten `useSuspenseQuery`
 * Wenn die Daten da sind, wird die Komponente nochmal gerendert
 * Diesmal bis zum zweiten `useSuspenseQuery`
-* Die Daten werden also *nacheinander* nicht *parallel* geladen. 😢
+* Die Daten werden also *nacheinander* und nicht *parallel* geladen. 😢
 ---
 ### Priorisierung mit TanStack Query
 * Um die Daten parallel zu laden, könnt ihr TanStack Query anweisen, Daten in den Cache zu laden, *ohne* darauf zu warten
 * Dazu verwendet ihr `QueryClient.ensureData`, das die selben Parameter wie `useSuspenseQuery` bzw. `useQuery` entgegennimmt
 * TanStack Query startet dann den Request im Hintergrund (und legt die Daten in den Cache, sobald sie vorliegen)
-* Um also *nicht* auf die User-Daten zu warten könnt ihr folgendes tun:
+* Um also *nicht* auf die Feedback-Daten zu warten könnt ihr folgendes tun:
 * ```tsx
   function RecipePage({recipeId}) {
     const queryClient = useQueryClient();
   
+    // Request für Bewertungen (Feedback) starten, aber nicht darauf warten
     queryClient.ensureData({queryFn: /* ... */, queryKey: ["recipes", recipeId, "feedbacks"]});
    
-    const recipeData = useSuspenseQuery(/* Post */);
+    // Request für Rezept starten und warten, bis Daten im Cache sind
+    const recipeData = useSuspenseQuery(/* Rezept-Query-Options */);
 
     return <RecipePageContent recipe={recipeData.recipe} />;
   }
   ```
-* Hier werden beide Requests gestartet und React wartet dann auf das Ergebnis des Post-Queries
-* In einer weiteren Komponente könntet ihr dann auf die User-Daten warten, die im besten Fall dann sogar schon im Cache sind:
+* Hier werden beide Requests gestartet und React wartet dann auf das Ergebnis des Rezept-Queries 😊
+---
+### Priorisierung mit TanStack Query
+* In einer weiteren Komponente könnt ihr mit `useSuspenseQuery` die Daten für die Bewertungen abfragen
+* Im besten Fall sind diese nun schon im Cache (weil der entsprechende Request abgeschlossen ist)
+  * Falls die Daten nicht im Cache sind, rendert React die nächsthöhere `Suspense.fallback`-Komponente
 * ```typescript
   function FeedbackList({recipeId}) {
     // Query-Key muss mit dem Query-Key von oben übereinstimmen!
     const feedbackData = useSuspenseQuery({queryFn: /* ... */, queryKey: ["recipes", recipeId, "feedbacks"]}); 
 
-    // User-Daten rendern
+    // geladene Feedback Daten rendern
 
     return ...;
   }
   ```
+* 💡 Damit die Query-Options garantiert identisch sind, kann man die [queryOptions](https://tanstack.com/query/latest/docs/framework/react/guides/query-options)-Funktion verwenden  
 ---
 ### Neu in React 19: use-Hook
 - Der Suspense-Mechanismus inkl. Error-Boundaries wird ab React 19 mit "normalen" Promises funktionieren
@@ -337,13 +375,20 @@
     }
   ```
 ---
+### useQuery oder useSuspenseQuery
+
+* <!-- .element: class="todo" -->Screenshot von Tweet
+* Suspense und Error Boundaries werden in React auch in anderen Teilen größere Rolle spielen als bisher (Transitions z.B.)
+* Ich würde empfehlen, `useSuspenseQuery` per Default zu verwenden und nur mit Begründung auf `useQuery` auszuweichen
+
+---
 ## Übung: Suspense
 
 * Die Rezept-Detailseite soll das Rezept nun mit Suspense laden und außerdem die Bewertungen darstellen
 * In der Route `/recipes/$recipeId/page.tsx` hast Du bereits den Query mit `useQuery` gebaut
-  * Stelle diesen Query auf `useSuspenseQuery` um
+  * Wenn du nicht fertig geworden bist, kopiere dir `spa_schritte/30/query_use_query/.../$recipeId/index.tsx` in deinen Workspace
+  * Stelle diesen Query auf `useSuspenseQuery` um (nur `useQuery` durch `useSuspenseQuery` ersetzen)
   * Die Logik zum prüfen, ob der Query erfolgreich war oder noch lädt, kannst Du nun entfernen.
-  * Falls dein Query nicht funktioniert hat, kopiere dir den fertigen `useQuery`-Code aus `spa_schritte/30_query_use_query`
 * Wenn Du den Query umgestellt hast, musst Du eine Suspense-Komponente einziehen
   * Das muss in einer Komponente sein, die oberhalb von `RecipePage` (bzw. `/recipes/$recipeId/page.tsx`) liegt
     * Du kannst eine `route.tsx` dafür verwenden oder eine "Wrapper-Komponente" um `RecipePage` bauen.

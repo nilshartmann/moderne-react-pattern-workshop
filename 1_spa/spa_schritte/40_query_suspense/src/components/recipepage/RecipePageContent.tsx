@@ -16,6 +16,7 @@ type RecipePageContentProps = {
 };
 
 export default function RecipePageContent({ recipe }: RecipePageContentProps) {
+  // React 19: <title>{recipe.title}</title>
   useRecipifyWindowTitle(recipe.title);
 
   return (

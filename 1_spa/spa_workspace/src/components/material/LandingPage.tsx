@@ -39,22 +39,13 @@ export default function LandingPage() {
         </div>
         <div className="mt-10 flex justify-center">
           <Button size={"lg"}>
-            {/* TODO:
-          -  add Link to /recipes
-          */}
             <Link to={"/recipes"}>Let me in - I'm hungry! 😋</Link>
           </Button>
         </div>
         <div className={"mt-10 flex justify-center space-x-8"}>
           <Button>
-            {/*
-            todo: add Link to /about
-            */}
             <Link to={"/about"}>About us</Link>
           </Button>
-          {/* TODO:
-          -  add privacy route
-          */}
           <Button>
             <Link to={"/privacy"}>Privacy</Link>
           </Button>

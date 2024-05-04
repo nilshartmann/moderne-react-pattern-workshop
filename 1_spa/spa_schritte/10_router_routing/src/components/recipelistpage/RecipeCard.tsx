@@ -12,16 +12,18 @@ const RecipeCard = memo(function RecipeCard({ recipe }: RecipeCardProps) {
   return (
     <div className={"flex flex-col justify-between"}>
       <div>
-        <div className={"overflow-hidden"}>
-          <img
-            className="mb-2 h-48 max-h-full w-full max-w-full transform rounded object-cover transition-all duration-500 ease-in-out hover:scale-110"
-            src={`/images/recipes/food_${recipe.id}.png`}
-            alt="image1"
-          />
-          {/* vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv */}
-          {/*<BookmarkButton recipeId={recipe.id} />*/}
-          {/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */}
-        </div>
+        <Link to={"/recipes/$recipeId"} params={{ recipeId: recipe.id }}>
+          <div className={"overflow-hidden"}>
+            <img
+              className="mb-2 h-48 max-h-full w-full max-w-full transform rounded object-cover transition-all duration-500 ease-in-out hover:scale-110"
+              src={`/images/recipes/food_${recipe.id}.png`}
+              alt="image1"
+            />
+            {/* vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv */}
+            {/*<BookmarkButton recipeId={recipe.id} />*/}
+            {/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */}
+          </div>
+        </Link>
         <div className={"mt-8 flex justify-between text-red"}>
           <p
             className={
@@ -42,7 +44,12 @@ const RecipeCard = memo(function RecipeCard({ recipe }: RecipeCardProps) {
              - als params musst Du das recipeId übergeben. Den Wert dazu kannst Du aus 'recipe.id' nehmen
 
           */}
-          <Link className={"hover:text-orange_2 hover:underline"}>
+          <Link
+            preload={"intent"}
+            to={"/recipes/$recipeId"}
+            params={{ recipeId: recipe.id }}
+            className={"hover:text-orange_2 hover:underline"}
+          >
             {recipe.title}
           </Link>
         </H1>

@@ -14,13 +14,15 @@ function RecipePage() {
   //
   //   - Verwende "useQuery", um das Rezept mit der Id 'recipeId' zu laden
   //     - Der queryKey soll aus 'recipes' und der recipeId bestehen
-  //     - Als queryFn kannst Du die fertige Funktion 'fetchRecipe' verwenden
+  //     - Als queryFn kannst Du die fertige Funktion 'fetchRecipe' verwenden:
+  //        fetchRecipe(receipId)
   //     - Wenn der Query erfolgreich war, kannst Du die RecipePageContent-Komponente rendern:
   //        - dieser musst Du 'data.recipe' aus dem Query-Ergebnis übergeben
   //     - Wenn der Query noch lädt gib eine entsprechende Meldung aus
   //       - Den Lade-Zustand kannst Du testen, in dem Du den Query künstlich verlangsamst.
   //           - Dazu kannst Du als zweiten Parameter eine Verzögerung in Millisekunden als
   //             2. Parameter an 'fetchRecipe' übergeben
+  //                fetchRecipe(recipeId, 2000)
   //
 
   return <div>...</div>;

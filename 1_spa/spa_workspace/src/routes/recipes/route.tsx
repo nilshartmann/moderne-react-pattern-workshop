@@ -6,9 +6,7 @@ import { GlobalLoadingIndicator } from "../../components/material/GlobalLoadingI
 export const Route = createFileRoute("/recipes")({
   component: () => (
     <RecipesPageLayout>
-      <Suspense fallback={<GlobalLoadingIndicator />}>
-        <Outlet />
-      </Suspense>
+      <Outlet />
     </RecipesPageLayout>
   ),
 });

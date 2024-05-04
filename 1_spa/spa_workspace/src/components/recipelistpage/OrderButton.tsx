@@ -11,11 +11,13 @@ type OrderButtonProps = {
 
 export function OrderButton({ children, orderBy }: OrderButtonProps) {
   // TODO:
+  //   - 'currentOrderBy' soll den Wert des Search Parameters 'orderBy' enthalten
+  //   - Verwende 'recipeListRoute.useSearch' um diesen Search Parameter zu lesen
+  //     - Das ist die aktuell eingestellte Sortierreihenfolge
+  //       Die wird für den Button (nur) benötigt, damit er sich entsprechend
+  //       darstellen kann
   //
-  //   - Verwende 'useSeach' um den 'orderBy' Search Parameter zu lesen
-  const currentOrderBy = recipeListRoute.useSearch({
-    select: (s) => s.orderBy,
-  });
+  const currentOrderBy = undefined;
 
   const checked = orderBy === currentOrderBy;
   return (
