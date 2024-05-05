@@ -50,8 +50,8 @@ Reveal.initialize({
     document
       .querySelectorAll(".no-fragment, .no-fragment *")
       .forEach((n) => n.classList.remove("fragment"));
-//
-//    // when using code blocks with markdown like this:
+    //
+    //    // when using code blocks with markdown like this:
     //  ```java fragment
     //  the <code> elements gets the "fragment" class, but it needs
     //  to be on its parent <pre> element
