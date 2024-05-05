@@ -19,6 +19,8 @@ export default function RecipeListPage({ searchParams }: RecipeListPageProps) {
   return (
     <div className={"bg-goldgray"}>
       <div className={"container mx-auto space-y-8 pb-8 pt-8"}>
+        TODO! Logik für diese Route muss leider noch implementiert werden! (s.
+        app/recipes/page.tsx)
         {/*
 
         TODO:
