@@ -6,15 +6,15 @@
 
 ## <img src="slides/images/go-with-fullstack-framework.png">
 
-[//]: # (---)
+---
 
-[//]: # (## React empfiehlt "Fullstack-Framework")
+## React empfiehlt "Fullstack-Framework"
 
-[//]: # ()
-[//]: # (<img src="slides/images/can-i-use-react-without-a-framework.png" style="height:900px">)
 
-[//]: # ()
-[//]: # (&#40;https://react.dev/learn/start-a-new-react-project#can-i-use-react-without-a-framework&#41;)
+<img src="slides/images/can-i-use-react-without-a-framework.png" style="height:900px">
+
+
+(https://react.dev/learn/start-a-new-react-project#can-i-use-react-without-a-framework)
 
 [//]: # (---)
 
@@ -34,22 +34,17 @@
 
 ---
 
-[//]: # (## Next.js)
+## Next.js
 
-[//]: # ()
-[//]: # (- https://nextjs.org/)
-
-[//]: # (- Features:)
-
-[//]: # (  - Unterstützung für React Server Components)
-
-[//]: # (  - SSR)
-
-[//]: # (  - Static Rendering)
-
-[//]: # (  - Datei-basiertes Routing)
-
-[//]: # (  - Caching und Preloading)
+- https://nextjs.org/
+- Features:
+  - Unterstützung für React Server Components
+  - SSR
+  - Static Rendering
+  - Datei-basiertes Routing
+  - Caching und Preloading
+- Wir konzentrieren uns heute auf die "Standard" React-Features, nicht die Next.js Erweiterungen
+  - Mehr Informationen zu Next.js findest du aber in den Slides
 
 ---
 
@@ -826,7 +821,6 @@
 ---
 ### Server Actions
 
-- <!-- .element: class="demo" -->Like Action!
 - **Server Actions** sind Funktionen, die auf dem Server laufen und aus einer Client-Komponente aufgerufen werden können
 
   - Eine Art remote-procedure Call
@@ -845,6 +839,7 @@
     return { newLikes: result.newLikes };
   }
   ```
+- <!-- .element: class="demo" -->Like Action!
 
 ---
 

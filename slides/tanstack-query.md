@@ -377,7 +377,7 @@
 ---
 ### useQuery oder useSuspenseQuery
 
-* <!-- .element: class="todo" -->Screenshot von Tweet
+* ![useQuery oder useSuspense](./slides/images/query-or-suspense.png)
 * Suspense und Error Boundaries werden in React auch in anderen Teilen größere Rolle spielen als bisher (Transitions z.B.)
 * Ich würde empfehlen, `useSuspenseQuery` per Default zu verwenden und nur mit Begründung auf `useQuery` auszuweichen
 
