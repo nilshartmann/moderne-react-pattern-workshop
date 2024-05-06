@@ -4,9 +4,18 @@
 ## TanStack Router
 
 - https://tanstack.com/router/latest/docs/framework/react/overview
-- Typsicherer React Router
+- Typsicherer, client-seitiger Router für React (und andere)
 - File-basierte Routen
 - Code-Generator für Routen-Konfiguration
+---
+### TanStack Router: Demo
+
+- <!-- .element: class="demo" -->Route für /recipe/$recipeId
+- <!-- .element: class="demo" -->useParams, um $recipeId auszugeben
+- <!-- .element: class="demo" -->In RecipeCard Link bauen
+- <!-- .element: class="demo" -->route.tsx für Layout
+- 
+
 ---
 ## Routen
 
@@ -222,6 +231,14 @@
 - **Optional**: Kannst Du ein Layout für alle Routen in `/recipes` erzeugen?
   - Du kannst dafür die `RecipesPageLayout`-Komponente verwenden oder Du denkst dir was einfaches selber aus
 - Eine Lösung findest Du in `spa_schritte/10_router_routing`
+---
+### TanStack Router
+## Search Params
+
+- TanStack Router bietet flexible und typsichere Wege um mit Search Parametern in der URL zu arbeiten
+  - (alles hinter dem `?` in der URL: `/users?order_by=age&lastname=mueller`)
+- Die Angabe der Search Parameter und der Zugriff darauf ist typsicher
+- Wie stellen wir sicher, dass eine Route während der Entwicklung (TypeScript) und zur Laufzeit (JavaScript) mit den korrekten Search Parametern verwendet wird?
 
 ---
 ## Exkurs: zod
@@ -234,11 +251,22 @@
 
 - "TypeScript-first schema validation with static type inference"
 - https://zod.dev/
+- Damit könnt ihr Objekte beschreiben und **zur Laufzeit** validieren lassen
+- Das ist insbesondere sinnvoll für Daten, die wir in der Anwendung nicht selbst erzeugen, z.B.:
+  - Search Parameter in einer URL
+  - Daten, die vom Server gelesen wurden
+  - um Benutzereingaben aus einem Formular
+
+---
+### Zod
+## Demo
+
+- <!-- .element: class="demo" -->user.ts mit Zod
 
 ---
 
 ### TypeScript vs. JavaScript
-
+<!-- .slide: data-state="exkurs" -->
 <!-- .slide: class="left" -->
 
 - Im folgenden ist mit **TypeScript** das Typsystem von TypeScript gemeint, das nur zur Buildzeit vorhanden ist
@@ -257,6 +285,7 @@
 ---
 
 ### Problem: TypeScript-Typen sind zur Laufzeit weg
+<!-- .slide: data-state="exkurs" -->
 
 - Wenn man ein Objekt beschrieben hat, kann man das zur **Laufzeit** nicht mit TypeScript überprüfen
   - Hat uns der Server zur Laufzeit wirklich ein Objekt geschickt, das aussieht wie ein `User`?
@@ -270,6 +299,7 @@
 ---
 
 ### Zod: Typen in JavaScript beschreiben und TS-Typen ableiten
+<!-- .slide: data-state="exkurs" -->
 
 - Aus dieser Not macht Zod eine Tugend:
 - Wir beschreiben die Objekte in JavaScript...
@@ -309,6 +339,7 @@
 ---
 
 ### Komplexe Regeln
+<!-- .slide: data-state="exkurs" -->
 
 - Mit Zod kann man die typischen Datentypen verwenden (Objekte, Arrays, string, number, boolean etc)
 - Auch aus TypeScript bekannte Möglichkeiten wie `unions`, `extends`, `omit` oder `brand-Types` werden unterstützt
@@ -339,6 +370,12 @@
   - Dann wird eine Route nur gerendert, wenn deren Search-Parameter gültig sind
 - Die Search Parameter werden von TS Router bei bedarf serialisiert und deserialisiert (z.B. bei Objekten oder Arrays)
   - Damit kannst du Search Parameter als Ergänzung oder Alternative zu (globalem) State verwenden
+---
+### Search Params: Demo
+- <!-- .element: class="demo" -->http://localhost:8099 Sortierung zeigen
+- <!-- .element: class="demo" --> `/recipes`-Route Search Parameter validateSearch
+- <!-- .element: class="demo" --> `OrderButton`
+- <!-- .element: class="demo" --> `RecipeListPageContent.tsx` Search Params verwenden
 ---
 ### Definition der Search Params
 - In der Routen-Definition gibst Du eine `validateSearch`-Methode an
@@ -401,5 +438,3 @@
   - Siehe Todos in `OrderButton.tsx`
 - Danach sollte Sortierung und Paginierung funktionieren (s. `RecipeListPageContent.tsx`)
 - Mögliche Lösung: `spa_schritte/20_router_search_params`
----
-### 

@@ -18,7 +18,11 @@
 ## TanStack Query
 ### Schritt-für-Schritt: Laden von Daten mit "TanStack Query"
 
-* 👉 `$recipeId`-Route
+- 👉 `$recipeId`-Route
+- <!-- .element: class="demo" -->`useQuery` mit `queryKey` und `queryFn`
+- <!-- .element: class="demo" -->`isSuccess`
+- <!-- .element: class="demo" -->Query langsam
+- <!-- .element: class="demo" -->Cache in Dev Tools zeigen 
 
 
 ---
@@ -206,8 +210,10 @@
 * Beispiele:
   * siehe `use-queries.ts` und `getEndpointConfig` (`fetch-from-api.ts`)
 ---
-## Suspense
+# Suspense
 <!-- .slide: id="t-suspense" -->
+---
+## Suspense
 
 * Suspense ist ein relativ neuer Mechanismus in React, um das Arbeiten mit asynchronem Code (insb. Data Fetching) zu vereinfachen
   * Für Lazy-Loading und Code-Splitting gibt's das schon länger
@@ -220,6 +226,12 @@
 * Um Suspense mit fetch o.ä. zu verwenden, muss die eingesetzte Bibliothek Suspense unterstützen
   * Das können wir in unserem eigenen Code nicht machen
   * TanStack Query, React Router und der Apollo GraphQL Client unterstützen Suspense in ihren neusten Versionen
+---
+### Demo: Suspense mit TanStack Query
+- <!-- .element: class="demo" -->$recipeId-Route aus Suspense Query umstellen
+- <!-- .element: class="demo" -->Suspense.Fallback in route.tsx
+- <!-- .element: class="demo" -->RecipeListPageContent RecipeListLoader aktivieren
+- <!-- .element: class="demo" -->evtl. ensureQueryData
 ---
 ### Suspense mit TanStack Query
 
@@ -322,7 +334,7 @@
 ---
 ### Priorisierung mit TanStack Query
 * Um die Daten parallel zu laden, könnt ihr TanStack Query anweisen, Daten in den Cache zu laden, *ohne* darauf zu warten
-* Dazu verwendet ihr `QueryClient.ensureData`, das die selben Parameter wie `useSuspenseQuery` bzw. `useQuery` entgegennimmt
+* Dazu verwendet ihr [`QueryClient.ensureQueryData`](https://tanstack.com/query/v5/docs/reference/QueryClient/#queryclientensurequerydata), das die selben Parameter wie `useSuspenseQuery` bzw. `useQuery` entgegennimmt
 * TanStack Query startet dann den Request im Hintergrund (und legt die Daten in den Cache, sobald sie vorliegen)
 * Um also *nicht* auf die Feedback-Daten zu warten könnt ihr folgendes tun:
 * ```tsx
@@ -330,7 +342,7 @@
     const queryClient = useQueryClient();
   
     // Request für Bewertungen (Feedback) starten, aber nicht darauf warten
-    queryClient.ensureData({queryFn: /* ... */, queryKey: ["recipes", recipeId, "feedbacks"]});
+    queryClient.ensureQueryData({queryFn: /* ... */, queryKey: ["recipes", recipeId, "feedbacks"]});
    
     // Request für Rezept starten und warten, bis Daten im Cache sind
     const recipeData = useSuspenseQuery(/* Rezept-Query-Options */);

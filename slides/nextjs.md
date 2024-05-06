@@ -222,9 +222,6 @@
   - (Mit SSR auch die Client-Komponenten)
 
 ---
-
-# RSC am Beispiel Next.js
----
 ### Demo: Server Komponenten
 - <!-- .element: class="demo" -->`recipes`-Route anlegen
 - <!-- .element: class="demo" -->`console.log` in `page`-Komponente
@@ -268,14 +265,12 @@
 
 ### Demo: Eine asynchrone Server-Komponente
 
-- **React Server Componentens können asynchron sein!**
-
-1. fetchRecipe: `await` in `recipes`-Route 
-   - await `recipes`-Route in `RecipeCard` direkt rendern
+1. `await fetchRecipe` in `recipes`-Route 
+   - Daten an `RecipeList` übergeben
 
 2. Zwei Komponenten, die die Daten brauchen: 
    - `RecipeList` und `RecipeListPaginationBar`
-
+   - `RecipeList` auf Promise umstellen
 
 ---
 
@@ -538,36 +533,8 @@
 - Ggf. wird das Ergebnis auf dem Server gecached
 
 ---
-
-## Suspense
-
-- Suspense unterbricht das Rendern, wenn in einer Komponente "etwas" fehlt
-- Das haben wir schon in Zusammenhang mit TanStack Query gesehen
-- "Etwas" ist im Fall von RSC ein Promise, das nicht aufgelöst ist
-  - Am Beispiel der `loading`-Komponente haben wir das schon gesehen (dort aber abstrahiert von Next.js)
-- Dazu kann um eine Komponente die `Suspense`-Komponente von React gelegt werden
-- ```tsx
-  async function loadData(...) {}
-
-  async function RecipeList() {
-    const posts = await loadRecipes();
-
-    return <>...</>;
-  }
-
-  function RecipeListPage() {
-    return <Suspense> fallback={"Please wait"}>
-      <RecipeList />
-    </Suspense>
-  }
-  ```
-
-- Hier würde React zunächst die `fallback`-Komponente (`Please wait`) rendern und darstellen
-- Wenn das Promise aufgelöst wird, rendert React dann die Komponente erneut für die finale Darstellung
-
----
-
 ### Suspense in Next.js
+<!-- .slide: data-state="nextjs-exkurs" -->
 - Um die oberste Komponente einer Route (`page.tsx`) legt Next.js eine automatisch eine `Suspense`-Komponente
 - Den `fallback` dafür implementieren wir in der Datei `loading.tsx`, die eine Komponente per `default export` exportieren muss
 - Konzeptionell sieht das so aus:
@@ -661,159 +628,6 @@
 - Falls du bei der vorherigen Übung nicht fertig geworden bist, kopiere die fertigen Dateien aus `30_dynamic_segments` in deinen Workspace-Ordner.
 - Lösung in `schritte/30_suspense`
 
----
-
-## Aufteilung in Server-Client-Komponenten
-
-<!-- .element: class="todo" -->Entweder komplett raus, oder hinter die Client-Komponenten Übung
-
----
-
-### Konsequenzen
-
-- React Server Component können keine Hooks verwenden und auch sonst nicht interaktiv sein
-  - `useState` oder `useEffect` zum Beispiel gehen beide nicht
-- Für alle Stellen, an denen wir Interaktivität benötigen, müssen wir **Client Components** bauen
-- Das sind Komponenten, die sich wie bisherige "klassische" React-Komponenten verhalten:
-  - Ihr JavaScript-Code wird bei Bedarf zum Client geschickt
-  - der JavaScript-Code wird im Client ausgeführt
-- Eine Client-Komponente wird mit der `"use client"`-Direktive am Beginn einer Datei ausgezeichnet:
-- ```tsx
-  "use client";
-
-  export function FeedbackForm() {
-    // hier jetzt Hooks etc. erlaubt
-    const [name, setName] = useState("");
-  }
-  ```
-
----
-
-### Konsequenzen
-
-<img src="slides%2Fimages%2Freact-anwendung.png" style="max-height:900px;float:left"/>
-
-- **Eine "normale" React-Anwendung im Browser**:
-- State befindet sich oben
-- Daten werden runtergereicht ("props")
-- Callbacks werden runtergereicht
-- Über Callbacks kann State-Veränderung ausgelöst werden
-
----
-
-### Konsequenzen
-
-<img src="slides%2Fimages%2Ffullstack-anwendung.png" style="max-height:900px;float:left"/>
-
-- **Komponenten auf dem Server**:
-- Auf dem Server gibt es keinen State!
-- ...und keine Interaktion
-- Wir haben nur statischen Content (RSC)
-- Wir haben **Daten**
-  - z.B. aus DB, Microservice, Filesystem...
-
----
-
-### Konsequenzen
-
-<img src="slides%2Fimages%2Finteraktives-muss-auf-den-client.png" style="max-height:900px;float:left"/>
-
-- Bestimmte Teile **müssen** auf den Client
-  - alles was mit Interaktion zu tun hat
-    - z.B. Event-Handler
-  - alles was Browser-spezifisch ist
-    - z.B. `window`
-
----
-
-### Konsequenzen
-
-<img src="slides/images/url-aendern.png" style="max-height:900px;float:left"/>
-
-- Properties müssen Client-Server-Grenze überwinden
-- Müssen serialisierbare Daten sein
-- Keine (Callback-)Funktionen!
-- Keine Props und State-Änderungen
-- Stattdessen: _Server-Requests_
-  - z.B. URL ändern
-  - z.B. Search-Parameter
-
----
-
-### Konsequenzen
-
-<!-- .slide: class="left" -->
-
-- Eine **Client-Komponente**
-  - wird mit `use client` gekennzeichnet
-  - Alle Komponenten darunter werden dann als Client-Komponenten angenommen
-  - Ist auf Client-seite interaktiv (JavaScript-Code im Browser vorhanden)
-  - Muss eine neue **Darstellung** vom Server anfordern
-  - Beispiel, das die Search-Parameter in der URL verändert:
-- ```tsx
-  "use client";
-
-  import { useSearchParams } from "next/navigation";
-
-  export default function OrderByButton({ orderBy, children }) {
-    const searchParams = useSearchParams();
-
-    const currentOrderBy = searchParams.get("orderBy");
-    const currentPage = searchParams.get("page");
-
-    const newParams = new URLSearchParams(searchParams);
-    newParams.set("order_by", orderBy);
-
-    const href = `/recipes?${newParams.toString()}`;
-
-    return <Link href={href}>{children}</Link>;
-  }
-  ```
-
----
-
-### Konsequenzen
-
-<!-- .slide: class="left" -->
-
-- Auf der **Server-Seite**:
-  - Statt "klassischer" Props werden hier nun Search Params verwendet
-  - Routen-Komponenten (`page.tsx`) in Next.js können sich die Search-Parameter als Property `searchParams` übergeben lassen
-    - (`params` für Segmente im Pfad, `searchParams` für die Query-Parameter hinter dem `?` in der URL)
-- ```tsx
-  type RecipeListPageProps = {
-    searchParams: {
-      page?: string;
-      orderBy?: "likes" | "time";
-    };
-  };
-
-  export default async function RecipeListPage({
-    searchParams,
-  }: RecipeListPageProps) {
-    // 'page' in Zahl konvertieren, 0 als Default
-    const page = parseInt(searchParams.page || "0");
-    const orderBy = searchParams.orderBy;
-
-    const result = fetchRecipes(page, orderBy);
-
-    return <ReipceList recipes={result.content} />;
-  }
-  ```
-
----
-
-### Server- und Client-Komponenten
-
-- Alle Komponenten, die von einer Client-Komponente (`use client`) aus gerendert werden (direkt oder indirekt) sind Client Komponenten
-- Das heißt deren JavaScript-Code wird ebenfalls zum Client geschickt und dort ausgeführt
-- Komponeten, die nicht explizit gekennzeichnet sind, können **beide** Rollen einnehmen
-- Sie müssen dann aber auch Anforderungen beider Komponenten-Typen erfüllen:
-  - **keine** Verwendung von Server-APIs wie Datenbanken
-  - **keine** Verwendung von Browser-spezifischen APIs (z.B. `window` oder hooks)
-- Wenn sie als Server Component verwent werden, wird ihr JavaScript-Code nicht zum Client geschickt
-- Next.JS rendert die Client Component serverseitig vor
-- Erst wenn eine Komponente als Client Komponente benötigt wird, der JS-Code vom Server abgefragt
 
 ---
 ## (Server) Actions
@@ -839,7 +653,14 @@
     return { newLikes: result.newLikes };
   }
   ```
-- <!-- .element: class="demo" -->Like Action!
+---
+### Server Actions: Demo
+- <!-- .element: class="demo" -->LikesWidget Action!
+- <!-- .element: class="demo" -->increase-likes implementieren
+- <!-- .element: class="demo" -->Likes Widget Action aufrufen
+- <!-- .element: class="demo" -->Like-Action verlangsamen
+- <!-- .element: class="demo" -->Transition
+- <!-- .element: class="demo" -->useOptimistich
 
 ---
 

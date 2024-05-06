@@ -9,7 +9,7 @@ console.log("Recipify Backend", recipifyBackend);
 export default defineConfig({
   plugins: [react(), TanStackRouterVite()],
   server: {
-    port: 8090,
+    port: 8099,
     proxy: { "/api": recipifyBackend },
   },
 });
