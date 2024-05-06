@@ -19,8 +19,8 @@
 ## TanStack Query
 ### Schritt-für-Schritt: Laden von Daten mit "TanStack Query"
 <!-- .slide: class="with-fragments" -->
-- 👉 `$recipeId`-Route
-- <!-- .element: class="demo" -->`useQuery` mit `queryKey` und `queryFn`
+<!-- .element: class="demo" -->`RecipePage_with_useEffect` als Ausgangsbasis für $recipeId-Route nehmen
+- <!-- .element: class="demo" -->Umstellen auf `useQuery` mit `queryKey` und `queryFn`
 - <!-- .element: class="demo" -->`isSuccess`
 - <!-- .element: class="demo" -->Query langsam
 - <!-- .element: class="demo" -->Cache in Dev Tools zeigen 
