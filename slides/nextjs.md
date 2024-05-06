@@ -54,6 +54,11 @@
   - (der "alte" `pages`-Router unterstützt keine RSC)
 ---
 ### Der Next.js App-Router
+<!-- .slide: class="with-fragments" -->
+- Wir verwenden nun den Workspace `2_nextjs/nextjs_workspace`
+- Ihr könnt dieses Verzeichnis nun in eurer IDE/Editor öffnen
+  - Pakete installieren und starten machen wir später
+- <!-- .slide: class="with-fragments" -->
 - <!-- .element: class="demo" -->Routen von Recipify zeigen
 ---
 ### Exkurs: Der Next.js App-Router
@@ -177,7 +182,7 @@
 ---
 
 ### React Server Components
-
+<!-- .slide: class="with-fragments" -->
 - **Idee:** Komponenten werden **nicht** im **Client** ausgeführt
 - Sie stehen auf dem Client nur **fertig gerendert** zur Verfügung
 - Der Server schickt lediglich _eine Repräsentation der UI_, aber _keinen JavaScript-Code_
@@ -187,7 +192,7 @@
 
 ---
 ### Arten von Komponenten
-
+<!-- .slide: class="with-fragments" -->
 - **Client-Komponenten** (wie bisher)
 
 - Werden auf dem **Client** gerendert
@@ -201,7 +206,7 @@
 ---
 
 ### Arten von Komponenten
-
+<!-- .slide: class="with-fragments" -->
 - **Neu: Server-Komponenten**
 
 - werden auf dem **Server** gerendert
@@ -214,7 +219,7 @@
 ---
 
 ### Arten von Komponenten
-
+<!-- .slide: class="with-fragments" -->
 - Die Komponenten gemischt werden:
 - Server-Komponenten können Client-Komponenten einbinden
   - (umgekehrt geht es nicht)
@@ -223,7 +228,8 @@
 
 ---
 ### Demo: Server Komponenten
-- <!-- .element: class="demo" -->`recipes`-Route anlegen
+<!-- .slide: class="with-fragments" -->
+- <!-- .element: class="demo" -->`recipes`-Route anlegen (noch ohne Daten!)
 - <!-- .element: class="demo" -->`console.log` in `page`-Komponente
 
 [//]: # (---)
@@ -249,7 +255,7 @@
 ---
 
 ## Data Fetching
-
+<!-- .slide: class="with-fragments" -->
 - Komponente, die Daten benötigen, können diese direkt _in der Komponente_ laden
 - _Kann_ Latenz sparen und bessere Performance bringen
 
@@ -260,7 +266,7 @@
 - 👉 Server-Komponenten können dazu _asynchron_ sein
 
 ---
-
+<!-- .slide: class="with-fragments" -->
 ## Data Fetching
 
 ### Demo: Eine asynchrone Server-Komponente
@@ -293,14 +299,14 @@
   ```
 ---
 ### Übung: Vorbereitung
-
+<!-- .slide: class="with-fragments" -->
 - Der Next.js-Workspace befindet sich in `2_nextjs/nextjs_workspace`
 - ⚠️ Bitte dieses Verzeichnis in IDE/Editor öffnen
 - In diesem Verzeichnis das Script `dev` ausführen
 - Die Anwendung sollte dann auf http://localhost:8100 laufen
 ---
 ### Warnung: Next.js Caching
-
+<!-- .slide: class="with-fragments" -->
 - Achtung! Next.js hat sehr aggressives Caching eingebaut
 - Wenn ihr "komisches" Verhalten feststellt, könnt ihr probieren:
   - Im Browser neuen Tab öffnen, oder in den Dev Tools Caching ausschalten oder Inkognito Modus verwenden
@@ -309,6 +315,7 @@
 
 ---
 ### Übung: Asynchrone Server Components
+<!-- .slide: class="with-fragments" -->
 **Lade Daten für die Rezept-Übersicht und untersuche das Render-Verhalten**
 
 * In der Datei `app/recipes/page.tsx` ist die Komponente für die Rezept-Übersicht implementiert
@@ -323,7 +330,7 @@
 * Lösung in `2_nextjs/nextjs_schritte/10_async_rsc/fertig`
 ---
 ### Server- und Client-Komponenten
-
+<!-- .slide: class="with-fragments" -->
 ***Demo: Client-Komponenten***
 
 1. In `RecipeListPaginationBar` soll mit `useRecipifyWindowTitle` der Fenster-Titel gesetzt werden
@@ -335,6 +342,7 @@
 
 ---
 ### Server- und Client-Komponenten
+<!-- .slide: class="with-fragments" -->
 * In Next.js sind alle Komponenten unterhalb von `app` per Default **Server Komponente**
 * Um zu kennzeichnen, wo die Server-Client-Komponente verläuft, muss ein Modul mit ["use client](https://19.react.dev/reference/rsc/use-client) ausgezeichnet werden
 * Alle Komponenten, die dieses Modul rendert (direkt oder indirekt) sind dann **Client Komponenten**
@@ -350,6 +358,7 @@
   ```
 ---
 ### Server- und Client-Komponenten
+<!-- .slide: class="with-fragments" -->
 
 * Eine Server-Komponente kann Client-Komponenten rendern
   * aber nicht umgekehrt
@@ -383,7 +392,7 @@
 
 ---
 ### Asynchronität in Client-Komponenten
-
+<!-- .slide: class="with-fragments" -->
 * Client-Komponenten dürfen keine `async`-Funktionen sein (keine Veränderung zum Status Quo)
 * Seit React 19 gibt es den [use-Hook](https://19.react.dev/reference/react/use)
 * Damit könnt ihr in einer Komponente auf ein Promise warten
@@ -406,7 +415,7 @@
   ```
 ---
 ### Übung: Server und Client-Komponenten
-
+<!-- .slide: class="with-fragments" -->
 **Mache aus der `RecipeListPaginationBar` eine Client-Komponente**
 * Falls Du mit der vorherigen Übung nicht fertig geworden bist, kopiere dir die Dateien aus `2_nextjs/nextjs_schritte/10_async_rsc/fertig` in deinen Workspace.
 * Du musst jetzt statt `await` den `use`-Hook von React verwenden
@@ -569,7 +578,7 @@
 ---
 
 ## Streaming
-
+<!-- .slide: class="with-fragments" -->
 - Wenn eine Komponente auf dem Server gerendert wird, kann React das Rendern bei einer `Suspense`-Komponente unterbrechen
 - Dann wird der Rest der Seite schon zum Client gesendet
 - Sobald die Komponenten unterhalb von `Suspense` gerendert werden konnten, werden diese zum Client nachgesendet
@@ -578,7 +587,12 @@
 ---
 
 ### Wasserfall-Requests
+<!-- .slide: class="with-fragments" -->
+<!-- .element: class="demo" -->Fertige Anwendung starten (http://localhost:8110)
+<!-- .element: class="demo" -->Rezept-Liste verlangsamen
 
+---
+### Wasserfall-Requests
 - Die `RecipePage`-Komponente benötigt Daten aus zwei Quellen: Das Rezept und dessen Bewertungen
 - Die Antwortzeit der beiden Requests dafür kann bei jedem Aufruf unterschiedlich lang sein
 - In einer klassischen React-Architektur könnte es zu einem "Request-Wasserfall" kommen:
@@ -586,8 +600,6 @@
   - Dann wird die `ReceipePageContent`-Komponente gerendert
   - Diese verwendet die `FeedbackList`-Komponente ein. Diese lädt nun (ebenfalls) per `fetch` ihre Daten und stellt sich dar.
   - Die beiden Requests starten also nicht zeitgleich, und die Dauer, bis die Daten vollständig angezeigt werden können, setzt sich aus der Dauer der **beiden** Requests zusammen
-- Kennt ihr das Problem? Meint ihr das ist ein Problem? Was könnte man dagegen tun 🤔
-
 ---
 
 ### Wasserfälle vermeiden
@@ -618,7 +630,7 @@
 ---
 
 ### Übung: Suspense und Streaming
-
+<!-- .slide: class="with-fragments" -->
 - **Lade die Bewertungen zu einem Rezept**
 - Die Route `/app/recipe/[recipeId]/page.tsx` verwendet die `RecipePageContent`-Komponente um das Rezept darzustellen
 - In der `RecipePageContent`-Komponente musst du nun noch die Bewertungen laden (`fetchFeedback`) und mit der `FeedbackListLoader`-Komponente anzeigen
@@ -634,7 +646,7 @@
 
 ---
 ### Server Actions
-
+<!-- .slide: class="with-fragments" -->
 - **Server Actions** sind Funktionen, die auf dem Server laufen und aus einer Client-Komponente aufgerufen werden können
 
   - Eine Art remote-procedure Call
@@ -655,6 +667,7 @@
   ```
 ---
 ### Server Actions: Demo
+<!-- .slide: class="with-fragments" -->
 - <!-- .element: class="demo" -->LikesWidget Action!
 - <!-- .element: class="demo" -->increase-likes implementieren
 - <!-- .element: class="demo" -->Likes Widget Action aufrufen
@@ -716,8 +729,9 @@
     // ...
   }
   ```
+---  
 ### useTransition
-
+<!-- .slide: class="with-fragments" -->
 - Mit dem `useTransition`-Hook von React 18 können Updates priorisiert werden
   - Seit React 19 geht das auch mit [asynchronen Funktionen](https://react.dev/blog/2024/04/25/react-19#actions)
 - Dazu wird eine Funktion angegeben, in der eine "Transition" beschrieben ist
@@ -835,7 +849,7 @@
 ---
 
 ### Übung: Server Actions
-
+<!-- .slide: class="with-fragments" -->
 - **Baue eine Server Action zum "liken" eines Rezeptes**
 - Implementiere die Logik zum Hochzählen in der Server-Action-Funktion `increaseLikes` in `recipe-actions.ts`
   - Die Funktion zum Speichern der Likes (`saveLike`) ist bereits fertig. Du übergibst dieser Funktion nur die Rezept-Id (`recipeId`), die Likes werden dann Backend-seitig hochgezählt

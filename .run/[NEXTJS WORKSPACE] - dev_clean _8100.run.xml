@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="[NEXTJS WORKSPACE] - dev:clean" type="js.build_tools.npm">
+  <configuration default="false" name="[NEXTJS WORKSPACE] - dev:clean :8100" type="js.build_tools.npm">
     <package-json value="$PROJECT_DIR$/2_nextjs/nextjs_workspace/package.json" />
     <command value="run" />
     <scripts>

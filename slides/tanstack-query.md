@@ -4,6 +4,7 @@
 
 ---
 ## Modernes Data Fetching in React
+<!-- .slide: class="with-fragments" -->
 * Mit `useEffect`, `fetch` und `axios` stehen dir "Low-Level-APIs" zur Verfügung, um mit serverseitigen Daten zu arbeiten
 * Diese APIs sind React (`useEffect`) bzw. Browser (`fetch`) Standard APIs
 * Es gibt aber spezialisierte Bibliotheken, die das Arbeiten mit Daten erleichtern können.
@@ -17,7 +18,7 @@
 ---
 ## TanStack Query
 ### Schritt-für-Schritt: Laden von Daten mit "TanStack Query"
-
+<!-- .slide: class="with-fragments" -->
 - 👉 `$recipeId`-Route
 - <!-- .element: class="demo" -->`useQuery` mit `queryKey` und `queryFn`
 - <!-- .element: class="demo" -->`isSuccess`
@@ -159,7 +160,7 @@
   ```
 ---
 ## Übung: Daten lesen mit TanStack Query
-
+<!-- .slide: class="with-fragments" -->
 - In der Route `/routes/recipes/$recipeId/index.tsx` befindet sich (d)eine Hello-World-Komponente
   - Wenn Du mit der Router-Übung nicht fertig geworden bist, kopiere dir die Dateien aus `spa_schritte/10_router_routing` in deinen Workspace 
 - Füge in dieser Komponente einen TanStack Query mit `useQuery` ein, der die Daten eines Rezeptes liest
@@ -167,10 +168,11 @@
 - In `/spa_schritte/30/query_use_query` findest Du eine mögliche Lösung
 
 ---
-## Validieren von Daten
+## Exkurs: "Ende-zu-ende-Typsicherheit"
 
 ---
 ### Validieren von Daten
+<!-- .slide: class="with-fragments" -->
 <!-- .slide: class="left" -->
 - Das Ergebnis eines `fetch`-Calls ist aus TypeScript-Sicht ein Promise von `any`
 - Wir können das Ergebnis also verwenden, ohne weitere Typ-Angaben zu verwenden:
@@ -203,6 +205,7 @@
 * Das führt in TanStack Query automatisch dazu, dass der Fehlerfall aktiviert wird (`isError === true`)
 ---
 ### Generieren von TypeScript Typen
+<!-- .slide: class="with-fragments" -->
 * In der Beispiel-Anwendung werden die Typen für die API-Zugriffe aus einer OpenAPI-Beschreibung generiert:
   * Das Backend erzeugt beim Starten eine aktuelle OpenAPI-Beschreibung aus dem Backend-Code (hier: Java)
   * Mit dem Projekt [typed-openapi](https://github.com/astahmer/typed-openapi) werden aus der OpenAPI-Beschreibung Zod-Typen erzeugt
@@ -214,7 +217,7 @@
 <!-- .slide: id="t-suspense" -->
 ---
 ## Suspense
-
+<!-- .slide: class="with-fragments" -->
 * Suspense ist ein relativ neuer Mechanismus in React, um das Arbeiten mit asynchronem Code (insb. Data Fetching) zu vereinfachen
   * Für Lazy-Loading und Code-Splitting gibt's das schon länger
 * Suspense unterbricht das Rendern, wenn eine Komponente wegen noch fehlender Daten nicht gerendert werden kann
@@ -223,11 +226,13 @@
 
 ---
 ### Suspense für Daten ("Suspense for Data Fetching")
+<!-- .slide: class="with-fragments" -->
 * Um Suspense mit fetch o.ä. zu verwenden, muss die eingesetzte Bibliothek Suspense unterstützen
   * Das können wir in unserem eigenen Code nicht machen
   * TanStack Query, React Router und der Apollo GraphQL Client unterstützen Suspense in ihren neusten Versionen
 ---
 ### Demo: Suspense mit TanStack Query
+<!-- .slide: class="with-fragments" -->
 - <!-- .element: class="demo" -->$recipeId-Route aus Suspense Query umstellen
 - <!-- .element: class="demo" -->Suspense.Fallback in route.tsx
 - <!-- .element: class="demo" -->RecipeListPageContent RecipeListLoader aktivieren
@@ -369,6 +374,7 @@
 * 💡 Damit die Query-Options garantiert identisch sind, kann man die [queryOptions](https://tanstack.com/query/latest/docs/framework/react/guides/query-options)-Funktion verwenden  
 ---
 ### Neu in React 19: use-Hook
+<!-- .slide: class="with-fragments" -->
 - Der Suspense-Mechanismus inkl. Error-Boundaries wird ab React 19 mit "normalen" Promises funktionieren
 - Dazu könnt ihr auf ein Promise mit `use` "warten" (statt mit `await`)
 - React rendert dann solange das nächstgelegene Suspense Fallback-Element
@@ -395,6 +401,7 @@
 
 ---
 ## Übung: Suspense
+<!-- .slide: class="with-fragments" -->
 <!-- .slide: class="left" -->
 **Die Rezept-Detailseite soll das Rezept nun mit Suspense laden und außerdem die Bewertungen darstellen**
 1. In der Route `/recipes/$recipeId/page.tsx` hast Du bereits den Query mit `useQuery` gebaut
@@ -622,7 +629,7 @@
   ```
 ---
 ## Übung: Feedback für ein Rezept speichern
-
+<!-- .slide: class="with-fragments" -->
 * Auf der Rezept-Detailseite gibt es ein Formular für eine Bewertung
 * Das Formular ist fertig, aber **die Logik zum Speichern** fehlt
 * Vervollständige dazu bitte `FeedbackForm.tsx` mit einer Mutation, die den Formular-Inhalt auf dem Server speichern kann

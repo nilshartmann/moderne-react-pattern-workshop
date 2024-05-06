@@ -2,14 +2,22 @@
 <!-- .slide: id="t-tanstack-router" -->
 ---
 ## TanStack Router
+<!-- .slide: class="with-fragments" -->
 
 - https://tanstack.com/router/latest/docs/framework/react/overview
 - Typsicherer, client-seitiger Router für React (und andere)
 - File-basierte Routen
 - Code-Generator für Routen-Konfiguration
 ---
-### TanStack Router: Demo
+### Workspace
+<!-- .slide: class="with-fragments" -->
+- Für den Single-Page-Application-Teil verwenden wir das Verzeichnis `1_spa/spa_workspace`
+- Du kannst dieses Verzeichnis schon in deinem Editor/IDE öffnen
+  - ...aber installieren und starten der npm-Pakete machen wir später
 
+---
+### TanStack Router: Demo
+<!-- .slide: class="with-fragments" -->
 - <!-- .element: class="demo" -->Route für /recipe/$recipeId
 - <!-- .element: class="demo" -->useParams, um $recipeId auszugeben
 - <!-- .element: class="demo" -->In RecipeCard Link bauen
@@ -18,7 +26,6 @@
 
 ---
 ## Routen
-
 * Es gibt verschiedene Routen-Typen
   * zum Beispiel `RootRoute` oder `FileRoute`
 * Route-Objekte werden mit Factory-Funktionen erzeugt
@@ -205,7 +212,7 @@
 
 ---
 ### Übung: Vorbereitung "SPA-Workspace"
-
+<!-- .slide: class="with-fragments" -->
 - **Klonen des Repositories**
 - Kurze Vorstellung des Repositories von mir
 - Bitte klonen: https://github.com/nilshartmann/moderne-react-pattern-workshop
@@ -216,7 +223,7 @@
 
 ---
 ### Übung: Routing mit TS Router
-
+<!-- .slide: class="with-fragments" -->
 - Lege die Route zur Einzeldarstellung eines Rezeptes an
   - Wenn Du die Datei dafür angelegt hast, sollte TS Router die (minimale) Routen-Defintion automatisch generieren. Wenn das *nicht* passiert:
       - evtl. Datei manuell in deiner IDE/Editor neu laden
@@ -234,7 +241,7 @@
 ---
 ### TanStack Router
 ## Search Params
-
+<!-- .slide: class="with-fragments" -->
 - TanStack Router bietet flexible und typsichere Wege um mit Search Parametern in der URL zu arbeiten
   - (alles hinter dem `?` in der URL: `/users?order_by=age&lastname=mueller`)
 - Die Angabe der Search Parameter und der Zugriff darauf ist typsicher
@@ -248,7 +255,7 @@
 ---
 
 # Zod
-
+<!-- .slide: class="with-fragments" -->
 - "TypeScript-first schema validation with static type inference"
 - https://zod.dev/
 - Damit könnt ihr Objekte beschreiben und **zur Laufzeit** validieren lassen
@@ -260,7 +267,7 @@
 ---
 ### Zod
 ## Demo
-
+<!-- .slide: class="with-fragments" -->
 - <!-- .element: class="demo" -->user.ts mit Zod
 
 ---
@@ -362,7 +369,7 @@
 ---
 ### TanStack Router
 ## Search Params
-
+<!-- .slide: class="with-fragments" -->
 - TanStack Router bietet flexible und typsichere Wege um mit Search Parametern in der URL zu arbeiten
   - (alles hinter dem `?` in der URL: `/users?order_by=age&lastname=mueller`)
 - Die Angabe der Search Parameter und der Zugriff darauf ist typsicher
@@ -372,6 +379,7 @@
   - Damit kannst du Search Parameter als Ergänzung oder Alternative zu (globalem) State verwenden
 ---
 ### Search Params: Demo
+<!-- .slide: class="with-fragments" -->
 - <!-- .element: class="demo" -->http://localhost:8099 Sortierung zeigen
 - <!-- .element: class="demo" --> `/recipes`-Route Search Parameter validateSearch
 - <!-- .element: class="demo" --> `OrderButton`
@@ -426,6 +434,7 @@
   ```
 ---
 ### Übung: Search-Parameter
+<!-- .slide: class="with-fragments" -->
 ![Order Button](./slides/images/order-buttons.png)
 - **Definiere für die Rezeptliste den `orderBy`-Search-Parameter**
   - Das `zod`-Objekt mit den Parametern ist bereits fertig: `RecipePageListParams` in `src/components/recipelistpage/RecipeListRouteParams.ts`

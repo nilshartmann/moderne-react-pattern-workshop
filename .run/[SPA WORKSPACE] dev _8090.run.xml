@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="[SPA] 01 - dev" type="js.build_tools.npm">
-    <package-json value="$PROJECT_DIR$/1_spa/spa_frontend/package.json" />
+  <configuration default="false" name="[SPA WORKSPACE] dev :8090" type="js.build_tools.npm">
+    <package-json value="$PROJECT_DIR$/1_spa/spa_workspace/package.json" />
     <command value="run" />
     <scripts>
       <script value="dev" />

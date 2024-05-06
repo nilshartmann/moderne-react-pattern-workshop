@@ -43,7 +43,10 @@ Reveal.initialize({
     Reveal.configure({ controls: false, fragments: true });
 
     // every 'li' should become a fragment
-    document.querySelectorAll("li").forEach((n) => n.classList.add("fragment"));
+    //    document.querySelectorAll("li").forEach((n) => n.classList.add("fragment"));
+    document
+      .querySelectorAll(".with-fragments li")
+      .forEach((n) => n.classList.add("fragment"));
 
     // ...but not really every (remove all 'fragments' from elements that are marked with 'no-fragment'
     //    and THEIR CHILDREN)
