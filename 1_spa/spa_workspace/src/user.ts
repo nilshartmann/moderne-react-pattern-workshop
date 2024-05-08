@@ -1,7 +1,19 @@
-type User = {
-  name: string;
-  age?: number;
-};
+import { z } from "zod";
+
+// type User = {
+//   firstname: string;
+//   age?: number;
+// };
+
+const TUser = z.object({
+  name: z.string(),
+  age: z.number().optional(),
+});
+
+type User = z.infer<typeof TUser>;
+
+const zodUser = TUser.parse({});
+showUser(zodUser);
 
 function showUser(u: User) {
   // irgendwas mit user machen

@@ -1,9 +1,11 @@
+"use client";
 import PaginationBar from "@/app/components/PaginationBar.tsx";
 import { PageButton } from "@/app/components/Button.tsx";
 import Link from "next/link";
 import { buildUrl } from "@/app/components/material/build-url.ts";
 import { use } from "react";
 import { useSearchParams } from "next/navigation";
+import { useRecipifyWindowTitle } from "@/app/components/useRecipifyWindowTitle.tsx";
 
 type RecipeListPaginationBarProps = {
   pageCountPromise: Promise<{
@@ -16,9 +18,10 @@ export default function RecipeListPaginationBar({
   pageCountPromise,
   params,
 }: RecipeListPaginationBarProps) {
-  // TODO:
-  //  Lies 'totalPages' aus dem übergebenen pageCountPromise
-  const totalPages = -1;
+  console.log("RecipeListPaginationBar wird gerendert");
+  const totalPages = use(pageCountPromise).totalPages;
+
+  useRecipifyWindowTitle("Browser Titel!!!");
 
   const currentPage = parseInt(params.page || "0");
 

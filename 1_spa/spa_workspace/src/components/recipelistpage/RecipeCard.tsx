@@ -42,7 +42,14 @@ const RecipeCard = memo(function RecipeCard({ recipe }: RecipeCardProps) {
              - als params musst Du das recipeId übergeben. Den Wert dazu kannst Du aus 'recipe.id' nehmen
 
           */}
-          <Link className={"hover:text-orange_2 hover:underline"}>
+
+          <Link
+            to={"/recipes/$recipeId"}
+            params={{
+              recipeId: recipe.id,
+            }}
+            className={"hover:text-orange_2 hover:underline"}
+          >
             {recipe.title}
           </Link>
         </H1>

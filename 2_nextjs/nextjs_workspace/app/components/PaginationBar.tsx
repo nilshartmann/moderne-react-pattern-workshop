@@ -19,6 +19,7 @@ export default function PaginationBar({
   currentPage = 0,
   children,
 }: PaginationBarProps) {
+  console.log("PaginationBar wird gerendert");
   // TODO
   //  füge eine console.log-Ausgabe hinzu: wann/wo wird die Komponente gerendert?
 

@@ -10,14 +10,9 @@ type OrderButtonProps = {
 };
 
 export function OrderButton({ children, orderBy }: OrderButtonProps) {
-  // TODO:
-  //   - 'currentOrderBy' soll den Wert des Search Parameters 'orderBy' enthalten
-  //   - Verwende 'recipeListRoute.useSearch' um diesen Search Parameter zu lesen
-  //     - Das ist die aktuell eingestellte Sortierreihenfolge
-  //       Die wird für den Button (nur) benötigt, damit er sich entsprechend
-  //       darstellen kann
-  //
-  const currentOrderBy = undefined;
+  const currentOrderBy = recipeListRoute.useSearch({
+    select: (currentParams) => currentParams.orderBy,
+  });
 
   const checked = orderBy === currentOrderBy;
   return (
@@ -35,7 +30,14 @@ export function OrderButton({ children, orderBy }: OrderButtonProps) {
               Komponenten 'RecipeListNavBar' und 'RecipeListPaginationBar' einkommentieren (siehe TODO dort),
               um deinen Code auszuprobieren
          */}
-      <Link to={"/recipes"} disabled={checked}>
+      <Link
+        to={"/recipes"}
+        disabled={checked}
+        search={(currentSeachParams) => ({
+          ...currentSeachParams,
+          orderBy: orderBy,
+        })}
+      >
         <CheckLabel checked={checked}>{children}</CheckLabel>
       </Link>
     </Button>

@@ -1,34 +1,30 @@
-import { fetchRecipes } from "@/app/components/queries.ts";
+import { fetchRecipe, fetchRecipes } from "@/app/components/queries.ts";
 import RecipeListNavBar from "@/app/components/recipelistpage/RecipeListNavBar.tsx";
 import RecipeListPaginationBar from "@/app/components/recipelistpage/RecipeListPaginationBar.tsx";
 import RecipeList from "@/app/components/recipelistpage/RecipeList.tsx";
+import { cookies } from "next/headers";
 
 type RecipeListPageProps = {
   searchParams: Record<string, string>;
 };
 
-export default function RecipeListPage({ searchParams }: RecipeListPageProps) {
-  const page = parseInt(searchParams.page) || 0;
-  // TODO:
-  //   - Verwende die fertige 'fetchRecipes'-Funktion, um die Daten für
-  //     Übersichtsseite zu laden
-  //     - An 'fetchRecipes' kannst Du als ersten Parameter 'page' übergeben
-  //   - fetchRecipes liefert ein Promise zurück.
-  //   - Render 'RecipeList' und 'RecipeListPaginationBar' und übergib das Promise
+export default async function RecipeListPage() {
+  console.log("Rendering RecipeListPage");
+  const searchParams = {};
+  // const page = parseInt(searchParams.page) || 0;
+  const page = 0;
+  const recipesPromise = fetchRecipes();
+
+  //
 
   return (
     <div className={"bg-goldgray"}>
       <div className={"container mx-auto space-y-8 pb-8 pt-8"}>
-        TODO! Logik für diese Route muss leider noch implementiert werden! (s.
-        app/recipes/page.tsx)
-        {/*
-
-        TODO:
-          - Render RecipeList
-          - Render RecipeListPaginationBar
-            - hier musst Du das Promise UND die 'searchParams' (unverändert) übergeben
-
-        */}
+        <RecipeList recipesPromise={recipesPromise} />
+        <RecipeListPaginationBar
+          pageCountPromise={recipesPromise}
+          params={searchParams}
+        />
       </div>
     </div>
   );
