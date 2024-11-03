@@ -1,7 +1,0 @@
-rootProject.name = 'moderne-react-pattern-workshop'
-
-
-include '0_backend'
-
-project(':0_backend').name = 'backend'
-

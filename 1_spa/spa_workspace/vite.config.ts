@@ -2,6 +2,8 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
 
+// http://localhost:8099/recipes?orderBy=time&page=4
+
 const recipifyBackend = process.env.RECIPIFY_BACKEND ?? "http://localhost:8080";
 console.log("Recipify Backend", recipifyBackend);
 

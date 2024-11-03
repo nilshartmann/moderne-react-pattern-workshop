@@ -29,7 +29,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetRecipeFeedbacksResponse'
+                $ref: "#/components/schemas/GetRecipeFeedbacksResponse"
     post:
       tags:
       - recipe-api-controller
@@ -50,7 +50,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostFeedbackRequest'
+              $ref: "#/components/schemas/PostFeedbackRequest"
         required: true
       responses:
         "200":
@@ -58,7 +58,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostFeedbackResponse'
+                $ref: "#/components/schemas/PostFeedbackResponse"
   /api/newsletter/subscribe:
     post:
       tags:
@@ -75,7 +75,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PostNewsletterRegistrationRequest'
+              $ref: "#/components/schemas/PostNewsletterRegistrationRequest"
         required: true
       responses:
         "200":
@@ -83,7 +83,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PostNewsletterRegistrationResponse'
+                $ref: "#/components/schemas/PostNewsletterRegistrationResponse"
   /api/recipes/{recipeId}/likes:
     patch:
       tags:
@@ -107,7 +107,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IncrementLikesResponse'
+                $ref: "#/components/schemas/IncrementLikesResponse"
   /api/search:
     get:
       tags:
@@ -137,7 +137,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PageResponseRecipeSummaryDto'
+                $ref: "#/components/schemas/PageResponseRecipeSummaryDto"
   /api/search/{recipeId}/details:
     get:
       tags:
@@ -161,7 +161,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetSearchDetailResponse'
+                $ref: "#/components/schemas/GetSearchDetailResponse"
   /api/recipes:
     get:
       tags:
@@ -206,7 +206,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PageResponseRecipeDto'
+                $ref: "#/components/schemas/PageResponseRecipeDto"
   /api/recipes/{recipeId}:
     get:
       tags:
@@ -230,7 +230,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetRecipeResponse'
+                $ref: "#/components/schemas/GetRecipeResponse"
   /api/recipes/{recipeId}/ingredients:
     get:
       tags:
@@ -254,7 +254,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetRecipeIngredientsResponse'
+                $ref: "#/components/schemas/GetRecipeIngredientsResponse"
   /api/recipes/{recipeId}/feedback:
     get:
       tags:
@@ -284,7 +284,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PageResponseFeedback'
+                $ref: "#/components/schemas/PageResponseFeedback"
 components:
   schemas:
     NewFeedback:
@@ -311,7 +311,7 @@ components:
       type: object
       properties:
         feedbackData:
-          $ref: '#/components/schemas/NewFeedback'
+          $ref: "#/components/schemas/NewFeedback"
     Feedback:
       required:
       - comment
@@ -339,7 +339,7 @@ components:
       type: object
       properties:
         newFeedback:
-          $ref: '#/components/schemas/Feedback'
+          $ref: "#/components/schemas/Feedback"
     PostNewsletterRegistrationRequest:
       required:
       - email
@@ -377,7 +377,7 @@ components:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/RecipeSummaryDto'
+            $ref: "#/components/schemas/RecipeSummaryDto"
         pageNumber:
           type: integer
           format: int32
@@ -399,9 +399,9 @@ components:
       properties:
         id:
           type: string
-        mealType:
-          type: string
         title:
+          type: string
+        mealType:
           type: string
     CategoryDto:
       required:
@@ -425,7 +425,7 @@ components:
       type: object
       properties:
         recipe:
-          $ref: '#/components/schemas/RecipeDto'
+          $ref: "#/components/schemas/RecipeDto"
     RecipeDto:
       required:
       - averageRating
@@ -461,7 +461,7 @@ components:
         categories:
           type: array
           items:
-            $ref: '#/components/schemas/CategoryDto'
+            $ref: "#/components/schemas/CategoryDto"
         mealType:
           type: string
         averageRating:
@@ -482,7 +482,7 @@ components:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/RecipeDto'
+            $ref: "#/components/schemas/RecipeDto"
         pageNumber:
           type: integer
           format: int32
@@ -532,7 +532,7 @@ components:
         categories:
           type: array
           items:
-            $ref: '#/components/schemas/CategoryDto'
+            $ref: "#/components/schemas/CategoryDto"
         mealType:
           type: string
         averageRating:
@@ -544,18 +544,18 @@ components:
         instructions:
           type: array
           items:
-            $ref: '#/components/schemas/Instruction'
+            $ref: "#/components/schemas/Instruction"
         ingredients:
           type: array
           items:
-            $ref: '#/components/schemas/Ingredient'
+            $ref: "#/components/schemas/Ingredient"
     GetRecipeResponse:
       required:
       - recipe
       type: object
       properties:
         recipe:
-          $ref: '#/components/schemas/DetailedRecipeDto'
+          $ref: "#/components/schemas/DetailedRecipeDto"
     Ingredient:
       required:
       - amount
@@ -593,7 +593,7 @@ components:
         ingredients:
           type: array
           items:
-            $ref: '#/components/schemas/Ingredient'
+            $ref: "#/components/schemas/Ingredient"
     GetRecipeFeedbacksResponse:
       required:
       - feedbacks
@@ -602,7 +602,7 @@ components:
         feedbacks:
           type: array
           items:
-            $ref: '#/components/schemas/Feedback'
+            $ref: "#/components/schemas/Feedback"
     PageResponseFeedback:
       required:
       - content
@@ -615,7 +615,7 @@ components:
         content:
           type: array
           items:
-            $ref: '#/components/schemas/Feedback'
+            $ref: "#/components/schemas/Feedback"
         pageNumber:
           type: integer
           format: int32

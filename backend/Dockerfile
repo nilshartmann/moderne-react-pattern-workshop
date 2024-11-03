@@ -5,7 +5,7 @@ FROM eclipse-temurin:21-jdk
 EXPOSE 8080
 
 # The application's jar file
-ARG JAR_FILE=build/libs/*.jar
+ARG JAR_FILE=target/*.jar
 
 # Add the application's jar to the container
 ADD ${JAR_FILE} recipify-backend.jar
