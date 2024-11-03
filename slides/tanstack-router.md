@@ -220,6 +220,13 @@
   - Es reicht für diesen Teil, wenn ihr **das Backend** und die **SPA-Anwendung (Workspace)** installiert bzw. startet 
 - **Arbeitsverzeichnis**: Wir arbeiten ausschliesslich im Verzeichnis `1_spa/spa_workspace`
 - ⚠️ Am besten nur das `1_spa/spa_workspace`-Verzeichnis in der IDE oder im Editor öffnen
+- Hierdrin `npm install` oder `pnpm install` oder `yarn install` ausführen
+- Dann .env-Datei anlegen:
+  ```
+  RECIPIFY_BACKEND=https://nextjs-workshop-backend.fly.dev 
+  ```
+- Dann `npm run dev` (oder `yarn dev` oder `pnpm dev`)  
+
 
 ---
 ### Übung: Routing mit TS Router
