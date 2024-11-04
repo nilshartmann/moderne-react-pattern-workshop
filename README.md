@@ -23,7 +23,7 @@ Das Backend ist in Java (21) und Spring Boot 3.2 geschrieben. Außerdem benötig
 
 **Variante 1**: Starten des Java-Prozesses aus deiner IDE bzw. über die Kommandozeile.
 
-Dieses ist der aufwändigste Weg und macht aus meiner Sicht nur Sinn, wenn du ohnehin Java entwickelst. Du brauchst dann ein JDK21 und Docker auf deinem Laptop. Dein Laptop muss in der Lage sein über Gradle und Docker Pakete bzw. Images zu installieren.
+Dieses ist der aufwändigste Weg und macht aus meiner Sicht nur Sinn, wenn du ohnehin Java entwickelst. Du brauchst dann ein JDK21 und Docker auf deinem Laptop. Dein Laptop muss in der Lage sein über Maven und Docker Pakete bzw. Images zu installieren.
 
 In dieser Variante müssen die Ports `8080` und `8432` verfügbar sein.
 
@@ -52,7 +52,7 @@ Ich werde das Backend während des Workshops auch in der Cloud starten. Du kanns
 
 ### Voraussetzungen für die React SPA- und Next.js-Anwendung
 
-Die beiden React-Anwendungen benötigen Node.JS (mindestens Version 18). Die Pakete werden mit [pnpm](https://pnpm.io/installation) installiert. Dabei handelt es sich um einen alternativen Package-Manager zur npm, den du über Node.js selbst aktivieren kannst. Wenn das bei dir nicht funktioniert, sollte auch npm oder yarn funktionieren. Ich habe die Installation aber nur mit pnpm getestet.
+Die beiden React-Anwendungen benötigen Node.JS (mindestens Version 22). Die Pakete werden mit [pnpm](https://pnpm.io/installation) installiert. Dabei handelt es sich um einen alternativen Package-Manager zur npm, den du über Node.js selbst aktivieren kannst. Wenn das bei dir nicht funktioniert, sollte auch npm oder yarn funktionieren. Ich habe die Installation aber nur mit pnpm getestet.
 
 Dein Laptop muss mit dem Package Manager in der Lage sein, npm Packages runterzuladen und zu installieren.
 
@@ -66,14 +66,18 @@ Dein Laptop muss mit dem Package Manager in der Lage sein, npm Packages runterzu
 - Zu den **Voraussetzungen** der einzelnen Varianten, s.o.
 - Sofern du normalerweise kein Java entwickelst, ist es am **einfachsten**, wenn du **Variante 2 (Docker)** oder **Variante 3 (Cloud)** verwendest.
 
-### Variante 1: Starten des Java-Prozesses in deiner IDE
+### Variante 1: Starten des Java-Prozesses über Maven oder in deiner IDE
 
-Das Java-Projekt wird mit Gradle gebaut. Wenn du das Projekt in deiner IDE öffnest, sollte diese also in der Lage sein, Gradle-Projekte zu importieren. Das geht bei IntelliJ z.B. automatisch. Nach dem Importieren und compilieren startest du die Spring Boot `main`-Klasse `nh.recipify.BackendApplication`.
+Das Java-Projekt wird mit Maven gebaut. Du kannst im Root-Verzeichnis (!) Maven ausführen, um das Backend zu starten:
 
-> **Arbeitsverzeichnis setzen**
-> 
-> In IntelliJ musst du in der Run Configuration darauf achten, dass das `Working directory` auf `$MODULE_DIR$` gesetzt ist.
-> Am besten, du verwendest einfach die fertige Run Configuration `01 - Run BackendApplication (with DB)`
+```bash
+# im Root-Verzeichnis
+./mvnw spring-boot:run
+```
+
+Alternativ kannst du natürlich das Projekt in deiner IDE öffnen. Dazu das Verzeichnis `backend` in deiner IDE öffnen.
+
+Wenn du das Projekt in deiner IDE öffnest, sollte diese also in der Lage sein, Maven-Projekte zu importieren. Das geht bei IntelliJ z.B. automatisch. Nach dem Importieren und compilieren startest du die Spring Boot `main`-Klasse `nh.recipify.BackendApplication`.
 
 Diese Klasse sorgt auch automatisch dafür, dass ein Docker-Container mit einer Postgres Datenbank gestartet wird. Voraussetzung dafür ist, dass du docker-compose auf einem Computer installiert hast.
 
@@ -91,23 +95,9 @@ In dem Compose-File sind der Backend-Prozess und die Datenbank beschrieben, so d
 
 Wenn das Backend gestartet ist, kannst du einmal `http://localhost:8080/api/recipes` im Browser öffnen. Dort sollte eine JSON-Liste mit Rezepten zurückgeliefert werden.
 
-### Variante 3: Verwenden des Backens in der Cloud
+### Variante 3: Verwenden des Backends aus der Cloud
 
-In dieser Variante musst du das Backend nicht starten. Stattdessen legst du eine `.env`-Datei in den Verzeichnissen `01_spa/spa_workspace` und `02_nextjs/nextjs_workspace` an und trägst dort den Servernamen ein. Den Servernamen gebe ich dir während des Workshops (falls ich das vergesse, einfach fragen). Ich würde dich bitten, mit dem Server sorgsam umzugehen, der steht mehr oder weniger schutzlos im Internet 😉.
-
-Für beide Anwendungen denselben Servernamen jeweils in der `.env`-Datei eintragen:
-
-```
-# 01_spa/spa_workspace/.env
-
-RECIPIFY_BACKEND=Der-Hostname-kommt-von-Nils-im-Workshop
-```
-
-```
-# 02_nextjs/nextjs_workspace/.env
-
-RECIPIFY_BACKEND=Der-Hostname-kommt-von-Nils-im-Workshop
-```
+In dieser Variante musst du das Backend nicht starten. Ich zeige euch, wie ihr die lokale Konfiguration des Frontends anpasst, so dass diese sich mit dem Backend aus der Cloud verbindet. 
 
 
 Zum Testen der Verbindung kannst du einmal den Cloud-Hostnamen mit dem Pfad `/api/recipes` im Browser öffnen aufrufen (https://Der-Hostname-kommt-von-Nils-im-Workshop/api/recipes).
