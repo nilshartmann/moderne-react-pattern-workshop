@@ -5,7 +5,7 @@
 ---
 ## Modernes Data Fetching in React
 <!-- .slide: class="with-fragments" -->
-* Mit `useEffect`, `fetch` und `axios` stehen dir "Low-Level-APIs" zur Verfügung, um mit serverseitigen Daten zu arbeiten
+* Mit `useEffect`, `fetch` stehen dir "Low-Level-APIs" zur Verfügung, um mit serverseitigen Daten zu arbeiten
 * Diese APIs sind React (`useEffect`) bzw. Browser (`fetch`) Standard APIs
 * Es gibt aber spezialisierte Bibliotheken, die das Arbeiten mit Daten erleichtern können.
     * [TanStack Query](https://tanstack.com/query/latest) / und [Vercel SWR](https://swr.vercel.app/): Zwei Bibliotheken zum Laden/Speichern von Daten inklusive Cache-Funktion
@@ -15,6 +15,83 @@
     * Hooks zum Laden/Speichern von Daten
     * globales Caching von Daten (auch zur Sicherstellung der konsistenten Darstellung)
         * Strategien zur Aktualisierung von Daten (auch automatisch im Hintergrund)
+---
+### Die ky Bibliothek
+<!-- .slide: data-state="exkurs" -->
+<!-- .slide: id="ky" -->
+* Auf dem `ky`-Objekt sind Funktionen definiert, mit denen ihr Requests mit unterschiedlichen HTTP Methoden machen könnt (`get`, `post`, ...)
+* Die Methoden haben jeweils zwei Parameter:
+  1. Die Methoden erwarten die URL, die ihr aufrufen wollt
+  2. (optional) Ein Objekt mit weiteren Einstellungen für einen Request, z.B. der Payload
+
+* ```typescript
+  import ky from "ky";
+  // HTTP GET Request
+  const blogPosts = await ky
+          .get<BlogPost[]>(`http://localhost:7000/posts`)
+          .json();
+  // ...
+  ```
+* ```typescript
+  // HTTP POST Request mit Objekt als Body
+  const newBlogPost = await ky.post<BlogPost>("http://localhost:7000/posts", {
+          json: { title, body, tags }
+  // ...
+  });
+  ```
+---
+### Daten lesen mit ky
+<!-- .slide: data-state="exkurs" -->
+* Die Funktionen auf dem `ky`-Objekt liefern jeweils ein Promise mit einem `Response`-Objekt zurück
+  * Dabei handelt es sich um eine Erweiterung des standardisierten [Response-Objektes des Browsers](https://developer.mozilla.org/en-US/docs/Web/API/Response).
+  * In ky gibt es darauf noch Hilfsmethoden, die es vereinfachen mit dem Payload der Antwort zu arbeiten
+* Mit `json` könnt ihr den Payload auslesen und in JavaScript-Objekte verwandeln
+  * Der Payload muss dazu natürlich im JSON-Format vorliegen
+* Als Typ-Argument muss der erwartete Rückgabe-Typ in TypeScript angegeben werden
+* ```typescript
+  import ky from "ky";
+
+  async function loadBlogPosts() {
+    const blogPosts = await ky
+          .get<BlogPost[]>(`http://localhost:7000/posts`)
+          .json();
+    return blogPosts; // blogPosts ist vom Typ BlogPost[]
+  // ...
+  ```
+* Wenn ihr keinen TypeScript-Typen angebt, ist der Typ `unknown`
+* Achtung! Zur Laufzeit findet keine Prüfung statt, ob die Antwort vom Server dem angegebenen
+  Typen tatsächlich entspricht.
+* Für Laufzeit-Prüfungen bietet sich z.B. die Bibliothek [zod](https://zod.dev) an
+---
+### Daten schreiben mit ky
+<!-- .slide: data-state="exkurs" -->
+* Um Daten zu schreiben, verwendet ihr die HTTP Methoden POST, PATCH, PUT oder DELETE
+* Auch dafür gibt es jeweils eigene Funktionen auf dem `ky`-Objekt
+* Üblicherweise gebt ihr dabei als zweiten Parameter ein Objekt mit [Konfigurationsoptionen](https://github.com/sindresorhus/ky?tab=readme-ov-file#options) an
+* ```typescript
+  const responsePromise = ky.post<NewBlogPost>("http://localhost:7000/posts", {
+    // Optionen für Payload, HTTP Header etc.
+  }).json();
+  ```
+* Mit dem Konfigurationsobjekt könnt ihr z.B. angeben, welche HTTP-Header ihr bei einem Request mitschicken wollt
+* Und ihr könnt den Payload festlegen.
+* Um JavaScript-Objekte im JSON-Format zu übertragen, verwendet ihr die `json`-Eigenschaft
+  * Das übergebene Objekt wird automatisch ins JSON-Format umgewandelt
+  * Außerdem wird der HTTP Header `content-type: application/json` gesetzt
+* Genau wie bei `ky.get` könnt ihr dann auf die Response zugreifen (z.B. mit `json()`)
+* Den Typ der Response gebt ihr ebenfalls als Typ-Parameter an (wie bei `ky.get`)
+* ```typescript
+  async function saveBlogPost(postTitle: string, postBody: string) {
+    const result = await
+            ky.post<NewBlogPost>(
+              "http://localhost:7000/posts", {
+                json: { title: postTitle, body: postBody }
+              }
+            ).json();
+      // result ist NewBlogPost
+    }
+  ```
+
 ---
 ## TanStack Query
 ### Schritt-für-Schritt: Laden von Daten mit "TanStack Query"
@@ -60,11 +137,13 @@
     * `queryFn`: Funktion zum Laden der Daten
     * Weitere Konfigurationen (optional)
 * ```typescript
-  import { useQuery } from "react-query";
-  import { loadBlogPosts } from "./blog-api";
+  import { useQuery } from "@tanstack/react-query";
   function BlogListPage() {
 
-    const result = useQuery({queryKey: ['posts'], queryFn: loadBlogPosts});
+    const result = useQuery({
+      queryKey: ['recipes'], 
+      async queryFn(): ky.get("...").json()
+    });
 
     // ...
   }
@@ -75,7 +154,7 @@
 * `useQuery` erwartet eine [Query-Function](https://tanstack.com/query/latest/docs/react/guides/query-functions), die den eigentlichen Request ausführt
 * Die Signatur ist fast beliebig, die Funktion muss aber ein Promise zurückliefern:
 * Wenn die Daten erfolgreich geladen wurden, muss das Promise mit den Daten "aufgelöst" werden
-* Wenn es einen Fehler gab, muss die Funktion einen Fehler werfen
+* Wenn es einen Fehler gab, kann die Funktion einen Fehler werfen
 * ```typescript
   export async function loadRecipe(recipeId) {
     const response = await fetch("http://localhost:8080/api/recipes/" + recipeId);
@@ -87,6 +166,7 @@
     return response.json();
   }
   ```
+* Bei `ky` wird bei HTTP Status Codes, die nicht "OK" sind (2xx), automatisch ein Fehler geworfen  
 
 ---
 
@@ -109,8 +189,7 @@
   oder die Sortierreihenfolge
     * Also alle Daten, die den Query exakt beschreiben
 * ```typescript
-  import { useQuery } from "react-query";
-  import { fetchRecipe } from "./recipe-api";
+  import { useQuery } from "react-query"; 
 
   function ReipcePage({recipeId}) {
 
@@ -120,7 +199,7 @@
       //  wird das Ergebnis separat in den Cache gelegt
       queryKey: ['recipes', recipeId],
    
-      queryFn: () => fetchRecipe(recipeId)
+      queryFn() { return ky.get<GetRecipeResponse>(`/api/recipes/${recipeId}`).json() }
     });
 
     // ...
@@ -178,9 +257,8 @@
 - Wir können das Ergebnis also verwenden, ohne weitere Typ-Angaben zu verwenden:
 * ```typescript
   async function fetchRecipe(recipeId: string) {
-    const response = await fetch("...");
-    const data = await response.json();
-    //      ^-- data ist 'any'
+    const data = await ky.gete("...").json();
+    //      ^-- data ist 'unknown'
     return data;
   }
   ``` 
@@ -193,9 +271,8 @@
   });
   
   async function fetchRecipe(recipeId: string) {
-    const response = await fetch("...");
-    const data = await response.json();
-    //      ^-- data ist 'any'
+    const data = await ky.getfetch("...").json();
+    //      ^-- data ist 'unknown'
     const recipe = Recipe.parse(data);
     //        ^-- recipe is Recipe 
     return data;
@@ -251,8 +328,8 @@
   
     // hier wird das Rendern von React unterbrochen, bis die Daten da sind:
     const data = useSuspenseQuery({ 
-      queryFn: fetchRecipe(/*...*/), 
-      queryKey: ["recipes", recipeId] 
+      queryKey: ["recipes", recipeId] ,
+      async queryFn() { return ky.get(/*...*/).json(); },
     });
   
     // wenn die Anwendung hierher kommt, sind die Daten in jedem Fall vorhanden

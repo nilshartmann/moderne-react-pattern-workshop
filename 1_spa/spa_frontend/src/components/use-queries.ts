@@ -22,6 +22,7 @@ import {
   slowDown_IncreaseLikes,
   slowDown_SubscribeNewsletter,
 } from "../demo-config.tsx";
+import ky from "ky";
 
 const getAllRecipesQueryOptions = (
   page: number,
@@ -84,15 +85,11 @@ export function useGetRecipeSuspenseQuery(
 ): UseSuspenseQueryResult<GetRecipeResponse> {
   return useSuspenseQuery<GetRecipeResponse>({
     queryKey: ["recipes", recipeId],
-    queryFn: () => {
-      return fetchFromApi(getEndpointConfig("get", "/api/recipes/{recipeId}"), {
-        path: {
-          recipeId,
-        },
-        query: {
-          slowdown: slowDown_GetRecipe,
-        },
-      });
+    async queryFn() {
+      const recipe = await ky
+        .get(`/api/recipes/${recipeId}?slowdown=${slowDown_GetRecipe}`)
+        .json();
+      return GetRecipeResponse.parse(recipe);
     },
   });
 }

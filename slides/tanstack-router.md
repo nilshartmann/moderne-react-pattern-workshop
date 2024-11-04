@@ -257,8 +257,6 @@
 ---
 ## Exkurs: zod
 
-- Kennt ihr zod? https://zod.dev/ 🤔
-
 ---
 
 # Zod
@@ -272,16 +270,10 @@
   - um Benutzereingaben aus einem Formular
 
 ---
-### Zod
-## Demo
-<!-- .slide: class="with-fragments" -->
-- <!-- .element: class="demo" -->user.ts mit Zod
-
----
 
 ### TypeScript vs. JavaScript
 <!-- .slide: data-state="exkurs" -->
-<!-- .slide: class="left" -->
+<!-- .slide: class="left with-fragments" -->
 
 - Im folgenden ist mit **TypeScript** das Typsystem von TypeScript gemeint, das nur zur Buildzeit vorhanden ist
 - Mit **JavaScript** ist der Code gemeint, den wir in JavaScript oder TypeScript schreiben, und der dann auch im Browser (als JavaScript) ausgeführt wird
@@ -295,7 +287,60 @@
     return { lastname: "Meier", firstname: null };
   }
   ```
+---
+### Typecast vs. Validierung
+<!-- .slide: data-state="exkurs" -->
+<!-- .slide: class="left with-fragments" -->
+- Mit einem Typecast sagen wir TypeScript welchen Typ eine Variablen haben soll
+* Das kann richtig oder falsch sein:
+* ```typescript
+  const s:string = "Hallo";
+  let y:any = s;
+  let x:number = y as number; 🙀
+  ```
+- Entspricht ungefähr in Java:
+* ```java
+  String s = "Hallo";
+  Object y = s;
+  Integer x = (Integer) y;
+  ```
+- ```
+  async function loadRecipes() {
+    const data = await fetch("/api/recipes");
+    const recipes = await data.json();
+    return recipes as Recipe[];
+  }
+  ```  
+- In dem Beispiel sind wir uns ja sicher, dass `data` eine Liste von `Recipe`-Objekten ist.
+- Deswegen können wir uns auf den Type Cast verlassen.
+* Oder? 🤔
+---
+### Validierung
+<!-- .slide: data-state="exkurs" -->
+<!-- .slide: class="left with-fragments" -->
+* Die Daten, die von einem Server (oder auch aus Benutzereingaben) kommen, können von TypeScript nicht überprüft werden
+* TypeScript ist zu Laufzeit "weg"
+* Wenn der Server also Daten schickt die - entgegen unserer Erwartung - nicht zu dem passen, was wir als TypeScript-Typ definiert haben, merken wir das nicht
+  * (abgesehen davon, dass die Anwendung irgendwann in Fehler läuft)
+* Besser wäre bei solchen Daten eine echte Laufzeit-Validierung
+* Dabei werden die gelesen Daten nach dem Empfang überprüft:
+* ```typescript
+  function validateRecipes(r: any): Recipe[] {
+    if (!Array.isArray(data)) {
+      // Fehler, Antwort muss eine Liste sein
+    }
 
+    data.forEach(p => {
+      if (!"title" in p) { throw new Error("Kein title"); }
+      if (!"likes" in p) { throw new Error("Keine likes"); }
+      // ... weitere Prüfungen ...
+    });
+
+    // ok: data hier ziemlich sicher Recipe-Liste
+    return r as Recipe[];
+  }
+  ```
+* Ist das schön?
 ---
 
 ### Problem: TypeScript-Typen sind zur Laufzeit weg
@@ -309,69 +354,117 @@
 - Wenn man Validierung zur Laufzeit benötigt, kommt man um (JavaScript-)Code, der zur Laufzeit ausgeführt wird, nicht drumherum
 - Also müssen die Validierungsregeln in JavaScript beschrieben werden.
 - Dann sind diese aber redundant: in TypeScript (statische Typbeschreibung), in JavaScript zur Validierung während der Laufzeit
+---
+### Zod
+## Demo
+<!-- .slide: class="with-fragments" -->
+- <!-- .element: class="demo" -->user.ts mit Zod
 
 ---
-
-### Zod: Typen in JavaScript beschreiben und TS-Typen ableiten
-<!-- .slide: data-state="exkurs" -->
-
-- Aus dieser Not macht Zod eine Tugend:
-- Wir beschreiben die Objekte in JavaScript...
-- ...und können von der Beschreibung TypeScript Typen ableiten lassen
-- ```typescript
+### Validierungsbibliothek: zod
+<!-- .slide: class="left" -->
+- Mit [zod](https://zod.dev) gibt es eine Validierungsbibliothek, die beides verbindet
+- Mit (JavaScript)-Code, der auch zur Laufzeit ausgeführt wird, wird ein **Schema** beschrieben
+- Dieses Schema kann zur Laufzeit verwendet werden, um ein beliebiges Objekt zu validieren
+- Außerdem kann aus dem Schema ein TypeScript-Type für die Build-Zeit abgeleitet werden
+* ```typescript
   import { z } from "zod";
 
-  const User = z.object({
-    firstName: z.string(),
-    lastName: z.string().nullish(),
+  const UserSchema = z.object({
+    // String:
+    username: z.string(),
+
+    // String mit Format:
+    email: z.email(),
+
+    // Optionaler String (kann null oder undefined sein):
+    nickname: z.string().nullish(),
+
+    // Zahl:
+    age: z.number(),
+
+    // Liste von Strings:
+    roles: z.string().array();
   });
-
-  type IUser = z.infer<typeof User>;
   ```
-
-- Mit dem `User`-Objekt von zod können wir nun zur Laufzeit ein Objekt validieren
-- Wenn das Objekt dem User-Schema entspricht, ist alles gut, sonst gibt es einen Fehler
-- ```typescript
-  const mayOrMayNotBeAUser = readUserFromServer();
-
-  const user = User.parse(mayOrMayNotBeAUser);
-  ```
-
-- Die `parse`-Funktion fungiert gleichzeit als **Type Predicate Function**, so dass TypeScript
-  danach auch weiß, wie `user` aussieht, unabhängig davon, was in `parse` übergeben wurde
-- ```typescript
-  declare function readUserFromServer(): unknown;
-
-  const user = User.parse(readUserFromServer());
-  //     ^? --> IUser
-  
-  declare function showUser(user: IUser): void;
-  
-  showUser(user); // OK, weil user IUser ist
-  ```
-
 ---
+### Validierungsbibliothek: zod
+<!-- .slide: class="left" -->
+* Die definierten Schema lassen sich kombinieren:
+* ```typescript
+  // "Primitiver" Wert mit definiertem Format
+  const Password = z.string()
+            .min(10)
+            .regex(/^(?=.*[a-zA-Z])(?=.*\d).+$/);
 
-### Komplexe Regeln
-<!-- .slide: data-state="exkurs" -->
+  const UserSchema = z.object({
+    // ...
+    password: Password
+  });
 
-- Mit Zod kann man die typischen Datentypen verwenden (Objekte, Arrays, string, number, boolean etc)
-- Auch aus TypeScript bekannte Möglichkeiten wie `unions`, `extends`, `omit` oder `brand-Types` werden unterstützt
-- Darüberhin kann man auch die gültigen Wertemengen und andere Constraints beschreiben
-- ```typescript
-  import { z } from "zod";
+  // Liste mit definiertem Inhalt (UserSchema)
+  const GetUserApiResponse = UserSchema.array();
 
-  const User = z.object({
-    login: z.string().min(5),
-    email: z.string().email(),
-    status: z.string().emoji(), // 😊
-    age: z.number().min(18).max(123),
+  ```
+* ```typescript
+  // Erweiterung des UserSchema:
+  const EditorSchema = UserSchema.extend({
+    mainTopic: z.string()
   });
   ```
+* ```typescript
+  // Verwenden von Schemas
+  const Article = z.object({
+    // writtenBy muss EditorSchema entsprechen (weder null noch undefined)
+    writtenBy: EditorSchema,
 
-- Die `parse`-Funktion gibt dann detailierte Fehler, wenn ein überprüftes Objekt nicht diesen Regeln entspricht.
-- Das funktioniert mittlerweile auch für das Validieren von Formularen in [React Hook Form
-  ](https://react-hook-form.com/) mit dem [zod-Resolver](https://github.com/react-hook-form/resolvers#zod)
+    // reviewedBy darf Editor oder null sein (nicht undefined)
+    reviewedBy: EditorSchema.nullable(),
+
+    // Optionale Liste von Usern (darf undefined, aber nicht null sein)
+    commentedBy: UserSchema.array().optional()
+  })
+  ```
+---
+### Zod
+* Mit dem `z`-Objekt lassen sich Typen (einfache und komplexe) beschreiben
+* Objekte werden mit [`z.object`](https://zod.dev/?id=objects) beschrieben
+* Dabei kann man nicht nur Typen angeben ([`string`, `number`](https://zod.dev/?id=primitives), `email`, ....) sondern auch Wertebeschränkungen
+  * [Mindestlänge, Maximallänge](https://zod.dev/?id=minmaxlength), erlaubte Zeichen etc.
+* Mit der [`parse`-Methode](https://zod.dev/?id=parse) am `Schema`-Objekt kann dann ein beliebiges Objekt validiert werden.
+* Wenn das Objekt nicht dem Schema entspricht, wird ein Fehler geworfen
+* Wenn alles in Ordnung ist, kommt das validierte Objekt zurück
+* ```typescript
+  const potentialUser = await loadUser("U1");
+
+  const user = UserSchema.parse(potentialUser);
+  ```
+* Dadurch ist auch TypeScript der Typ bekannt!
+* ```typescript
+  type User = { username: string; email: string; nickname?: string | null };
+  const user: User = UserSchema.parse(potentialUser);
+                     // ^--- ok
+
+  ```
+---
+### Zod: Ableiten des TypeScript-Typen
+* Den TypeScript-Typen müssen wir gar nicht selber schreiben, dass kann zod für uns machen:
+* ```typescript
+  export const UserSchema = z.object({ /* ... */ });
+
+  export type User = z.infer<typeof UserSchema>;
+  ```
+* 👉 Damit sind wir sicher, dass unser TypeScript-Type und die Validierungsregeln übereinstimmen
+  * Wir vermeiden Redundanzen
+  * Wir haben Sicherheit zur Build- und zur Laufzeit
+---
+### Übung: zod
+<!-- .slide: class="with-fragments" -->
+
+* In `src/param.ts` ist ein `RecipeListSearchParams`-Typ als TypeScript-Typ definiert
+* Schreibe dafür einen zod-Typen und lass dir den TypeScript-Typen dann generieren
+* Mehr Hinweise findest du direkt in `src/param.ts`
+* Mögliche Lösung: `15_zod`
 
 ---
 ### TanStack Router
@@ -454,3 +547,24 @@
   - Siehe Todos in `OrderButton.tsx`
 - Danach sollte Sortierung und Paginierung funktionieren (s. `RecipeListPageContent.tsx`)
 - Mögliche Lösung: `spa_schritte/20_router_search_params`
+
+---
+## Search Params als globaler State
+<!-- .slide: class="with-fragments" -->
+* Macht das Sinn? 🤔
+* In welchen Fällen können wir Search-Params als Alternative oder Ergänzung zu globalem State verwenden? 🤔
+
+---
+### Demo: Search Params als globaler State
+* `BookmarkButton` einfügen und implementieren
+
+---
+### Search Params als globaler State
+
+* TanStack Router sorgt dafür, dass nur Komponeten neu gerendert werden, die sich für einen (oder mehrere) _veränderte_ Search Parameter interessieren
+  * Das Verhalten ist damit ähnlich wie z.B. in den `useSelector`-Funktionen von Redux
+* Die Search-Parameter werden automatisch validiert
+* ...sie sind typsicher
+* ...und es können sogar Objekte und Arrays sein
+  * TS Router serialisiert und deserialisert diese dann automatisch
+  
