@@ -305,15 +305,6 @@
 - In diesem Verzeichnis das Script `dev` ausführen
 - Die Anwendung sollte dann auf http://localhost:8100 laufen
 ---
-### Warnung: Next.js Caching
-<!-- .slide: class="with-fragments" -->
-- Achtung! Next.js hat sehr aggressives Caching eingebaut
-- Wenn ihr "komisches" Verhalten feststellt, könnt ihr probieren:
-  - Im Browser neuen Tab öffnen, oder in den Dev Tools Caching ausschalten oder Inkognito Modus verwenden
-  - "Hard Refresh" im Browser machen
-  - Verzeichnis `nextjs_workspace/.next` löschen und Next.js neu starten
-
----
 ### Übung: Asynchrone Server Components
 <!-- .slide: class="with-fragments" -->
 **Lade Daten für die Rezept-Übersicht und untersuche das Render-Verhalten**
@@ -729,7 +720,8 @@
     // ...
   }
   ```
----  
+
+---
 ### useTransition
 <!-- .slide: class="with-fragments" -->
 - Mit dem `useTransition`-Hook von React 18 können Updates priorisiert werden

@@ -401,8 +401,7 @@
 
 ---
 ## Übung: Suspense
-<!-- .slide: class="with-fragments" -->
-<!-- .slide: class="left" -->
+<!-- .slide: class="left with-fragments" -->
 **Die Rezept-Detailseite soll das Rezept nun mit Suspense laden und außerdem die Bewertungen darstellen**
 1. In der Route `/recipes/$recipeId/page.tsx` hast Du bereits den Query mit `useQuery` gebaut
   * Wenn du nicht fertig geworden bist, kopiere dir `spa_schritte/30/query_use_query/.../$recipeId/index.tsx` in deinen Workspace
@@ -635,6 +634,6 @@
 * Vervollständige dazu bitte `FeedbackForm.tsx` mit einer Mutation, die den Formular-Inhalt auf dem Server speichern kann
 * Du findest Hinweise und Todos direkt in der Datei.
 * ⚠️ Wenn mehrere von euch die Cloud-Version als Backend verwenden, nicht wundern, wenn ihr Kommentare seht, die ihr nicht geschrieben habt 😉
-  * Entsprechend nur anständiges Zeugs zum testen posten 👮‍
+  * Entsprechend nur anständiges Zeugs zum Testen posten 👮‍
 * Eine mögliche Lösung findest Du in `spa_schritte/50_query_use_mutation`
 

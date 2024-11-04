@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+
+    <title>Moderne React Pattern in der Praxis</title>
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui"
+    />
+    <link rel="stylesheet" href="slides/revealjs/reveal.js/dist/reset.css" />
+    <link rel="stylesheet" href="slides/revealjs/reveal.js/dist/reveal.css" />
+    <link
+      rel="stylesheet"
+      href="slides/revealjs/reveal.js/dist/theme/solarized.css"
+    />
+
+    <!-- Theme used for syntax hislides/ghlighted code -->
+    <link
+      rel="stylesheet"
+      href="slides/revealjs/highlight-js-github-theme.css"
+    />
+    <link rel="stylesheet" href="slides/revealjs/styles.css" />
+  </head>
+
+  <body>
+    <div class="reveal">
+      <!-- Any section element inside of this container is displayed as a slide -->
+      <div class="slides">
+        <section data-state="title">
+          <h2 class="title" style="font-size: 7rem">
+            <b>Moderne React Pattern in der Praxis</b>
+          </h2>
+
+          <h4>
+            <span class="transparent-bg">
+              <a href="https://nilshartmann.net" target="_blank"
+                >Nils Hartmann</a
+              >
+              |
+              <a href="https://twitter.com/nilshartmann" target="_blank"
+                >@nilshartmann</a
+              >
+            </span>
+          </h4>
+          <p style="margin-top: 4rem"></p>
+          <div>
+            <h3><span class="transparent-bg">Repository</span></h3>
+            <p>
+              <span class="transparent-bg"
+                >Remote:
+                <a
+                  href="https://github.com/nilshartmann/moderne-react-pattern-workshop"
+                  >https://github.com/nilshartmann/moderne-react-pattern-workshop</a
+                ></span
+              >
+            </p>
+          </div>
+          <p style="margin-top: 4rem"></p>
+          <div>
+            <h3><span class="transparent-bg">Slides</span></h3>
+            <p>
+              <span class="transparent-bg"
+                >Online:
+                <a href="https://react.schule/wjax-2024-workshop"
+                  >https://react.schule/wjax-2024-workshop</a
+                ></span
+              >
+            </p>
+          </div>
+        </section>
+        <section>
+          <h2>Nils Hartmann</h2>
+          <p style="margin-top: 2rem">
+            <a href="https://nilshartmann.net" target="_blank"
+              >https://nilshartmann.net</a
+            >
+            /
+            <a href="https://twitter.com/nilshartmann" target="_blank"
+              >@nilshartmann</a
+            >
+          </p>
+          <p style="margin-top: 2rem">
+            <em
+              >Freiberuflicher Software-Entwickler, Berater und Trainer aus
+              Hamburg</em
+            >
+          </p>
+          <p></p>
+          <p style="margin-top: 5rem">
+            Java | JavaScript, TypeScript | React | GraphQL
+          </p>
+          <div style="display: flex; justify-content: center; margin-top: 2rem">
+            <div style="margin-left: 15px">
+              <a href="https://graphql.schule/video-kurs"
+                ><img
+                  style="max-height: 450px"
+                  src="slides/images/screenshot-graphql-kurs.png"
+                /><br />https://graphql.schule/video-kurs</a
+              >
+              <br />
+            </div>
+            <!--  -->
+            <div style="margin-left: 100px">
+              <a href="https://reactbuch.de"
+                ><img
+                  style="max-height: 450px"
+                  src="slides/images/react-buch-v2.jpg"
+                /><br />https://reactbuch.de</a
+              >
+              <br />
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================================= -->
+        <section data-markdown>
+          <textarea data-template>
+### Agenda
+* Teil 1: Single-Page-Anwendungen
+  * [Typsicheres Routing mit TanStack Router](#/t-tanstack-router)
+  * [Modernes Data Fetching mit TanStack Query und Suspense](#/t-tanstack-query)
+
+* Teil 2: [Fullstack-Anwendungen mit React](#/t-nextjs)
+  * Am Beispiel Next.js
+
+* Eure Fragen, Diskussionen: **jederzeit**
+---
+## React 19
+
+* [React 19 Release Candidate](https://react.dev/blog/2024/04/25/react-19) ist bereits Ende April erschienen
+  * **Nicht** enthalten ist der React **Compiler**, der wird wohl später nachgeliefert
+* Das ["Suspense Drama"](https://tkdodo.eu/blog/react-19-and-suspense-a-drama-in-3-acts) verhindert seitdem die finale Version 😢
+* Außerdem ist [React 18.3](https://react.dev/blog/2024/04/25/react-19-upgrade-guide#react-18-3) erschienen, das die Migration vorbereiten soll
+---
+## Demo-Anwendung
+
+* http://localhost:8099
+
+
+          </textarea>
+        </section>
+
+        <section data-markdown="slides/tanstack-router.md"></section>
+        <section data-markdown="slides/tanstack-query.md"></section>
+        <section data-markdown="slides/nextjs.md"></section>
+
+        <!-- ============================================================================= -->
+        <section>
+          <h2>Geschafft! 😊</h2>
+          <h3>Vielen Dank für Eure Teilnahme!</h3>
+          <h3>Viel Spaß und Erfolg mit React und Next.js!</h3>
+          <p>Wenn ihr noch Fragen habt, könnt ihr mich erreichen:</p>
+          <p>
+            Mail:
+            <a href="mailto:nils@nilshartmann.net">nils@nilshartmann.net</a>
+          </p>
+          <p>
+            Web:
+            <a href="https://nilshartmann.net" target="_blank"
+              >https://nilshartmann.net</a
+            >
+          </p>
+          <p>
+            Twitter:
+            <a href="https://twitter.com/nilshartmann" target="_blank"
+              >@nilshartmann</a
+            >
+          </p>
+          <p>
+            Weitere Kontaktdaten:
+            <a href="https://nilshartmann.net/kontakt" target="_blank"
+              >https://nilshartmann.net/kontakt</a
+            >
+          </p>
+        </section>
+      </div>
+    </div>
+
+    <script src="slides/revealjs/reveal.js/dist/reveal.js"></script>
+    <script src="slides/revealjs/reveal.js/plugin/notes/notes.js"></script>
+    <script src="slides/revealjs/reveal.js/plugin/markdown/markdown.js"></script>
+    <script src="slides/revealjs/reveal.js/plugin/highlight/highlight.js"></script>
+    <script src="slides/revealjs/config.js"></script>
+  </body>
+</html>

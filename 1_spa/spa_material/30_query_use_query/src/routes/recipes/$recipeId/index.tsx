@@ -13,7 +13,9 @@ function RecipePage() {
   // TODO:
   //
   //   - Verwende "useQuery", um das Rezept mit der Id 'recipeId' zu laden
-  //     - Der queryKey soll aus 'recipes' und der recipeId bestehen
+  //     - Das queryKey-Array soll zwei Einträge haben:
+  //        1. der String 'recipes'
+  //        2. die recipeId dieser Route
   //     - Als queryFn kannst Du die fertige Funktion 'fetchRecipe' verwenden:
   //        fetchRecipe(receipId)
   //     - Wenn der Query erfolgreich war, kannst Du die RecipePageContent-Komponente rendern:

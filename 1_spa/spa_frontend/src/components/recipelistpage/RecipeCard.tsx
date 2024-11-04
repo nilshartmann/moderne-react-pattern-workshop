@@ -1,7 +1,7 @@
 import { RecipeDto } from "../api-types.ts";
 import { H1 } from "../Heading.tsx";
 import { Link } from "@tanstack/react-router";
-import { memo } from "react";
+import React from "react";
 import { RecipeCategories } from "../RecipeCategories.tsx";
 
 type RecipeCardProps = {
@@ -14,7 +14,9 @@ type RecipeCardProps = {
 //  - use profile to see that it is (not) rerendered
 //  - use console.log
 
-const RecipeCard = memo(function RecipeCard({ recipe }: RecipeCardProps) {
+const RecipeCard = function RecipeCard({ recipe }: RecipeCardProps) {
+  console.log("Rendering RecipeCard for Recipe", recipe.id);
+
   return (
     <div className={"flex flex-col justify-between"}>
       <div>
@@ -25,7 +27,7 @@ const RecipeCard = memo(function RecipeCard({ recipe }: RecipeCardProps) {
               src={`/images/recipes/food_${recipe.id}.png`}
               alt="image1"
             />
-            {/* vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv */}
+            {/*vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv */}
             {/*<BookmarkButton recipeId={recipe.id} />*/}
             {/* ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ */}
           </div>
@@ -65,6 +67,6 @@ const RecipeCard = memo(function RecipeCard({ recipe }: RecipeCardProps) {
       </div>
     </div>
   );
-});
+};
 
 export { RecipeCard };

@@ -12,7 +12,6 @@ import java.lang.annotation.Target;
 
 @RestController
 @RequestMapping(produces = MediaType.APPLICATION_JSON_VALUE, path = "/api")
-@CrossOrigin(originPatterns = {"http://localhost:8090", "http://localhost:8091", "http://localhost:8100", "https://*:8100"})
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ApiController {
