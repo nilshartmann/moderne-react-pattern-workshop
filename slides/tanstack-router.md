@@ -21,7 +21,7 @@
 - <!-- .element: class="demo" -->Route für /recipe/$recipeId
 - <!-- .element: class="demo" -->useParams, um $recipeId auszugeben
 - <!-- .element: class="demo" -->In RecipeCard Link bauen
-- <!-- .element: class="demo" -->route.tsx für Layout
+- <!-- .element: class="demo" -->route.tsx für Layout (RecipesPageLayout)
 - 
 
 ---

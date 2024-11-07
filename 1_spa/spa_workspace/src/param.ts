@@ -1,8 +1,8 @@
 import { z } from "zod";
 
 type RecipeListSearchParams = {
-  // Im zod-Typen sollte page nicht nur optional sein, sondern auch einen mindest Wert von 0 haben
-  //  (es gibt keine negativen page-Angaben)
+  // Im zod-Typen sollte page nicht nur optional sein, sondern auch einen Mindest-Wert von 0 haben
+  //  (denn es gibt ja keine negativen page-Angaben)
   page?: number;
 
   orderBy?: "time" | "like";

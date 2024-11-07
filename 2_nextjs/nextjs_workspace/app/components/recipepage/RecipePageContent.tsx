@@ -10,9 +10,12 @@ type RecipePageContentProps = {
   recipe: DetailedRecipeDto;
 };
 
-export default function RecipePageContent({ recipe }: RecipePageContentProps) {
+export default async function RecipePageContent({
+  recipe,
+}: RecipePageContentProps) {
+  const defaultServings = 4;
   return (
-    <div className={"mb-20"}>
+    <div>
       <RecipeBanner recipe={recipe} />
       <div className={"container mx-auto mb-8 mt-8 md:flex md:space-x-12"}>
         <div className={"md:w-2/3"}>
@@ -20,21 +23,28 @@ export default function RecipePageContent({ recipe }: RecipePageContentProps) {
             cookTime={recipe.cookTime}
             preparationTime={recipe.preparationTime}
           />
-          <IngredientsSection ingredients={recipe.ingredients} />
+          {/*
+
+          // todo: Austauschen gegen ConfigurableIngredientsSection
+          //  - oben: defaultServings aus "Datenbank" laden
+
+          */}
+          <IngredientsSection
+            ingredients={recipe.ingredients}
+            defaultServings={defaultServings}
+          />
           <Instructions recipe={recipe} />
         </div>
         <div className={"md:w-1/3"}>
           <Sidebar>
-            <H2>Feedback</H2>
             {/*
-
-            TODO:
-
-             -> hier FeedbackList (oder FeedbackListLoader) verwenden,
-                um Bewertungen zu laden und anzuzeigen
-             --> Mit der Suspense-Komponente experimentieren!
-
+            - todo:
+              - FeedbackListLoader einbauen
+              - Verzögern des Ladens in 'demo_config'
+              - In FeedbackListLoader Laden der Daten zeigen
+              - Suspense
             */}
+            <H2>Feedback</H2>
           </Sidebar>
         </div>
       </div>

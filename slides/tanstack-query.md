@@ -19,6 +19,8 @@
 ### Die ky Bibliothek
 <!-- .slide: data-state="exkurs" -->
 <!-- .slide: id="ky" -->
+* Die [ky-Bibliothek](https://github.com/sindresorhus/ky) stellt eine kleine Abstraktion der `fetch` API zur Verfügung
+* Typische Anwendungsfälle sind damit etwas einfacher abzubilden
 * Auf dem `ky`-Objekt sind Funktionen definiert, mit denen ihr Requests mit unterschiedlichen HTTP Methoden machen könnt (`get`, `post`, ...)
 * Die Methoden haben jeweils zwei Parameter:
   1. Die Methoden erwarten die URL, die ihr aufrufen wollt
@@ -526,6 +528,11 @@
     // ...
   }
   ```
+---
+### Demo: Mutations
+
+* 🕵️‍♂️ FeedbackForm.tsx
+
 ---
 ### TanStack Query: Mutations
 * Im Gegensatz zu `useQuery` wird eine Mutation aber nicht automatisch ausgeführt, sondern wird explizit gestartet

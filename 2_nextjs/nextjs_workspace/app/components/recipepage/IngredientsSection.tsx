@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import { Ingredient } from "@/app/components/api-types.ts";
 import IngredientList from "@/app/components/recipepage/IngredientsList.tsx";
 import { twMerge } from "tailwind-merge";
@@ -9,7 +6,7 @@ type IngredientsProps = {
   ingredients: Ingredient[];
 };
 export default function IngredientsSection({ ingredients }: IngredientsProps) {
-  const [servings, setServings] = useState(4);
+  const servings = 4;
   return (
     <>
       <div className={"mb-8 mt-8 flex items-center justify-between"}>
@@ -23,7 +20,6 @@ export default function IngredientsSection({ ingredients }: IngredientsProps) {
             className={
               "fa-solid fa-circle-plus text-orange_2 hover:cursor-pointer hover:text-orange_2-500"
             }
-            onClick={() => setServings(servings + 1)}
           />
           <span className={"text-gray-500 "}> {servings} servings </span>
           <i
@@ -32,7 +28,6 @@ export default function IngredientsSection({ ingredients }: IngredientsProps) {
               servings < 2 &&
                 "cursor-default text-gray-300 hover:text-gray-300",
             )}
-            onClick={servings > 1 ? () => setServings(servings - 1) : undefined}
           />{" "}
         </div>
       </div>
