@@ -5,7 +5,7 @@ export const recipesPerPage = 6;
 export const slowDown_GetRecipeList = 0;
 
 /** slowdown increasing likes of a recipe */
-export const slowDown_IncreaseLikes = 0;
+export const slowDown_IncreaseLikes = 2400;
 
 /** Only for Ingredients in RecipeCard */
 export const slowDown_GetIngredients = 0;
@@ -14,7 +14,7 @@ export const slowDown_GetIngredients = 0;
 export const slowDown_GetRecipe = 0;
 
 /** list of feedbacks on /$recipeId */
-export const slowDown_GetFeedbacks = 0;
+export const slowDown_GetFeedbacks = 3000;
 
 /** delay after submitting the add feedback form */
 export const slowDown_AddFeedback = 0;

@@ -12,7 +12,8 @@ export function LikesWidget({ recipe }: LikesWidgetProps) {
   const isPending = likeMutation.isPending;
 
   const handleIncreaseLikes = async () => {
-    likeMutation.mutate();
+    const result = likeMutation.mutateAsync();
+
     // const result = await increaseLikes(recipe.id);
     // setLikes(result.newLikes);
   };

@@ -5,6 +5,10 @@ import RecipeListPageContentWrapper from "../../components/recipelistpage/Recipe
 
 export const Route = createFileRoute("/recipes/")({
   component: RecipeListPageContentWrapper,
+  validateSearch(searchParams) {
+    return RecipePageListParams.parse(searchParams);
+  },
+
   // TODO:
   //  - Füge die 'validateSearch'-Method hinzu
   //    - Du kannst das fertige Zod-Objekt 'RecipePageListParams' verwenden, um die

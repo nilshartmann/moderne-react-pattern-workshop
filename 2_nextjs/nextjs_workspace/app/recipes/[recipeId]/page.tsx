@@ -10,11 +10,5 @@ type RecipePageProps = {
 };
 
 export default async function RecipePage({ params }: RecipePageProps) {
-  const recipe = await fetchRecipe(params.recipeId);
-
-  if (!recipe) {
-    notFound();
-  }
-
-  return <RecipePageContent recipe={recipe.recipe} />;
+  return null;
 }

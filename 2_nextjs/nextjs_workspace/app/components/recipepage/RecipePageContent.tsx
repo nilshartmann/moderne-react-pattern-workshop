@@ -29,10 +29,7 @@ export default async function RecipePageContent({
           //  - oben: defaultServings aus "Datenbank" laden
 
           */}
-          <IngredientsSection
-            ingredients={recipe.ingredients}
-            defaultServings={defaultServings}
-          />
+          <IngredientsSection ingredients={recipe.ingredients} />
           <Instructions recipe={recipe} />
         </div>
         <div className={"md:w-1/3"}>

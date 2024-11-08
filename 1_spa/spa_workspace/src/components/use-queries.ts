@@ -1,4 +1,5 @@
 import {
+  queryOptions,
   useMutation,
   useQuery,
   useQueryClient,
@@ -118,10 +119,8 @@ export function useGetRecipeIngredientsQuery(
   });
 }
 
-export function useGetRecipeFeedbackQuery(
-  recipeId: string,
-): UseSuspenseQueryResult<GetRecipeFeedbacksResponse> {
-  return useSuspenseQuery<GetRecipeFeedbacksResponse>({
+export function feedbackQueryOptions(recipeId: string) {
+  return queryOptions({
     queryKey: ["recipes", recipeId, "feedbacks"],
     queryFn: () => {
       return fetchFromApi(
@@ -137,6 +136,10 @@ export function useGetRecipeFeedbackQuery(
       );
     },
   });
+}
+
+export function useGetRecipeFeedbackQuery(recipeId: string) {
+  return useSuspenseQuery(feedbackQueryOptions(recipeId));
 }
 
 export type AddFeedbackMutationPayload = {
@@ -244,11 +247,12 @@ export function useLikeMutation(recipeId: string) {
       //         the "invalidate" request is DONE
       //          (only if it is run imediately)
       await queryClient.invalidateQueries({ queryKey: ["recipe-list"] });
+      // await queryClient.invalidateQueries({ queryKey: ["recipes"] });
 
-      // Option 2:
-      //  Modify the cache data manually
-      //    - advantage: no server request neccessary for updates
-      //    - disadvantage: duplicating logic from backend
+      // // Option 2:
+      // //  Modify the cache data manually
+      // //    - advantage: no server request neccessary for updates
+      // //    - disadvantage: duplicating logic from backend
       queryClient.setQueryData(["recipes", recipeId], (cachedData: unknown) => {
         if (!cachedData) {
           return cachedData;

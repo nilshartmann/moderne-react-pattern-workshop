@@ -3,7 +3,7 @@ import { Button, CheckLabel } from "../Button.tsx";
 import { getRouteApi, Link } from "@tanstack/react-router";
 
 // todo: mit getRouteApi("/recipes") die RouteApi holen
-const recipeListRoute = null;
+const recipeListRoute = getRouteApi("/recipes/");
 
 type OrderButtonProps = {
   children: ReactNode;
@@ -21,7 +21,11 @@ export function OrderButton({ children, orderBy }: OrderButtonProps) {
   //       Die wird für den Button (nur) benötigt, damit er sich entsprechend darstellen kann
   //        ("angehakt" bzw. "nicht angehakt")
   //
-  const currentOrderBy = undefined;
+  const currentOrderBy = recipeListRoute.useSearch({
+    select(s) {
+      return s.orderBy;
+    },
+  });
 
   const checked = orderBy === currentOrderBy;
   return (
@@ -39,7 +43,14 @@ export function OrderButton({ children, orderBy }: OrderButtonProps) {
               Komponenten 'RecipeListNavBar' und 'RecipeListPaginationBar' einkommentieren (siehe TODO dort),
               um deinen Code auszuprobieren
          */}
-      <Link to={"/recipes"} disabled={checked}>
+      <Link
+        to={"/recipes"}
+        disabled={checked}
+        search={(s) => ({
+          ...s,
+          orderBy,
+        })}
+      >
         <CheckLabel checked={checked}>{children}</CheckLabel>
       </Link>
     </Button>

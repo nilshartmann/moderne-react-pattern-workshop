@@ -221,10 +221,6 @@
 - **Arbeitsverzeichnis**: Wir arbeiten ausschliesslich im Verzeichnis `1_spa/spa_workspace`
 - ⚠️ Am besten nur das `1_spa/spa_workspace`-Verzeichnis in der IDE oder im Editor öffnen
 - Hierdrin `npm install` oder `pnpm install` oder `yarn install` ausführen
-- Dann `spa_workspace/vite.config.ts`-Datei anpassen:
-  ```
-  const recipifyBackend = "URL_KOMMT_VON_NILS"; 
-  ```
 - Dann `npm run dev` (oder `yarn dev` oder `pnpm dev`)  
 
 
